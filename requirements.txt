@@ -1,0 +1,8 @@
+Flask
+Flask-Script
+flask-bootstrap
+Flask-Login
+flask-debugtoolbar
+flask-mongoengine
+flask-wtf
+Werkzeug

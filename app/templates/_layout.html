@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<!--[if IE 9 ]><html class="ie9"><![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>BLANKSPIDER - FRONTEND</title>
+
+        <!-- Vendor CSS -->
+        <link href="{{url_for('static', filename='themes/css/fullcalendar.min.css')}}"  rel="stylesheet">
+        <link href="{{url_for('static', filename='themes/css/sweet-alert.css')}}"  rel="stylesheet">
+
+        <link href="{{url_for('static', filename='themes/css/jquery.mCustomScrollbar.min.css')}}"  rel="stylesheet">
+
+        <link href="{{url_for('static', filename='themes/css/animate.min.css')}}" rel="stylesheet">
+        <link href="{{url_for('static', filename='themes/css/material-design-iconic-font.min.css')}}" rel="stylesheet">
+
+        <!-- CSS -->
+        <link href="{{url_for('static', filename='themes/css/app.min.1.css')}}" rel="stylesheet">
+        <link href="{{url_for('static', filename='themes/css/app.min.2.css')}}" rel="stylesheet">
+        <link href="{{url_for('static', filename='css/blankspider.css')}}" rel="stylesheet">
+
+
+
+        <link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.png') }}" type="image/x-icon">
+
+
+        <link href='http://fonts.googleapis.com/css?family=Roboto:300,400&subset=latin,vietnamese,latin-ext' rel='stylesheet' type='text/css'>
+
+    </head>
+    <body>
+        <header id="header" class="clearfix" data-current-skin="blue">
+            <ul class="header-inner">
+                <li id="menu-trigger" data-trigger="#sidebar">
+                    <div class="line-wrap">
+                        <div class="line top"></div>
+                        <div class="line center"></div>
+                        <div class="line bottom"></div>
+                    </div>
+                </li>
+
+                <li class="logo hidden-xs">
+                    <a href="/">BLANKSPIDER - FRONTEND</a>
+                </li>
+
+                <li class="pull-right">
+                    <ul class="top-menu">
+                        <li id="toggle-width">
+                            <div class="toggle-switch">
+                                <input id="tw-switch" type="checkbox" hidden="hidden">
+                                <label for="tw-switch" class="ts-helper"></label>
+                            </div>
+                        </li>
+
+                        <li id="top-search">
+                            <a href=""><i class="tm-icon zmdi zmdi-search"></i></a>
+                        </li>
+
+
+                        <li class="dropdown">
+                            <a data-toggle="dropdown" href=""><i class="tm-icon zmdi zmdi-more-vert"></i></a>
+                            <ul class="dropdown-menu dm-icon pull-right">
+                                <li class="skin-switch hidden-xs">
+                                    <span class="ss-skin bgm-lightblue" data-skin="lightblue"></span>
+                                    <span class="ss-skin bgm-bluegray" data-skin="bluegray"></span>
+                                    <span class="ss-skin bgm-cyan" data-skin="cyan"></span>
+                                    <span class="ss-skin bgm-teal" data-skin="teal"></span>
+                                    <span class="ss-skin bgm-orange" data-skin="orange"></span>
+                                    <span class="ss-skin bgm-blue" data-skin="blue"></span>
+                                </li>
+                                <li class="divider hidden-xs"></li>
+                                <li class="hidden-xs">
+                                    <a data-action="fullscreen" href=""><i class="zmdi zmdi-fullscreen"></i> Toggle Fullscreen</a>
+                                </li>
+                                <li>
+                                    <a data-action="clear-localstorage" href=""><i class="zmdi zmdi-delete"></i> Clear Local Storage</a>
+                                </li>
+                                <li>
+                                    <a href=""><i class="zmdi zmdi-face"></i> Privacy Settings</a>
+                                </li>
+                                <li>
+                                    <a href=""><i class="zmdi zmdi-settings"></i> Other Settings</a>
+                                </li>
+                            </ul>
+                        </li>
+
+                    </ul>
+                </li>
+            </ul>
+
+
+            <!-- Top Search Content -->
+            <div id="top-search-wrap">
+                <div class="tsw-inner">
+                    <i id="top-search-close" class="zmdi zmdi-arrow-left"></i>
+                    <input type="text">
+                </div>
+            </div>
+        </header>
+
+        <section id="main" data-layout="layout-1">
+            <aside id="sidebar" class="sidebar c-overflow">
+                <div class="profile-menu">
+                    <a href="">
+                        <div class="profile-pic">
+                            <img src="{{url_for('static', filename='images/avatar_default.jpg')}}" alt="">
+                        </div>
+
+                        <div class="profile-info">
+
+                            ADMINISTRATOR
+
+
+                            <i class="zmdi zmdi-caret-down"></i>
+                        </div>
+                    </a>
+
+                    <ul class="main-menu">
+                        <li>
+                            <a href="profile-about.html"><i class="zmdi zmdi-account"></i> View Profile</a>
+                        </li>
+                        <li>
+                            <a href=""><i class="zmdi zmdi-input-antenna"></i> Privacy Settings</a>
+                        </li>
+                        <li>
+                            <a href=""><i class="zmdi zmdi-settings"></i> Settings</a>
+                        </li>
+                        <li>
+                            <a href=""><i class="zmdi zmdi-time-restore"></i> Logout</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <ul class="main-menu">
+                    <li>
+                        <a href="/"><i class="zmdi zmdi-home"></i> HOME</a>
+                    </li>
+                    <li class="sub-menu">
+                        <a href=""><i class="zmdi zmdi-view-compact"></i> PARENT #1</a>
+
+                        <ul>
+                            <li><a href="/">NAV #3</a></li>
+                            <li><a href="/">NAV #2</a></li>
+                        </ul>
+                    </li>
+                    <li class="sub-menu">
+                        <a href="javascript;"><i class="zmdi zmdi-widgets"></i> PARENT #2</a>
+                        <ul>
+                            <li><a href="/">NAV 1</a></li>
+                            <li><a href="/">NAV 2</a></li>
+                        </ul>
+                    </li>
+
+                </ul>
+            </aside>
+
+            <aside id="chat" class="sidebar c-overflow">
+
+                <div class="chat-search">
+                    <div class="fg-line">
+                        <input type="text" class="form-control" placeholder="Search People">
+                    </div>
+                </div>
+
+                <div class="listview">
+                    <a class="lv-item" href="">
+                        <div class="media">
+                            <div class="pull-left p-relative">
+                                <img class="lv-img-sm" src="#" tppabs="http://192.185.228.226/projects/ma/1-5-2/jquery/img/profile-pics/2.jpg" alt="">
+                                <i class="chat-status-busy"></i>
+                            </div>
+                            <div class="media-body">
+                                <div class="lv-title">Jonathan Morris</div>
+                                <small class="lv-small">Available</small>
+                            </div>
+                        </div>
+                    </a>
+
+                    <a class="lv-item" href="">
+                        <div class="media">
+                            <div class="pull-left">
+                                <img class="lv-img-sm" src="#" tppabs="http://192.185.228.226/projects/ma/1-5-2/jquery/img/profile-pics/1.jpg" alt="">
+                            </div>
+                            <div class="media-body">
+                                <div class="lv-title">David Belle</div>
+                                <small class="lv-small">Last seen 3 hours ago</small>
+                            </div>
+                        </div>
+                    </a>
+
+                    <a class="lv-item" href="">
+                        <div class="media">
+                            <div class="pull-left p-relative">
+                                <img class="lv-img-sm" src="#" tppabs="http://192.185.228.226/projects/ma/1-5-2/jquery/img/profile-pics/3.jpg" alt="">
+                                <i class="chat-status-online"></i>
+                            </div>
+                            <div class="media-body">
+                                <div class="lv-title">Fredric Mitchell Jr.</div>
+                                <small class="lv-small">Availble</small>
+                            </div>
+                        </div>
+                    </a>
+
+                    <a class="lv-item" href="">
+                        <div class="media">
+                            <div class="pull-left p-relative">
+                                <img class="lv-img-sm" src="#" tppabs="http://192.185.228.226/projects/ma/1-5-2/jquery/img/profile-pics/4.jpg" alt="">
+                                <i class="chat-status-online"></i>
+                            </div>
+                            <div class="media-body">
+                                <div class="lv-title">Glenn Jecobs</div>
+                                <small class="lv-small">Availble</small>
+                            </div>
+                        </div>
+                    </a>
+
+                    <a class="lv-item" href="">
+                        <div class="media">
+                            <div class="pull-left">
+                                <img class="lv-img-sm" src="#" tppabs="http://192.185.228.226/projects/ma/1-5-2/jquery/img/profile-pics/5.jpg" alt="">
+                            </div>
+                            <div class="media-body">
+                                <div class="lv-title">Bill Phillips</div>
+                                <small class="lv-small">Last seen 3 days ago</small>
+                            </div>
+                        </div>
+                    </a>
+
+                    <a class="lv-item" href="">
+                        <div class="media">
+                            <div class="pull-left">
+                                <img class="lv-img-sm" src="#" tppabs="http://192.185.228.226/projects/ma/1-5-2/jquery/img/profile-pics/6.jpg" alt="">
+                            </div>
+                            <div class="media-body">
+                                <div class="lv-title">Wendy Mitchell</div>
+                                <small class="lv-small">Last seen 2 minutes ago</small>
+                            </div>
+                        </div>
+                    </a>
+                    <a class="lv-item" href="">
+                        <div class="media">
+                            <div class="pull-left p-relative">
+                                <img class="lv-img-sm" src="#" tppabs="http://192.185.228.226/projects/ma/1-5-2/jquery/img/profile-pics/7.jpg" alt="">
+                                <i class="chat-status-busy"></i>
+                            </div>
+                            <div class="media-body">
+                                <div class="lv-title">Teena Bell Ann</div>
+                                <small class="lv-small">Busy</small>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </aside>
+
+            <section id="content">
+
+                <div class="container">
+                     {% for message in get_flashed_messages() %}
+                         <div role="alert" class="alert alert-success alert-dismissible">
+                            <button aria-label="Close" data-dismiss="alert" class="close" type="button"><span aria-hidden="true">×</span></button>
+                            {{message}}
+                        </div>
+                     {% endfor %}
+
+                 {% block content %}
+
+
+
+
+
+                 {% endblock %}
+                </div>
+
+            </section>
+
+        </section>
+
+        <footer id="footer">
+            Copyright &copy; 2016 - 2017
+
+
+
+        </footer>
+
+        <!-- Page Loader -->
+        <div class="page-loader">
+            <div class="preloader pls-blue">
+                <svg class="pl-circular" viewBox="25 25 50 50">
+                    <circle class="plc-path" cx="50" cy="50" r="20" />
+                </svg>
+
+                <p>Please wait...</p>
+            </div>
+        </div>
+
+
+
+        <!-- Javascript Libraries -->
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+        <script src="{{url_for('static', filename='scripts/waves.min.js')}}"></script>
+        <script src="{{url_for('static', filename='scripts/functions.js')}}"></script>
+
+
+        <script src="{{url_for('static', filename='scripts/jquery.flot.js')}}"></script>
+        <script src="{{url_for('static', filename='scripts/jquery.flot.resize.js')}}"></script>
+        <script src="{{url_for('static', filename='scripts/curvedLines.js')}}"></script>
+        <script src="{{url_for('static', filename='scripts/jquery.sparkline.min.js')}}"></script>
+        <script src="{{url_for('static', filename='scripts/jquery.easypiechart.min.js')}}"></script>
+
+        <script src="{{url_for('static', filename='scripts/moment.min.js')}}"></script>
+        <script src="{{url_for('static', filename='scripts/fullcalendar.min.js')}}"></script>
+        <script src="{{url_for('static', filename='scripts/jquery.simpleWeather.min.js')}}"></script>
+        <script src="{{url_for('static', filename='scripts/bootstrap-growl.min.js')}}"></script>
+        <script src="{{url_for('static', filename='scripts/sweet-alert.min.js')}}"></script>
+        <script src="{{url_for('static', filename='scripts/jquery.mCustomScrollbar.concat.min.js')}}"></script>
+
+        <!-- Placeholder for IE9 -->
+        <!--[if IE 9 ]>
+            <script src="{{url_for('static', filename='scripts/jquery.placeholder.min.js')}}"></script>
+        <![endif]-->
+
+        <script src="{{url_for('static', filename='scripts/curved-line-chart.js')}}"></script>
+        <script src="{{url_for('static', filename='scripts/line-chart.js')}}"></script>
+        <script src="{{url_for('static', filename='scripts/charts.js')}}"></script>
+
+
+
+        <script src="{{url_for('static', filename='scripts/demo.js')}}"></script>
+
+
+    </body>
+  </html>

@@ -41,7 +41,29 @@
                                         {%for c in contents%}
                                             <tr>
                                                 <td>{{loop.index}}</td>
-                                                <td><a href="#"><strong>{{c.href}}</strong></a></td>
+                                                <td>
+                                                    <table>
+                                                        <tr>
+                                                            <td>
+                                                                <a href="{{c.href}}" target="_blank">
+                                                                    <img class="thumbnail" width="130px" height="100px" src="{{data_masters[loop.index-1]['imageurl']}}">
+                                                                </a>
+                                                            </td>
+                                                            <td valign="top" style="padding-left:10px;">
+                                                                <a href="{{c.href}}" target="_blank">
+                                                                    <strong>{{data_masters[loop.index-1]['title']}}</strong>
+                                                                </a>
+                                                                <br>
+                                                                {{data_masters[loop.index-1]['description']}}
+                                                                <br>
+                                                                <i>{{data_masters[loop.index-1]['published_at']}} - {{data_masters[loop.index-1]['tag_name']}}</i><br>
+                                                                <a class="btn btn-primary btn-xs waves-effect pull-right"><i class="zmdi zmdi-arrow-forward"></i> Xem OFFLINE</a>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+
+                                                </td>
+
                                             </tr>
                                        {%endfor%}
                                     {%endif%}

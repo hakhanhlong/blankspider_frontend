@@ -26,17 +26,16 @@ def get_current_user():
 def login():
     if request.method == 'POST':
         form = LoginForm(request.form)
-        if form.validate():
+        '''if form.validate():
             try:
-                #account = get_by_username(username=form.username.data)
-                #if account is not None and account.verify_password(form.password.data):
-                #    login_user(account, form.remember.data)
-                #    return redirect(url_for('home.index'))
-                #account =
-                #login_user(account, form.remember.data)
-                return redirect(url_for('home.index'))
+                account = get_by_username(username=form.username.data)
+                if account is not None and account.verify_password(form.password.data):
+                    login_user(account, form.remember.data)
+                    return redirect(url_for('home.index'))
+
+
             except Exception as ex:
-                flash('#ERROR LOGIN:' + ex.message)
+                flash('#ERROR LOGIN:' + ex.message)'''
     else:
         form = LoginForm()
         return render_template('auth/login.html', form=form)

@@ -18,12 +18,33 @@ def create_app(config_name):
     app = Flask(__name__, template_folder='templates')
     app.config.from_object(config[config_name])
 
-    app.config['MONGODB_SETTINGS'] = {
+    '''app.config['MONGODB_SETTINGS'] = {
         'db': config[config_name].MONGO_DATABASE_NAME,
         'host': config[config_name].MONGO_DATABASE_SERVER,
         'port': config[config_name].MONGO_DATABASE_PORT
 
-    }
+    }'''
+
+    app.config['MONGODB_SETTINGS'] = [
+        {
+            'alias': 'default',
+            'db': config[config_name].MONGO_DATABASE_SECURITY_NAME,
+            'host': config[config_name].MONGO_DATABASE_SECURITY_SERVER,
+            'port': config[config_name].MONGO_DATABASE_SECURITY_PORT
+        },
+        {
+            'alias': config[config_name].MONGO_DATABASE_ARCHIVIED_NAME,
+            'db': config[config_name].MONGO_DATABASE_ARCHIVIED_NAME,
+            'host': config[config_name].MONGO_DATABASE_ARCHIVIED_SERVER,
+            'port': config[config_name].MONGO_DATABASE_ARCHIVIED_PORT
+        },
+        {
+            'alias': config[config_name].MONGO_DATABASE_BLANKSPIDER_NAME,
+            'db': config[config_name].MONGO_DATABASE_BLANKSPIDER_NAME,
+            'host': config[config_name].MONGO_DATABASE_BLANKSPIDER_SERVER,
+            'port': config[config_name].MONGO_DATABASE_BLANKSPIDER_PORT
+        }
+    ]
 
     config[config_name].init_app(app)
     bootstrap.init_app(app)
@@ -57,11 +78,13 @@ def create_app(config_name):
     ############### begin blueprint ############################
     from app.controllers.auth import auth as auth_blueprint
     from app.controllers.home import home as home_blueprint
+    from app.controllers.source import source as source_blueprint
 
 
 
     app.register_blueprint(home_blueprint, url_prefix='/')
     app.register_blueprint(auth_blueprint, url_prefix='/auth')
+    app.register_blueprint(source_blueprint, url_prefix='/source')
 
     ############### end blueprint   ############################
 

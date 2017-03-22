@@ -6,5 +6,31 @@
  <ol class="breadcrumb">
     <li><a href="/">HOME</a></li>
 </ol>
+<div class="card">
+                        <div class="card-header">
+                            <h2>NGUON
+                            <small>Danh sach nguon dang luu chieu</small></h2>
+                        </div>
 
+                        <div class="card-body table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>TEN NGUON</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {%if sources %}
+                                        {%for source in sources%}
+                                            <tr>
+                                                <td>{{loop.index}}</td>
+                                                <td><a href="{{url_for('source.index', sid=source.id, tagid='all')}}"><strong>{{source.name}}</strong></a></td>
+                                            </tr>
+                                       {%endfor%}
+                                    {%endif%}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
 {%endblock%}

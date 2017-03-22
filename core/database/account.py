@@ -10,6 +10,7 @@ class ACCOUNTS(db.Document):
     createddate = db.DateTimeField(default=datetime.now, required=True)
     lastlogin = db.DateTimeField(default=datetime.now)
     is_active = db.BooleanField(default=False)
+    meta = {"db_alias": "DEV_BLANKSPIDER_SECURITY"}
 
     def __unicode__(self):
         return self.fullname

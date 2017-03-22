@@ -11,9 +11,18 @@ class Config:
 
 class Development(Config):
     DEBUG = True
-    MONGO_DATABASE_SERVER = os.environ.get('DEV_DATABASE_SERVER') or 'localhost'
-    MONGO_DATABASE_PORT = os.environ.get('DEV_DATABASE_PORT') or 27017
-    MONGO_DATABASE_NAME = os.environ.get('DEV_DATABASE_NAME') or 'DEV_BLANKSPIDER_ARCHIVIED'
+
+    MONGO_DATABASE_SECURITY_SERVER = os.environ.get('DEV_DATABASE_SERVER') or 'localhost'
+    MONGO_DATABASE_SECURITY_PORT = os.environ.get('DEV_DATABASE_PORT') or 27017
+    MONGO_DATABASE_SECURITY_NAME = os.environ.get('DEV_DATABASE_NAME') or 'DEV_BLANKSPIDER_SECURITY'
+
+    MONGO_DATABASE_BLANKSPIDER_SERVER = os.environ.get('DEV_DATABASE_SERVER') or 'localhost'
+    MONGO_DATABASE_BLANKSPIDER_PORT = os.environ.get('DEV_DATABASE_PORT') or 27017
+    MONGO_DATABASE_BLANKSPIDER_NAME = os.environ.get('DEV_DATABASE_NAME') or 'DEV_BLANKSPIDER'
+
+    MONGO_DATABASE_ARCHIVIED_SERVER = os.environ.get('DEV_DATABASE_SERVER') or 'localhost'
+    MONGO_DATABASE_ARCHIVIED_PORT = os.environ.get('DEV_DATABASE_PORT') or 27017
+    MONGO_DATABASE_ARCHIVIED_NAME = os.environ.get('DEV_DATABASE_NAME') or 'blankspider_content_database'
 
 class Production(Config):
     DEBUG = False

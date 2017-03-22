@@ -14,17 +14,13 @@ import json
 def index(sid, tagid):
     s = tag_impl.get_bysourceid(sid)
     data_master = []
-
-
     if tagid != 'all':
         objContents = content_impl.get_bytagid(tagid)
         for x in objContents:
             n_dict = json.loads(x.data)
             data_master.append(n_dict)
             x.data = None
-
         return render_template('source/index.html', tags=s, contents = objContents, data_masters=data_master)
-
     else:
         _tagid = str(s[0].id)
         objContents = content_impl.get_bytagid(_tagid)
@@ -32,11 +28,15 @@ def index(sid, tagid):
             n_dict = json.loads(x.data)
             data_master.append(n_dict)
             x.data = None
-
-
-
         #title = test_json['title']
         return render_template('source/index.html', tags=s, contents = objContents, data_masters=data_master)
-
-
     return render_template('source/index.html', tags=s)
+
+@source.route('/content-detail/<cid>', methods=['GET'])
+#@login_required
+def content_detail(cid):
+    cont = content_impl.get_byid(cid)
+    n_dict = json.loads(cont.data)
+    data_master = n_dict
+    cont.data = None
+    return render_template('source/content-detail.html', content=cont, data=data_master)

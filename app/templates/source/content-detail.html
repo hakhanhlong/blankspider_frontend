@@ -1,0 +1,20 @@
+{% extends "_layout.html"%}
+{% import "bootstrap/wtf.html" as wtf%}
+{% block title %}BLANKSPIDER - FRONTEND{% endblock %}
+{% block content%}
+
+ <ol class="breadcrumb">
+    <li><a href="/">HOME</a></li>
+     <li><a href="/" class="active">NGUON</a></li>
+</ol>
+<div class="card">
+    <div class="card-body card-padding">
+
+        <h3>{{data['title']}}</h3>
+        <i>{{data['published_at']}}</i>
+        <p>{{data['description']}}</p>
+        <div class="clearfix"></div>
+        {{data['content']|safe}}
+    </div>
+</div>
+{%endblock%}

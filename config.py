@@ -22,7 +22,8 @@ class Development(Config):
 
     MONGO_DATABASE_ARCHIVIED_SERVER = os.environ.get('DEV_DATABASE_SERVER') or 'localhost'
     MONGO_DATABASE_ARCHIVIED_PORT = os.environ.get('DEV_DATABASE_PORT') or 27017
-    MONGO_DATABASE_ARCHIVIED_NAME = os.environ.get('DEV_DATABASE_NAME') or 'blankspider_content_database'
+    #MONGO_DATABASE_ARCHIVIED_NAME = os.environ.get('DEV_DATABASE_NAME') or 'blankspider_content_database'
+    MONGO_DATABASE_ARCHIVIED_NAME = os.environ.get('DEV_DATABASE_NAME') or 'blankspider_content_tshirt'
 
 class Production(Config):
     DEBUG = False

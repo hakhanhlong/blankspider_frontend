@@ -7,5 +7,5 @@ class TAGS(db.Document):
     count = db.IntField()
     __v = db.IntField()
 
-    meta = {"db_alias": "blankspider_content_database", 'collection': 'tags', 'strict': False}
+    meta = {"db_alias": "blankspider_content_tshirt", 'collection': 'tags', 'strict': False}
 

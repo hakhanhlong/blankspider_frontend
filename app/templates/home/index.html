@@ -25,7 +25,7 @@
                                         {%for source in sources%}
                                             <tr>
                                                 <td>{{loop.index}}</td>
-                                                <td><a href="{{url_for('source.index', sid=source.id, tagid='all')}}"><strong>{{source.name}}</strong></a></td>
+                                                <td><a href="{{url_for('source.index_tshirt', sid=source.id, tagid='all')}}"><strong>{{source.name}}</strong></a></td>
                                             </tr>
                                        {%endfor%}
                                     {%endif%}

@@ -1,0 +1,87 @@
+{% extends "_layout.html"%}
+{% import "bootstrap/wtf.html" as wtf%}
+{% block title %}BLANKSPIDER - FRONTEND{% endblock %}
+{% block content%}
+
+ <ol class="breadcrumb">
+    <li><a href="/">HOME</a></li>
+     <li><a href="/" class="active">NGUON</a></li>
+</ol>
+<div class="card">
+    <div class="card-body card-padding">
+    <div class="row">
+        <div class="col-sm-3 m-b-20">
+             <p class="f-500 m-b-20 c-black">DANH SACH NGUON</p>
+
+                    <ul class="list-group">
+                        {%if tags %}
+                                        {%for tag in tags%}
+                                              <li class="list-group-item">
+                                                  <span class="badge">{{tag.count}}</span>
+                                                  <a href="{{url_for('source.index_tshirt', sid=tag.source_id, tagid=tag.id)}}">{{tag.name}}</a>
+                                                </li>
+                                       {%endfor%}
+                                    {%endif%}
+
+
+
+                      </ul>
+        </div>
+        <div col-sm-3 m-b-20>
+             <div class="card-body table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>TITLE</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {%if contents %}
+                                        {%for c in contents%}
+                                            <tr>
+                                                <td>{{loop.index}}</td>
+                                                <td>
+                                                    <table>
+                                                        <tr>
+                                                            <td>
+                                                                <a href="{{c.href}}" target="_blank">
+                                                                    <img class="thumbnail" width="130px" height="100px" src="{{data_masters[loop.index-1]['imageurl']}}">
+                                                                </a>
+                                                            </td>
+                                                            <td valign="top" style="padding-left:10px;">
+                                                                <a href="{{c.href}}" target="_blank">
+                                                                    <strong>{{data_masters[loop.index-1]['title']}}</strong>
+                                                                </a>
+                                                                <br>
+                                                                {{data_masters[loop.index-1]['description']}}
+                                                                <br>
+                                                                    <i>
+                                                                       Price: $ {{data_masters[loop.index-1]['published_at']}} - campaign_region:{{data_masters[loop.index-1]['campaign_region']}}
+                                                                    </i>
+                                                                    <br>
+                                                                    <i>
+                                                                       campaign_start_date: {{data_masters[loop.index-1]['campaign_start_date']}} - campaign_end_date:{{data_masters[loop.index-1]['campaign_end_date']}}
+                                                                    </i>
+                                                                    <br>
+                                                                    <i>
+                                                                       daysremaining: {{data_masters[loop.index-1]['daysremaining']}} - availability:{{data_masters[loop.index-1]['availability']}}
+                                                                    </i>
+
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+
+                                                </td>
+
+                                            </tr>
+                                       {%endfor%}
+                                    {%endif%}
+                                </tbody>
+                            </table>
+                        </div>
+        </div>
+    </div>
+        </div>
+</div>
+{%endblock%}

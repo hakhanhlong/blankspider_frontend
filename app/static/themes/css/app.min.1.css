@@ -1998,7 +1998,7 @@ pre code {
   padding-right: 15px;
 }
 
-@media (min-width: 768px) {
+/*@media (min-width: 768px) {
   .container {
     width: 100%;
   }
@@ -2010,11 +2010,16 @@ pre code {
   }
 }
 
+
 @media (min-width: 1200px) {
   .container {
     width: 1170px;
   }
-}
+}*/
+
+ .container {
+    width: 100%;
+  }
 
 .container-fluid {
   margin-right: auto;
@@ -10163,7 +10168,7 @@ h6 small,
   color: #fff;
   text-transform: uppercase;
   display: block;
-  font-size: 16px;
+  font-size: 24px;
 }
 
 #menu-trigger {

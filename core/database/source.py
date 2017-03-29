@@ -11,4 +11,7 @@ class SOURCES(db.Document):
     project_id = db.StringField(max_length=255, required=True)
     project_name = db.StringField(max_length=255, required=True)
     type_spider = db.StringField(max_length=255, required=True, default=u'DEFAULT')
+
+    tags = []
+
     meta = {"db_alias": "DEV_BLANKSPIDER"}

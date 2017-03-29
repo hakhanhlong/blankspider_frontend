@@ -79,12 +79,14 @@ def create_app(config_name):
     from app.controllers.auth import auth as auth_blueprint
     from app.controllers.home import home as home_blueprint
     from app.controllers.source import source as source_blueprint
+    from app.controllers.repository import repository as repository_blueprint
 
 
 
     app.register_blueprint(home_blueprint, url_prefix='/')
     app.register_blueprint(auth_blueprint, url_prefix='/auth')
     app.register_blueprint(source_blueprint, url_prefix='/source')
+    app.register_blueprint(repository_blueprint, url_prefix='/repository')
 
     ############### end blueprint   ############################
 

@@ -15,15 +15,13 @@
 
                     <ul class="list-group">
                         {%if tags %}
-                                        {%for tag in tags%}
+                                {%for tag in tags%}
                                               <li class="list-group-item">
                                                   <span class="badge">{{tag.count}}</span>
                                                   <a href="{{url_for('source.index', sid=tag.source_id, tagid=tag.id)}}">{{tag.name}}</a>
                                                 </li>
-                                       {%endfor%}
-                                    {%endif%}
-
-
+                                   {%endfor%}
+                                {%endif%}
 
                       </ul>
         </div>

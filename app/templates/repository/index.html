@@ -1,0 +1,47 @@
+{% extends "_layout.html"%}
+{% import "bootstrap/wtf.html" as wtf%}
+{% block title %}BLANKSPIDER - FRONTEND{% endblock %}
+{% block content%}
+
+ <ol class="breadcrumb">
+    <li><a href="/">HOME</a></li>
+    <li><a href="/" class="active">KHO NỘI DUNG</a></li>
+</ol>
+<div class="card">
+    <div class="card-body card-padding">
+        <div class="row">
+             <div class="col-sm-3">
+                {%if sources %}
+                 <div class="panel-group" role="tablist" aria-multiselectable="true">
+                        {% for source in sources%}
+                                <div class="panel panel-collapse">
+                                    <div class="panel-heading active" role="tab" id="headingOne">
+                                        <h4 class="panel-title">
+                                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse-{{loop.index}}" aria-expanded="true" aria-controls="collapse-{{loop.index}}">
+                                                {{source.name}}
+                                            </a>
+                                        </h4>
+                                    </div>
+                                    <div id="collapse-{{loop.index}}" class="collapse in" role="tabpanel" aria-labelledby="headingOne">
+                                        <div class="panel-body">
+                                            <ul class="list-group">
+                                            {%for tag in source.tags%}
+                                                <li class="list-group-item">
+                                                    <span class="badge">{{tag.count}}</span>
+                                                    {{tag.name}}
+                                                </li>
+                                            {%endfor%}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                        {%endfor%}
+                 </div>
+                 {%endif%}
+             </div>
+             <div class="col-sm-9">
+             </div>
+        </div>
+    </div>
+</div>
+{%endblock%}

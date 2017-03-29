@@ -9,6 +9,7 @@ from core.dataimpl import content_impl
 import json
 
 
+'''
 @source.route('/<sid>/<tagid>', methods=['GET'])
 #@login_required
 def index(sid, tagid):
@@ -31,6 +32,9 @@ def index(sid, tagid):
         #title = test_json['title']
         return render_template('source/index.html', tags=s, contents = objContents, data_masters=data_master)
     return render_template('source/index.html', tags=s)
+'''
+
+
 
 
 

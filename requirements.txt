@@ -5,4 +5,7 @@ Flask-Login
 flask-debugtoolbar
 flask-mongoengine
 flask-wtf
+Flask-moment
 Werkzeug
+requests
+python-dotenv

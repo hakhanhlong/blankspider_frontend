@@ -6,11 +6,29 @@ from . import repository
 from core.dataimpl import tag_impl
 from core.dataimpl import content_impl
 from core.dataimpl import source_impl
+import json
+
+from flask_moment import Moment
+
+from datetime import datetime
+
+from core.api.request_helpers import RequestHelpers
+from core.api.request_url import RequestURL
 
 @repository.route('/', methods=['GET'])
 def index():
     sources = source_impl.get_all_active(True)
-    for x in sources:
-        x.tags = tag_impl.get_bysourceid(str(x.id))
+    _request = RequestHelpers()
+    _requestURL = RequestURL()
+    _request.url = _requestURL.PUBLISHTIMING_URL_LISTBYSOURCE
 
+    for x in sources:
+
+        _request.params = {'source_id': str(x.id), 'limit': 10}
+        #x.timings = _request.post_json().json()
+        timings = _request.post_json().json()
+        for timing in timings:
+            timing['published_at'] = datetime.strptime(timing['published_at'].replace('T00:00:00.000Z',''), '%Y-%m-%d')
+
+        x.timings = timings
     return render_template('repository/index.html', sources = sources)

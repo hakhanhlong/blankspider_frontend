@@ -1,6 +1,8 @@
 from app import create_app
 from flask.ext.script import Manager, Shell, Server, Command, Option
 import os
+from os.path import join, dirname
+from dotenv import load_dotenv
 
 class createadmin(Command):
     option_list = (
@@ -44,4 +46,6 @@ manager.add_command('runserver', Server(
 manager.add_command('create_account_admin', createadmin())
 
 if __name__ == '__main__':
+    dotenv_path = join(dirname(__file__), '.env')
+    load_dotenv(dotenv_path)
     manager.run()

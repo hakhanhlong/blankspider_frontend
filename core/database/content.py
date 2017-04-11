@@ -13,4 +13,4 @@ class CONTENTS(db.Document):
     created_at = db.DateTimeField(default=datetime.now)
     content_hash = db.StringField(max_length=255)
     __v = db.IntField()
-    meta = {"db_alias": "blankspider_content_database", 'collection': 'contents', 'strict': False}
+    meta = {"db_alias": "blankspider_content_archived", 'collection': 'contents', 'strict': False}

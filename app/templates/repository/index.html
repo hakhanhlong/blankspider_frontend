@@ -25,10 +25,10 @@
                                     <div id="collapse-{{loop.index}}" class="collapse in" role="tabpanel" aria-labelledby="headingOne">
                                         <div class="panel-body">
                                             <ul class="list-group">
-                                            {%for tag in source.tags%}
+                                            {%for timing in source.timings%}
                                                 <li class="list-group-item">
-                                                    <span class="badge">{{tag.count}}</span>
-                                                    {{tag.name}}
+                                                    <span class="badge">{{timing.count}}</span>
+                                                    {{ moment(timing.published_at).format('L')}}
                                                 </li>
                                             {%endfor%}
                                             </ul>

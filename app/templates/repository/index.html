@@ -28,7 +28,7 @@
                                             {%for timing in source.timings%}
                                                 <li class="list-group-item">
                                                     <span class="badge">{{timing.count}}</span>
-                                                    {{ moment(timing.published_at).format('L')}}
+                                                    {{ moment(timing.published_at).format('DD/MM/YYYY')}}
                                                 </li>
                                             {%endfor%}
                                             </ul>

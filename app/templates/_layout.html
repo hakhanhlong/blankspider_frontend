@@ -18,6 +18,8 @@
         <!-- CSS -->
         <link href="{{url_for('static', filename='themes/css/app.min.1.css')}}" rel="stylesheet">
         <link href="{{url_for('static', filename='themes/css/app.min.2.css')}}" rel="stylesheet">
+        <link href="{{url_for('static', filename='themes/css/bootstrap-select.css')}}" rel="stylesheet">
+        <link href="{{url_for('static', filename='themes/css/bootstrap-datetimepicker.min.css')}}" rel="stylesheet">
         <link href="{{url_for('static', filename='css/blankspider.css')}}" rel="stylesheet">
 
 
@@ -53,6 +55,7 @@
 
                 <li class="pull-right">
                     <ul class="top-menu">
+                        <!--
                         <li class="dropdown">
                             <a data-toggle="dropdown" href="">
                                 <i class="tmn-counts">6</i>
@@ -266,7 +269,7 @@
                                     <a class="lv-footer" href="">View All</a>
                                 </div>
                             </div>
-                        </li>
+                        </li>-->
                         <li class="dropdown">
                             <a data-toggle="dropdown" href=""><i class="tm-icon zmdi zmdi-more-vert"></i></a>
                             <ul class="dropdown-menu dm-icon pull-right">
@@ -293,70 +296,15 @@
             <nav class="ha-menu">
                 <ul>
                     <li class="active waves-effect"><a href="index.html" tppabs="http://192.185.228.226/projects/ma/1-5-2/jquery/index.html">Home</a></li>
-                    <li class="dropdown">
-                        <div class="waves-effect" data-toggle="dropdown">Headers</div>
+                    <li class="waves-effect"><a href="typography.html" tppabs="http://192.185.228.226/projects/ma/1-5-2/jquery/typography.html">Kho nội dung</a></li>
 
-                        <ul class="dropdown-menu">
-                            <li><a href="textual-menu.html" tppabs="http://192.185.228.226/projects/ma/1-5-2/jquery/textual-menu.html">Textual menu</a></li>
-                            <li><a href="image-logo.html" tppabs="http://192.185.228.226/projects/ma/1-5-2/jquery/image-logo.html">Image logo</a></li>
-                            <li><a class="active" href="top-mainmenu.html" tppabs="http://192.185.228.226/projects/ma/1-5-2/jquery/top-mainmenu.html">Mainmenu on top</a></li>
-                        </ul>
-                    </li>
-                    <li class="waves-effect"><a href="typography.html" tppabs="http://192.185.228.226/projects/ma/1-5-2/jquery/typography.html">Typography</a></li>
-                    <li class="dropdown">
-                        <div class="waves-effect" data-toggle="dropdown">Widgets</div>
-                        <ul class="dropdown-menu">
-                            <li><a href="widget-templates.html" tppabs="http://192.185.228.226/projects/ma/1-5-2/jquery/widget-templates.html">Templates</a></li>
-                            <li><a href="widgets.html" tppabs="http://192.185.228.226/projects/ma/1-5-2/jquery/widgets.html">Widgets</a></li>
-                        </ul>
-                    </li>
-                    <li class="dropdown">
-                        <div class="waves-effect" data-toggle="dropdown" aria-expanded="false">Tables</div>
-                        <ul class="dropdown-menu">
-                            <li><a href="tables.html" tppabs="http://192.185.228.226/projects/ma/1-5-2/jquery/tables.html">Normal Tables</a></li>
-                            <li><a href="data-tables.html" tppabs="http://192.185.228.226/projects/ma/1-5-2/jquery/data-tables.html">Data Tables</a></li>
-                        </ul>
-                    </li>
-                    <li class="dropdown">
-                        <div class="waves-effect" data-toggle="dropdown" aria-expanded="false">Forms</div>
-                        <ul class="dropdown-menu">
-                            <li><a href="form-elements.html" tppabs="http://192.185.228.226/projects/ma/1-5-2/jquery/form-elements.html">Basic Form Elements</a></li>
-                            <li><a href="form-components.html" tppabs="http://192.185.228.226/projects/ma/1-5-2/jquery/form-components.html">Form Components</a></li>
-                            <li><a href="form-examples.html" tppabs="http://192.185.228.226/projects/ma/1-5-2/jquery/form-examples.html">Form Examples</a></li>
-                            <li><a href="form-validations.html" tppabs="http://192.185.228.226/projects/ma/1-5-2/jquery/form-validations.html">Form Validation</a></li>
-                        </ul>
-                    </li>
-                    <li class="dropdown">
-                        <div class="waves-effect" data-toggle="dropdown" aria-expanded="false">User Interface</div>
-                        <ul class="dropdown-menu">
-                            <li><a href="colors.html" tppabs="http://192.185.228.226/projects/ma/1-5-2/jquery/colors.html">Colors</a></li>
-                            <li><a href="animations.html" tppabs="http://192.185.228.226/projects/ma/1-5-2/jquery/animations.html">Animations</a></li>
-                            <li><a href="box-shadow.html" tppabs="http://192.185.228.226/projects/ma/1-5-2/jquery/box-shadow.html">Box Shadow</a></li>
-                            <li><a href="buttons.html" tppabs="http://192.185.228.226/projects/ma/1-5-2/jquery/buttons.html">Buttons</a></li>
-                            <li><a href="icons.html" tppabs="http://192.185.228.226/projects/ma/1-5-2/jquery/icons.html">Icons</a></li>
-                            <li><a href="alerts.html" tppabs="http://192.185.228.226/projects/ma/1-5-2/jquery/alerts.html">Alerts</a></li>
-                            <li><a href="preloaders.html" tppabs="http://192.185.228.226/projects/ma/1-5-2/jquery/preloaders.html">Preloaders</a></li>
-                            <li><a href="notification-dialog.html" tppabs="http://192.185.228.226/projects/ma/1-5-2/jquery/notification-dialog.html">Notifications &amp; Dialogs</a></li>
-                            <li><a href="media.html" tppabs="http://192.185.228.226/projects/ma/1-5-2/jquery/media.html">Media</a></li>
-                            <li><a href="components.html" tppabs="http://192.185.228.226/projects/ma/1-5-2/jquery/components.html">Components</a></li>
-                            <li><a href="other-components.html" tppabs="http://192.185.228.226/projects/ma/1-5-2/jquery/other-components.html">Others</a></li>
-                        </ul>
-                    </li>
-                    <li class="dropdown">
-                        <div class="waves-effect" data-toggle="dropdown">Charts</div>
-                        <ul class="dropdown-menu">
-                            <li><a href="flot-charts.html" tppabs="http://192.185.228.226/projects/ma/1-5-2/jquery/flot-charts.html">Flot Charts</a></li>
-                            <li><a href="other-charts.html" tppabs="http://192.185.228.226/projects/ma/1-5-2/jquery/other-charts.html">Other Charts</a></li>
-                        </ul>
-                    </li>
-                    <li class="waves-effect"><a href="calendar.html" tppabs="http://192.185.228.226/projects/ma/1-5-2/jquery/calendar.html">Calendar</a></li>
                 </ul>
             </nav>
 
 
         </header>
 
-        <section id="main" data-layout="layout-1">
+        <section id="main">
             <aside id="sidebar" class="sidebar c-overflow">
                 <div class="profile-menu">
                     <a href="">
@@ -583,6 +531,9 @@
         <script src="{{url_for('static', filename='scripts/curved-line-chart.js')}}"></script>
         <script src="{{url_for('static', filename='scripts/line-chart.js')}}"></script>
         <script src="{{url_for('static', filename='scripts/charts.js')}}"></script>
+
+        <script src="{{url_for('static', filename='scripts/bootstrap-select.js')}}"></script>
+        <script src="{{url_for('static', filename='scripts/bootstrap-datetimepicker.min.js')}}"></script>
 
 
 

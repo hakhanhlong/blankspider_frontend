@@ -84,6 +84,7 @@ def create_app(config_name):
     from app.controllers.home import home as home_blueprint
     from app.controllers.source import source as source_blueprint
     from app.controllers.repository import repository as repository_blueprint
+    from app.controllers.ajax import ajax as ajax_blueprint
 
 
 
@@ -91,6 +92,7 @@ def create_app(config_name):
     app.register_blueprint(auth_blueprint, url_prefix='/auth')
     app.register_blueprint(source_blueprint, url_prefix='/source')
     app.register_blueprint(repository_blueprint, url_prefix='/repository')
+    app.register_blueprint(ajax_blueprint, url_prefix='/ajax')
 
     ############### end blueprint   ############################
 

@@ -22,13 +22,16 @@ def index():
     _requestURL = RequestURL()
     _request.url = _requestURL.PUBLISHTIMING_URL_LISTBYSOURCE
 
+    # fill data timing to source
     for x in sources:
-
         _request.params = {'source_id': str(x.id), 'limit': 10}
-        #x.timings = _request.post_json().json()
         timings = _request.post_json().json()
         for timing in timings:
             timing['published_at'] = datetime.strptime(timing['published_at'].replace('T00:00:00.000Z',''), '%Y-%m-%d')
-
         x.timings = timings
+    # ------------------------------------------------------------------------------------------------------------------
+
+    # get list source fill to dropdownlist
+
+    # ------------------------------------------------------------------------------------------------------------------
     return render_template('repository/index.html', sources = sources)

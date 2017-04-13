@@ -52,10 +52,13 @@
                     <div class="row">
                         <div class="col-sm-6 m-b-25">
                             <p class="f-500 m-b-15 c-black">BÁO ĐIỆN TỬ</p>
-                            <select class="selectpicker form-control">
-                                <option>Mustard</option>
-                                <option>Ketchup</option>
-                                <option>Relish</option>
+
+                            <select class="selectpicker form-control" id="select-baodientu-repository">
+                                {% for source in sources%}
+                                    <option value="{{source.id}}">{{source.name}}</option>
+                                {%endfor%}
+
+
                             </select>
                         </div>
                         <div class="col-sm-6 m-b-25">
@@ -66,7 +69,7 @@
                     <div class="row">
                         <div class="col-sm-6 m-b-25">
                             <p class="f-500 m-b-15 c-black">CHUYÊN MỤC</p>
-                            <select class="selectpicker form-control">
+                            <select class="selectpicker form-control" id="select-tag">
                                 <option>Mustard</option>
                                 <option>Ketchup</option>
                                 <option>Relish</option>
@@ -89,6 +92,102 @@
                         </div>
                     </div>
                 </div>
+                 <div class="row">
+                     <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>TIÊU ĐỀ</th>
+                                        <th>CHUYÊN MỤC</th>
+                                        <th>THỜI GIAN ĐĂNG TẢI</th>
+                                        <th>SỐ PHIÊN BẢN</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>Alexandra</td>
+                                        <td>Christopher</td>
+                                        <td>@makinton</td>
+                                        <td>Ducky</td>
+                                    </tr>
+                                    <tr>
+                                        <td>2</td>
+                                        <td>Madeleine</td>
+                                        <td>Hollaway</td>
+                                        <td>@hollway</td>
+                                        <td>Cheese</td>
+                                    </tr>
+                                    <tr>
+                                        <td>3</td>
+                                        <td>Sebastian</td>
+                                        <td>Johnston</td>
+                                        <td>@sebastian</td>
+                                        <td>Jaycee</td>
+                                    </tr>
+                                    <tr>
+                                        <td>4</td>
+                                        <td>Mitchell</td>
+                                        <td>Christin</td>
+                                        <td>@mitchell4u</td>
+                                        <td>AdskiDeAnus</td>
+                                    </tr>
+                                    <tr>
+                                        <td>5</td>
+                                        <td>Elizabeth</td>
+                                        <td>Belkitt</td>
+                                        <td>@belkitt</td>
+                                        <td>Goat</td>
+                                    </tr>
+                                    <tr>
+                                        <td>6</td>
+                                        <td>Benjamin</td>
+                                        <td>Parnell</td>
+                                        <td>@wayne234</td>
+                                        <td>Pokie</td>
+                                    </tr>
+                                    <tr>
+                                        <td>7</td>
+                                        <td>Katherine</td>
+                                        <td>Buckland</td>
+                                        <td>@anitabelle</td>
+                                        <td>Wokie</td>
+                                    </tr>
+                                    <tr>
+                                        <td>8</td>
+                                        <td>Nicholas</td>
+                                        <td>Walmart</td>
+                                        <td>@mwalmart</td>
+                                        <td>Spike</td>
+                                    </tr>
+                                    <tr>
+                                        <td>9</td>
+                                        <td>Nicholas</td>
+                                        <td>Walmart</td>
+                                        <td>@mwalmart</td>
+                                        <td>Spike</td>
+                                    </tr>
+                                    <tr>
+                                        <td>10</td>
+                                        <td>Nicholas</td>
+                                        <td>Walmart</td>
+                                        <td>@mwalmart</td>
+                                        <td>Spike</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                         <ul class="pagination pull-right">
+                                <li class="disabled"><a href="" aria-label="Previous"><i class="zmdi zmdi-chevron-left"></i></a></li>
+                                <li class="active"><a href="">1 <span class="sr-only">(current)</span></a></li>
+                                <li><a href="">2</a></li>
+                                <li><a href="">3</a></li>
+                                <li><a href="">4</a></li>
+                                <li><a href="">5</a></li>
+                                <li><a href="" aria-label="Next"><i class="zmdi zmdi-chevron-right"></i></a></li>
+                             </ul>
+                        </div>
+                 </div>
              </div>
         </div>
     </div>

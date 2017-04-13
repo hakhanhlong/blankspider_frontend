@@ -9,3 +9,4 @@ Flask-moment
 Werkzeug
 requests
 python-dotenv
+flask-restful

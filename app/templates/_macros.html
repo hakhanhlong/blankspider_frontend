@@ -1,0 +1,45 @@
+{% macro pagination_ajax(pagination, sid, timingid) %}
+
+  <ul class="pagination pull-right lv-body">
+
+    {% if pagination.has_prev %}
+      <li>
+        <a href="javascript:;" onclick="pagination_ajax(this);" aria-label="Previous" id="filter-timing"
+        sourceid="{{sid}}" timingid="{{timingid}}" page="{{pagination.prev_num}}">
+          <span aria-hidden="true">&laquo;</span>
+        </a>
+      </li>
+    {% endif %}
+
+    {% for p in pagination.iter_pages(left_edge=1, left_current=2, right_current=3, right_edge=1) %}
+      {% if p %}
+        {% if p != pagination.page %}
+          <li>
+            <a href="javascript:;" onclick="pagination_ajax(this);" id="filter-timing"
+            sourceid="{{sid}}" timingid="{{timingid}}" page="{{p}}">{{ p }}</a>
+          </li>
+        {% else %}
+          <li class="active">
+            <a href="javascript:;" onclick="pagination_ajax(this);" id="filter-timing"
+            sourceid="{{sid}}" timingid="{{timingid}}" page="{{p}}">{{ p }}</a>
+          </li>
+        {% endif %}
+      {% else %}
+        <li class="disabled">
+          <span class="ellipsis">&hellip;</span>
+        </li>
+      {% endif %}
+    {% endfor %}
+
+    {% if pagination.has_next %}
+      <li>
+        <a href="javascript:;" onclick="pagination_ajax(this);" aria-label="Next" id="filter-timing"
+        sourceid="{{sid}}" timingid="{{timingid}}" page="{{pagination.next_num}}">
+          <span aria-hidden="true">&raquo;</span>
+        </a>
+      </li>
+    {% endif %}
+
+  </ul>
+
+{% endmacro %}

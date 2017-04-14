@@ -2,9 +2,7 @@ $(document).ready(function(){
 
     $('#select-baodientu-repository').change(function(){
         $('#select-tag option').remove();
-
-
-        $.ajax('/ajax/tag_get_by_source/' + this.value, {
+        $.ajax('/ajax/tag/get_by_source/' + this.value, {
               success: function(data) {
 
                 $.each(data, function(index, item){
@@ -20,4 +18,40 @@ $(document).ready(function(){
 
     }).change();
 
+    $('.lv-body').on('click', '#filter-timing', function(){
+        var sourceid = $(this).attr('sourceid');
+        var timingid = $(this).attr('timingid');
+        var page = $(this).attr('page');
+
+
+          $.ajax('/ajax/content/filter_by_ptiming/' + sourceid + '/' + timingid + '/' + page, {
+              success: function(data) {
+
+                $('.table-responsive').html(data);
+
+              },
+              error: function() {
+                 console.log('ERROR: GET CONTENT');
+              }
+           });
+    });
 });
+
+function pagination_ajax(obj){
+
+    var sourceid = $(obj).attr('sourceid');
+    var timingid = $(obj).attr('timingid');
+    var page = $(obj).attr('page');
+
+
+      $.ajax('/ajax/content/filter_by_ptiming/' + sourceid + '/' + timingid + '/' + page, {
+          success: function(data) {
+
+            $('.table-responsive').html(data);
+
+          },
+          error: function() {
+             console.log('ERROR: GET CONTENT');
+          }
+       });
+}

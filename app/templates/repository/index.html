@@ -27,13 +27,16 @@
                                             <div class="listview">
                                                 <div class="lv-body">
                                                     {%for timing in source.timings%}
-                                                        <a class="lv-item" href="">
+                                                        <a id="filter-timing" class="lv-item" target="_blank" sourceid="{{timing.source_id}}" timingid="{{timing._id}}"
+                                                           href="javascript:;" page="1">
                                                             <div class="media">
                                                                 <div class="pull-right">
                                                                     <span class="badge">{{timing.count}}</span>
                                                                 </div>
                                                                 <div class="media-body">
-                                                                    <div class="lv-title">{{ moment(timing.published_at).format('DD/MM/YYYY')}}</div>
+                                                                    <div class="lv-title">
+                                                                            {{ moment(timing.published_at).format('DD/MM/YYYY')}}
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </a>
@@ -94,99 +97,11 @@
                 </div>
                  <div class="row">
                      <div class="table-responsive">
-                            <table class="table table-hover">
-                                <thead>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>TIÊU ĐỀ</th>
-                                        <th>CHUYÊN MỤC</th>
-                                        <th>THỜI GIAN ĐĂNG TẢI</th>
-                                        <th>SỐ PHIÊN BẢN</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Alexandra</td>
-                                        <td>Christopher</td>
-                                        <td>@makinton</td>
-                                        <td>Ducky</td>
-                                    </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td>Madeleine</td>
-                                        <td>Hollaway</td>
-                                        <td>@hollway</td>
-                                        <td>Cheese</td>
-                                    </tr>
-                                    <tr>
-                                        <td>3</td>
-                                        <td>Sebastian</td>
-                                        <td>Johnston</td>
-                                        <td>@sebastian</td>
-                                        <td>Jaycee</td>
-                                    </tr>
-                                    <tr>
-                                        <td>4</td>
-                                        <td>Mitchell</td>
-                                        <td>Christin</td>
-                                        <td>@mitchell4u</td>
-                                        <td>AdskiDeAnus</td>
-                                    </tr>
-                                    <tr>
-                                        <td>5</td>
-                                        <td>Elizabeth</td>
-                                        <td>Belkitt</td>
-                                        <td>@belkitt</td>
-                                        <td>Goat</td>
-                                    </tr>
-                                    <tr>
-                                        <td>6</td>
-                                        <td>Benjamin</td>
-                                        <td>Parnell</td>
-                                        <td>@wayne234</td>
-                                        <td>Pokie</td>
-                                    </tr>
-                                    <tr>
-                                        <td>7</td>
-                                        <td>Katherine</td>
-                                        <td>Buckland</td>
-                                        <td>@anitabelle</td>
-                                        <td>Wokie</td>
-                                    </tr>
-                                    <tr>
-                                        <td>8</td>
-                                        <td>Nicholas</td>
-                                        <td>Walmart</td>
-                                        <td>@mwalmart</td>
-                                        <td>Spike</td>
-                                    </tr>
-                                    <tr>
-                                        <td>9</td>
-                                        <td>Nicholas</td>
-                                        <td>Walmart</td>
-                                        <td>@mwalmart</td>
-                                        <td>Spike</td>
-                                    </tr>
-                                    <tr>
-                                        <td>10</td>
-                                        <td>Nicholas</td>
-                                        <td>Walmart</td>
-                                        <td>@mwalmart</td>
-                                        <td>Spike</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                         <ul class="pagination pull-right">
-                                <li class="disabled"><a href="" aria-label="Previous"><i class="zmdi zmdi-chevron-left"></i></a></li>
-                                <li class="active"><a href="">1 <span class="sr-only">(current)</span></a></li>
-                                <li><a href="">2</a></li>
-                                <li><a href="">3</a></li>
-                                <li><a href="">4</a></li>
-                                <li><a href="">5</a></li>
-                                <li><a href="" aria-label="Next"><i class="zmdi zmdi-chevron-right"></i></a></li>
-                             </ul>
-                        </div>
+
+                         <!--
+                            CONTENTS FILTER HERE
+                         -->
+                     </div>
                  </div>
              </div>
         </div>

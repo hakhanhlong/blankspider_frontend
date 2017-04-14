@@ -12,6 +12,10 @@ class RequestURL:
         self.TAG_URL_LISTBYSOURCE = os.environ.get('TAG_URL_LISTBYSOURCE')
         #--------------------------------------------------------------------------------------------
 
+        #---------------------------- CONTENT -------------------------------------------------------
+        self.CONTENT_URL_FILTER_BY_TIMING = os.environ.get('CONTENT_URL_FILTER_BY_TIMING')
+        #--------------------------------------------------------------------------------------------
+
 
 
 

@@ -1,0 +1,36 @@
+{% extends "_layout.html"%}
+{% import "bootstrap/wtf.html" as wtf%}
+{% block title %}BLANKSPIDER - FRONTEND{% endblock %}
+{% block content%}
+
+ <ol class="breadcrumb">
+    <li><a href="/">HOME</a></li>
+    <li><a href="/" class="active">KHO NỘI DUNG</a></li>
+     <li><a href="/" class="active">CHI TIẾT NỘI DUNG</a></li>
+</ol>
+<div class="card">
+    <div class="card-body card-padding">
+         <div class="panel-group" role="tablist" aria-multiselectable="true">
+
+                {%for item in data%}
+                    <div class="panel panel-collapse">
+                        <div class="panel-heading" role="tab" id="headingOne">
+                            <h1 class="panel-title">
+                                <a style="font-size:24px;" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne" class="collapsed">
+                                    Phiên bản <span style="color:red;">{{item['key']}}</span>:{{item['value']['title']}}
+                                </a>
+                            </h1>
+                        </div>
+                        <div id="collapseOne" class="collapse" role="tabpanel" aria-labelledby="headingOne" style="height: 0px;" aria-expanded="false">
+                            <div class="panel-body">
+                                <p class="lead">{{item['value']['description']}}</p>
+                                <p>{{item['value']['content']|safe}}</p>
+                            </div>
+                        </div>
+                    </div>
+                {%endfor%}
+
+            </div>
+    </div>
+</div>
+{%endblock%}

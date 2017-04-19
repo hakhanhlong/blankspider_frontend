@@ -91,7 +91,7 @@ def create_app(config_name):
     app.register_blueprint(home_blueprint, url_prefix='/')
     app.register_blueprint(auth_blueprint, url_prefix='/auth')
     app.register_blueprint(source_blueprint, url_prefix='/source')
-    app.register_blueprint(repository_blueprint, url_prefix='/repository')
+    app.register_blueprint(repository_blueprint, url_prefix='/kho-noi-dung')
     app.register_blueprint(ajax_blueprint, url_prefix='/ajax')
 
     ############### end blueprint   ############################

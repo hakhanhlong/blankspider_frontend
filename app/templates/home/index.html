@@ -8,8 +8,8 @@
     </ol>
     <div class="card">
         <div class="card-header">
-            <h2>NGUON
-            <small>Danh sach nguon dang luu chieu</small></h2>
+            <h2>NGUỒN
+            <small>Danh sách nguồn đang lưu chiểu</small></h2>
         </div>
 
         <div class="card-body table-responsive">
@@ -17,7 +17,7 @@
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th>TEN NGUON</th>
+                        <th>TÊN NGUỒN</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -25,7 +25,7 @@
                         {%for source in sources%}
                             <tr>
                                 <td>{{loop.index}}</td>
-                                <td><a href="{{url_for('source.index_tshirt', sid=source.id, tagid='all')}}"><strong>{{source.name}}</strong></a></td>
+                                <td><a href="/repository"><strong>{{source.name}}</strong></a></td>
                             </tr>
                        {%endfor%}
                     {%endif%}

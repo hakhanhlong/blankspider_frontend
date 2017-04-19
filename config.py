@@ -20,7 +20,8 @@ class Development(Config):
     MONGO_DATABASE_BLANKSPIDER_PORT = os.environ.get('DEV_DATABASE_PORT') or 27017
     MONGO_DATABASE_BLANKSPIDER_NAME = os.environ.get('DEV_DATABASE_NAME') or 'DEV_BLANKSPIDER'
 
-    MONGO_DATABASE_ARCHIVIED_SERVER = os.environ.get('DEV_DATABASE_SERVER') or 'localhost'
+    #MONGO_DATABASE_ARCHIVIED_SERVER = os.environ.get('DEV_DATABASE_SERVER') or 'localhost'
+    MONGO_DATABASE_ARCHIVIED_SERVER = os.environ.get('DEV_DATABASE_SERVER') or '118.107.88.35'
     MONGO_DATABASE_ARCHIVIED_PORT = os.environ.get('DEV_DATABASE_PORT') or 27017
     MONGO_DATABASE_ARCHIVIED_NAME = os.environ.get('DEV_DATABASE_NAME') or 'blankspider_content_archived'
     #MONGO_DATABASE_ARCHIVIED_NAME = os.environ.get('DEV_DATABASE_NAME') or 'blankspider_content_tshirt'

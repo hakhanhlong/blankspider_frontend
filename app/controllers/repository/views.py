@@ -35,3 +35,15 @@ def index():
 
     # ------------------------------------------------------------------------------------------------------------------
     return render_template('repository/index.html', sources = sources)
+
+@repository.route('/chi-tiet/<cid>', methods=['GET'])
+def detail(cid):
+    cont = content_impl.get_byid(cid)
+    #n_dict = json.loads(cont.data)
+    data_master = []
+    for item in cont.data:
+        for k, v in item.items():
+            data_master.append({'key':k, 'value': json.loads(v)})
+    #cont.data = None
+
+    return render_template('repository/detail.html', data=data_master)

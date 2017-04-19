@@ -17,7 +17,7 @@
                     <td>{{loop.index}}</td>
                     <td>
                         <strong>
-                            <a href="#">
+                            <a href="{{url_for('repository.detail', cid=item._id)}}">
                                 {{item['title']}}
                             </a>
                         </strong>

@@ -36,7 +36,7 @@ def index():
     # ------------------------------------------------------------------------------------------------------------------
     return render_template('repository/index.html', sources = sources)
 
-@repository.route('/chi-tiet/<cid>', methods=['GET'])
+@repository.route('/detail/<cid>', methods=['GET'])
 def detail(cid):
     cont = content_impl.get_byid(cid)
     #n_dict = json.loads(cont.data)

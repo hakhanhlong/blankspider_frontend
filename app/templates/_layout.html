@@ -295,8 +295,8 @@
 
             <nav class="ha-menu">
                 <ul>
-                    <li class="active waves-effect"><a href="/">Home</a></li>
-                    <li class="waves-effect"><a href="/repository">Kho nội dung</a></li>
+                    <li class="{%if request.path==url_for('home.index')%}active{%endif%} waves-effect"><a href="/">Home</a></li>
+                    <li class="{%if request.path==url_for('repository.index')%}active{%endif%} waves-effect"><a href="/repository">Kho nội dung</a></li>
 
                 </ul>
             </nav>

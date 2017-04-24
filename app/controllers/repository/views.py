@@ -46,4 +46,15 @@ def detail(cid):
             data_master.append({'key':k, 'value': json.loads(v)})
     #cont.data = None
 
-    return render_template('repository/detail.html', data=data_master)
+    return render_template('repository/detail.html', data=data_master, link_href = cont.href, contentid=cid)
+
+@repository.route('/detail-html/<cid>/<idx>', methods=['GET'])
+def detail_html(cid, idx):
+    cont = content_impl.get_byid(cid)
+    #n_dict = json.loads(cont.data)
+    data_master = []
+    for k, v in cont.data[int(idx)].items():
+        data_master.append({'key':k, 'value': json.loads(v)})
+    #cont.data = None
+
+    return render_template('repository/detail_html.html', data=data_master)

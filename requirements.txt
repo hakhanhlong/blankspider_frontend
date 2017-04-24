@@ -10,3 +10,4 @@ Werkzeug
 requests
 python-dotenv
 flask-restful
+flask_cors

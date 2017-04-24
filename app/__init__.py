@@ -6,6 +6,7 @@ from config import config
 from flask_debugtoolbar import DebugToolbarExtension
 
 from flask_moment import Moment
+from flask_cors import CORS
 
 bootstrap = Bootstrap()
 db = MongoEngine()
@@ -18,6 +19,7 @@ login_manager = LoginManager()
 
 def create_app(config_name):
     app = Flask(__name__, template_folder='templates')
+    CORS(app)
     app.config.from_object(config[config_name])
 
     moment = Moment(app)

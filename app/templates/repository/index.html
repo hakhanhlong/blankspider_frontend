@@ -15,14 +15,14 @@
                  <div class="panel-group" role="tablist" aria-multiselectable="true">
                         {% for source in sources%}
                                 <div class="panel panel-collapse">
-                                    <div class="panel-heading active" role="tab" id="headingOne">
+                                    <div class="panel-heading" role="tab" id="heading{{loop.index}}">
                                         <h4 class="panel-title">
                                             <a data-toggle="collapse" data-parent="#accordion" href="#collapse-{{loop.index}}" aria-controls="collapse-{{loop.index}}">
                                                 {{source.name}}
                                             </a>
                                         </h4>
                                     </div>
-                                    <div id="collapse-{{loop.index}}" class="collapse in" role="tabpanel" aria-labelledby="headingOne">
+                                    <div id="collapse-{{loop.index}}" class="collapse in" role="tabpanel" aria-labelledby="heading{{loop.index}}">
                                         <div class="panel-body">
                                             <div class="listview">
                                                 <div class="lv-body">

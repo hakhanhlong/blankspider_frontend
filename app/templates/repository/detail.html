@@ -38,7 +38,8 @@
                         <div class="modal-dialog modal-lg" style="width:1024px;">
                             <div class="modal-content">
                                 <div class="modal-body">
-                                    <iframe src="{{url_for('repository.detail_html', cid=contentid, idx=loop.index-1)}}" frameborder="0" scrolling="no"
+                                    <iframe src="{{url_for('repository.detail_html', cid=contentid, idx=loop.index-1)}}"
+                                            frameborder="0" scrolling="no"
                                             style="width:1024px;" onload="resizeIframe(this);">
                                     </iframe>
                                 </div>

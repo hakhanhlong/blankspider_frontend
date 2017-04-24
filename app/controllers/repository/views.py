@@ -57,4 +57,5 @@ def detail_html(cid, idx):
         data_master.append({'key':k, 'value': json.loads(v)})
     #cont.data = None
 
-    return render_template('repository/detail_html.html', data=data_master)
+    #return data_master[0]['value']['html_data'].replace("document.domain", "")
+    return render_template('repository/detail_html.html', data=data_master[0]['value']['html_data'].replace("document.domain", ""))

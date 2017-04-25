@@ -58,7 +58,7 @@ function pagination_ajax(obj){
     var timingid = $(obj).attr('timingid');
     var page = $(obj).attr('page');
 
-
+        $('.table-responsive').html('Xin đợi trong giây lát ...');
       $.ajax('/ajax/content/filter_by_ptiming/' + sourceid + '/' + timingid + '/' + page, {
           success: function(data) {
 
@@ -76,7 +76,7 @@ function pagination_ajax_content_default(obj){
 
     var page = $(obj).attr('page');
 
-
+    $('.table-responsive').html('Xin đợi trong giây lát ...');
       $.ajax('/ajax/content/list_by_default/' + page, {
           success: function(data) {
 

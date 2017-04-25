@@ -14,3 +14,8 @@ class ContentService:
                                       'pageindex':pageindex, 'pagesize':pagesize}
 
         return self.requestHelpers.post_json().json()
+
+    def list_by_default(self, pageindex=1, pagesize=20):
+        self.requestHelpers.url = self.request_URL.CONTENT_URL_LIST_BY_DEFAULT
+        self.requestHelpers.params = {'pageindex':pageindex, 'pagesize':pagesize}
+        return self.requestHelpers.post_json().json()

@@ -17,6 +17,8 @@ class RequestURL:
         #---------------------------- CONTENT -------------------------------------------------------
         #self.CONTENT_URL_FILTER_BY_TIMING = os.environ.get('CONTENT_URL_FILTER_BY_TIMING')
         self.CONTENT_URL_FILTER_BY_TIMING = 'http://118.107.88.25:8096/api/v1/content/filter_by_timing'
+
+        self.CONTENT_URL_LIST_BY_DEFAULT = 'http://118.107.88.25:8096/api/v1/content/listbydefault'
         #--------------------------------------------------------------------------------------------
 
 

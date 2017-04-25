@@ -538,8 +538,14 @@
 
 
         <script src="{{url_for('static', filename='scripts/demo.js')}}"></script>
-    <script src="{{url_for('static', filename='scripts/frontend.js')}}"></script>
+        <script src="{{url_for('static', filename='scripts/frontend.js')}}"></script>
 
+        {% block javascript %}
+
+
+
+
+        {% endblock %}
 
     </body>
   </html>

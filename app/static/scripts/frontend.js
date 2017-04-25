@@ -35,7 +35,22 @@ $(document).ready(function(){
               }
            });
     });
+
 });
+
+function init_repository(){
+
+      $.ajax('/ajax/content/list_by_default', {
+          success: function(data) {
+
+            $('.table-responsive').html(data);
+
+          },
+          error: function() {
+             console.log('ERROR: GET CONTENT');
+          }
+       });
+}
 
 function pagination_ajax(obj){
 
@@ -45,6 +60,24 @@ function pagination_ajax(obj){
 
 
       $.ajax('/ajax/content/filter_by_ptiming/' + sourceid + '/' + timingid + '/' + page, {
+          success: function(data) {
+
+            $('.table-responsive').html(data);
+
+          },
+          error: function() {
+             console.log('ERROR: GET CONTENT');
+          }
+       });
+}
+
+function pagination_ajax_content_default(obj){
+
+
+    var page = $(obj).attr('page');
+
+
+      $.ajax('/ajax/content/list_by_default/' + page, {
           success: function(data) {
 
             $('.table-responsive').html(data);

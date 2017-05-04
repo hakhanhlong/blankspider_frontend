@@ -25,6 +25,13 @@ class RequestURL:
 
         #--------------------------------------------------------------------------------------------
 
+        #--------------------------------------------------------------------------------------------
+
+
+        self.CONTENT_URL_SEARCH = 'http://118.107.88.35:8983/solr/lcbc_search/select?fl=title,published_at,tag_name,version_count,published_time,id&fq=source_id:%s&fq=tag_id:%s&fq=published_at:%s&indent=on&q=%s&rows=%s&sort=published_at desc&start=%s&wt=json'
+
+        #--------------------------------------------------------------------------------------------
+
 
 
 

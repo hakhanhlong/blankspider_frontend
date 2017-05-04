@@ -1,0 +1,35 @@
+{% extends "_layoutblank.html"%}
+{% block content%}
+
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>TIÊU ĐỀ</th>
+                <th>CHUYÊN MỤC</th>
+                <th>THỜI GIAN ĐĂNG TẢI</th>
+                <th>SỐ PHIÊN BẢN</th>
+            </tr>
+        </thead>
+        <tbody>
+            {%for item in contents%}
+                <tr>
+                    <td>{{loop.index}}</td>
+                    <td>
+                        <strong>
+                            <a href="{{url_for('repository.detail', cid=item.id)}}">
+                                {{item['title']}}
+                            </a>
+                        </strong>
+                    </td>
+                    <td>{{item['tag_name']}}</td>
+                    <td>{{item['published_time']}}</td>
+                    <td>{{item['version_count']}}</td>
+                </tr>
+            {%endfor%}
+        </tbody>
+    </table>
+
+    {{ pagination_ajax_search_content(pagination) }}
+
+{% endblock%}

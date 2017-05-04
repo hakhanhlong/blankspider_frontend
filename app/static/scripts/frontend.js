@@ -36,6 +36,38 @@ $(document).ready(function(){
            });
     });
 
+    $('#btn-search').click(function(){
+        var source = $('#select-baodientu-repository').val();
+        var tag = $('#select-tag').val();
+        var kw = $('#txt-search').val();
+        var published = $('#txt-published-date').val();
+
+        if(!kw)
+        {
+            kw = "*";
+        }
+
+        if(!published)
+        {
+            published = "*";
+        }
+
+        var newchar = '-'
+        published = published.split('/').join(newchar);
+
+        var url = '/ajax/content/search/' + source + '/' + tag + '/' + published + '/' + kw + '/1';
+         $.ajax(encodeURI(url), {
+          success: function(data) {
+
+            $('.table-responsive').html(data);
+
+          },
+          error: function() {
+             console.log('ERROR: GET CONTENT');
+          }
+       });
+    });
+
 });
 
 function init_repository(){
@@ -78,6 +110,39 @@ function pagination_ajax_content_default(obj){
 
     $('.table-responsive').html('Xin đợi trong giây lát ...');
       $.ajax('/ajax/content/list_by_default/' + page, {
+          success: function(data) {
+
+            $('.table-responsive').html(data);
+
+          },
+          error: function() {
+             console.log('ERROR: GET CONTENT');
+          }
+       });
+}
+
+function pagination_ajax_search_content(obj){
+        var page = $(obj).attr('page');
+        var source = $('#select-baodientu-repository').val();
+        var tag = $('#select-tag').val();
+        var kw = $('#txt-search').val();
+        var published = $('#txt-published-date').val();
+
+        if(!kw)
+        {
+            kw = "*";
+        }
+
+        if(!published)
+        {
+            published = "*";
+        }
+
+        var newchar = '-'
+        published = published.split('/').join(newchar);
+
+        var url = '/ajax/content/search/' + source + '/' + tag + '/' + published + '/' + kw + '/' + page;
+         $.ajax(encodeURI(url), {
           success: function(data) {
 
             $('.table-responsive').html(data);

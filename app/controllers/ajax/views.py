@@ -40,9 +40,31 @@ def content_list_by_default(page=0):
     content_service = ContentService()
     content = content_service.list_by_default(int(page), 50)
     count_items = content['response']['numFound']
-    pagination = Pagination(int(page), 20, count_items)
+    pagination = Pagination(int(page), 50, count_items)
 
     data_master = []
     for item in content['response']['docs']:
         data_master.append(item)
     return render_template('ajax/list_by_default.html', contents=data_master, pagination = pagination)
+
+
+@ajax.route('/content/search/', methods=['GET'])
+@ajax.route('/content/search/<source>/<tag>/<published>/<kw>/<page>', methods=['GET'])
+def content_search(source='', tag='', published='', kw='', page=0):
+    content_service = ContentService()
+
+    if published is not '*':
+        published = published.split('-')[::-1]
+        published = '-'.join(published)
+
+    content = content_service.search(source, tag, published, kw, int(page), 50)
+    count_items = content['response']['numFound']
+    pagination = Pagination(int(page), 50, count_items)
+
+    data_master = []
+    for item in content['response']['docs']:
+        data_master.append(item)
+    return render_template('ajax/search.html', contents=data_master, pagination = pagination)
+
+
+

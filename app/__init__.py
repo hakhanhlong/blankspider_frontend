@@ -65,7 +65,8 @@ def create_app(config_name):
     db.init_app(app)
 
     # Specify the debug panels you want
-    app.config['DEBUG_TB_PANELS'] = [
+    '''app.config['DEBUG_TB_PANELS'] = [
+
         'flask_debugtoolbar.panels.versions.VersionDebugPanel',
         'flask_debugtoolbar.panels.timer.TimerDebugPanel',
         'flask_debugtoolbar.panels.headers.HeaderDebugPanel',
@@ -78,8 +79,7 @@ def create_app(config_name):
         #'flask.ext.mongoengine.panels.MongoDebugPanel',
     ]
     app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
-
-    toolbar = DebugToolbarExtension(app)
+    toolbar = DebugToolbarExtension(app)'''
 
     ############### begin blueprint ############################
     from app.controllers.auth import auth as auth_blueprint

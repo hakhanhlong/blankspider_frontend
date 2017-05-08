@@ -26,21 +26,24 @@
                                         <div class="panel-body">
                                             <div class="listview">
                                                 <div class="lv-body">
-                                                    {%for timing in source.timings%}
-                                                        <a id="filter-timing" class="lv-item" target="_blank" sourceid="{{timing.source_id}}" timingid="{{timing._id}}"
-                                                           href="javascript:;" page="1">
-                                                            <div class="media">
-                                                                <div class="pull-right">
-                                                                    <span class="badge">{{timing.count}}</span>
-                                                                </div>
-                                                                <div class="media-body">
-                                                                    <div class="lv-title">
-                                                                            {{ moment(timing.published_at).format('DD/MM/YYYY')}}
+                                                    {%if source.timings%}
+                                                        {%for timing in source.timings%}
+                                                            <a id="filter-timing" class="lv-item" target="_blank" sourceid="{{timing.source_id}}" timingid="{{timing._id}}"
+                                                               href="javascript:;" page="1">
+                                                                <div class="media">
+                                                                    <div class="pull-right">
+                                                                        <span class="badge">{{timing.count}}</span>
+                                                                    </div>
+                                                                    <div class="media-body">
+                                                                        <div class="lv-title">
+                                                                                {{ moment(timing.published_at).format('DD/MM/YYYY')}}
+                                                                        </div>
                                                                     </div>
                                                                 </div>
-                                                            </div>
-                                                        </a>
-                                                    {%endfor%}
+                                                            </a>
+                                                        {%endfor%}
+                                                    {%endif%}
+
                                                 </div>
                                             </div>
                                         </div>

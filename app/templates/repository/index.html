@@ -28,6 +28,7 @@
                                                 <div class="lv-body">
                                                     {%if source.timings%}
                                                         {%for timing in source.timings%}
+                                                            {%if timing.published_at%}
                                                             <a id="filter-timing" class="lv-item" target="_blank" sourceid="{{timing.source_id}}" timingid="{{timing._id}}"
                                                                href="javascript:;" page="1">
                                                                 <div class="media">
@@ -41,6 +42,7 @@
                                                                     </div>
                                                                 </div>
                                                             </a>
+                                                            {%endif%}
                                                         {%endfor%}
                                                     {%endif%}
 

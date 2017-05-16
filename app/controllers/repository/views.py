@@ -28,11 +28,14 @@ def index():
             _request.params = {'source_id': str(x.id), 'limit': 10}
             timings = _request.post_json().json()
             for timing in timings:
-                timing['published_at'] = datetime.strptime(timing['published_at'].replace('T00:00:00.000Z',''), '%Y-%m-%d')
+                try:
+                    timing['published_at'] = datetime.strptime(timing['published_at'].replace('T00:00:00.000Z', ''),'%Y-%m-%d')
+                except:
+                    break
             x.timings = timings
         # ------------------------------------------------------------------------------------------------------------------
     except Exception as ex:
-        flash('ERROR:' + ex.message, 'danger')
+        flash('ERROR:' + ex, 'danger')
 
 
     return render_template('repository/index.html', sources = sources)

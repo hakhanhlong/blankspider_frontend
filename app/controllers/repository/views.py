@@ -6,6 +6,7 @@ from . import repository
 from core.dataimpl import tag_impl
 from core.dataimpl import content_impl
 from core.dataimpl import source_impl
+from core.dataimpl import configuration_impl
 import json
 
 from flask_moment import Moment
@@ -14,6 +15,11 @@ from datetime import datetime
 
 from core.api.request_helpers import RequestHelpers
 from core.api.request_url import RequestURL
+
+from lxml import html, etree
+from io import StringIO, BytesIO
+
+
 
 @repository.route('/', methods=['GET'])
 def index():
@@ -43,15 +49,50 @@ def index():
 @repository.route('/detail/<cid>', methods=['GET'])
 def detail(cid):
     cont = content_impl.get_byid(cid)
+    configuration = configuration_impl.get_config('SOURCE', cont.source_id)
     #n_dict = json.loads(cont.data)
     data_master = []
+
+
+
 
     try:
         for item in cont.data:
             for k, v in item.items():
+
+                _val = json.loads(v)
+                content = _val['content']
+                try:
+                    if configuration['config']['PARSERVIDEOS']:
+                        configs = configuration['config']['PARSERVIDEOS']['data']
+                        array_player = []
+                        array_player_id = []
+                        htmlparser = etree.HTMLParser()
+                        tree = etree.parse(StringIO(content), htmlparser)
+
+                        attribute = configs['attribute']
+                        attribute_pattern_value = attribute['step']['1']['field_value']
+
+                        pattern = configs['pattern']
+                        pattern_value = pattern['step']['1']['field_value']
+                        players = tree.xpath(pattern_value)
+                        for x in players:
+                            #array_player_id.append()
+                            array_player_id.append(dict(x.attrib)[attribute_pattern_value])
+                            array_player.append(str(etree.tostring(x, pretty_print=True)))
+
+
+
+
+
+                except:
+                    pass
+
+
                 data_master.append({'key': k, 'value': json.loads(v)})
     except Exception as ex:
         flash('ERROR:' + ex.message, 'danger')
+
 
 
     return render_template('repository/detail.html', data=data_master, link_href = cont.href, contentid=cid)

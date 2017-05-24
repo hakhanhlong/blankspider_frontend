@@ -97,7 +97,7 @@ def detail(cid):
                             x.append(etree.HTML(embeded))
 
 
-                        content = etree.tostring(tree, method='html')
+                        content = etree.tostring(tree, pretty_print=True, method='html')
                         _val['content'] = content
 
 

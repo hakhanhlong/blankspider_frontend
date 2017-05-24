@@ -66,30 +66,48 @@ def detail(cid):
                     if configuration['config']['PARSERVIDEOS']:
                         configs = configuration['config']['PARSERVIDEOS']['data']
                         array_player = []
+                        array_embeded_player = []
                         array_player_id = []
-                        htmlparser = etree.HTMLParser()
-                        tree = etree.parse(StringIO(content), htmlparser)
+                        htmlparser = etree.HTMLParser(recover=True)
+                        #tree = etree.parse(StringIO(content), htmlparser)
+                        tree =  etree.fromstring(str(content), htmlparser)
+
 
                         attribute = configs['attribute']
                         attribute_pattern_value = attribute['step']['1']['field_value']
 
                         pattern = configs['pattern']
                         pattern_value = pattern['step']['1']['field_value']
+
                         players = tree.xpath(pattern_value)
+                        #players = tree.find(pattern_value)
+                        #players = tree.find('.//div')
+
+
+
+                        embeded_player = configs['format_player']['step']['1']['field_value']
                         for x in players:
                             #array_player_id.append()
-                            array_player_id.append(dict(x.attrib)[attribute_pattern_value])
+                            array_player_id.append(dict(x.attrib)[attribute_pattern_value]) # get value by attribute
                             array_player.append(str(etree.tostring(x, pretty_print=True)))
 
+                            embeded = embeded_player.replace("{1}", dict(x.attrib)[attribute_pattern_value])
+                            array_embeded_player.append(embeded)
+
+                            x.append(etree.HTML(embeded))
+
+
+                        content = etree.tostring(tree, method='html')
+                        _val['content'] = content
 
 
 
-
-                except:
+                except Exception as error:
                     pass
 
 
-                data_master.append({'key': k, 'value': json.loads(v)})
+                #data_master.append({'key': k, 'value': json.loads(v)})
+                data_master.append({'key': k, 'value': _val})
     except Exception as ex:
         flash('ERROR:' + ex.message, 'danger')
 

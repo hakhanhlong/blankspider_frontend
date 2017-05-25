@@ -1,0 +1,356 @@
+@charset "utf-8";
+/* CSS Document */
+.label-detail-text-style {
+	font-family: 'Segoe UI';
+	color: #ffffff;
+	font-size: 14px;
+	font-weight: 400;
+}
+.menu-tree-link {
+	font-family: 'Segoe UI';
+	color: #333333;
+	font-size: 14px;
+	font-weight: 600;
+}
+.tree-toggler {
+	font-family: UTMAvoBold;
+	color: #333333;
+	font-size: 14px;
+	font-weight: bold;
+}
+.midle-content-navigationbar a {
+	font-family: 'Segoe UI';
+	color: #333333;
+	font-size: 14px;
+	font-weight: 400;
+}
+label img {
+	margin-right: 5px;
+}
+a img {
+	margin-right: 5px;
+	margin-left: 5px;
+}
+
+/*Safari, Google Chrome, Opera 15+*/
+::-webkit-input-placeholder {
+ font-family: 'Segoe UI';
+ color: #333333;
+ font-size: 11px;
+ font-style: italic;
+font-weight: lighter;
+}
+/*firefox*/
+:-moz-placeholder {
+ font-family: 'Segoe UI';
+ color: #333333;
+ font-size: 12px;
+ font-style: italic;
+}
+
+/*Mozilla Firefox 19+*/
+::-moz-placeholder {
+ font-family: 'Segoe UI';
+ color: #333333;
+ font-size: 12px;
+ font-style: italic;
+}
+
+/*Internet Explorer 10 and 11*/
+:-ms-input-placeholder {
+ font-family: 'Segoe UI';
+ color: #333333;
+ font-size: 12px;
+ font-style: italic;
+}
+
+/*::-webkit-datetime-edit { padding: 1em; }*/
+/*::-webkit-datetime-edit-fields-wrapper { background: silver; }*/
+::-webkit-datetime-edit-text {
+color: red;
+padding: 0 0.3em;
+}
+::-webkit-datetime-edit-month-field {
+color: blue;
+}
+::-webkit-datetime-edit-day-field {
+color: green;
+}
+::-webkit-datetime-edit-year-field {
+color: purple;
+}
+::-webkit-inner-spin-button {
+ content: "";
+ background: url(../images/datetimepickericon.png) no-repeat center center;
+}
+::-webkit-calendar-picker-indicator {
+background: orange;
+}
+.custom-select {
+	position: relative;
+	display: inline-block;
+}
+.label-text-style {
+	font-family: 'Segoe UI';
+	color: #ffffff;
+	font-size: 14px;
+	font-weight: 700;
+}
+.input-text-style {
+	font-family: 'Segoe UI';
+	color: #333333;
+	font-size: 12px;
+	font-weight: 700;
+}
+.horizontal-menu-border-style {
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	border: 1px solid #f1f1f1;
+}
+.custom-select select {
+	display: inline-block;
+	padding: 4px 3px 3px 5px;
+	margin: 0;
+	outline: none; /* remove focus ring from Webkit */
+	line-height: 1.2;
+	-webkit-appearance: none; /* remove the strong OSX influence from Webkit */
+	font-family: 'Segoe UI';
+	color: #333333;
+	font-size: 12px;
+	font-weight: 700;
+}
+.horizontal-menubar-detail-column a:hover{
+	color: black;
+}
+
+/* for Webkit's CSS-only solution */
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+.custom-select select {
+	padding-right: 30px;
+}
+}
+/* Since we removed the default focus styles, we have to add our own */
+.custom-select select:focus {
+	-webkit-box-shadow: 0 0 3px 1px #f1f1f1;
+	-moz-box-shadow: 0 0 3px 1px #f1f1f1;
+	box-shadow: 0 0 3px 1px #f1f1f1;
+}
+/* Select arrow styling */
+.custom-select:after {
+	content: "";
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	padding: 0 7px 0 7px;
+	margin-right: 5px;
+	background: url(../images/iconmonstr-triangle-3-[Converted].png) no-repeat;
+	background-position: center center;
+	color: black;
+	pointer-events: none;
+	border-left: 1px solid #7d7d7d;
+	-webkit-border-radius: 0 6px 6px 0;
+	-moz-border-radius: 0 6px 6px 0;
+	border-radius: 0 6px 6px 0;
+}
+.no-pointer-events .custom-select:after {
+	content: none;
+}
+.calendar {
+	position: relative;
+	width: 20%;
+	margin-left: 5%;
+}
+.calendar input {
+	display: inline-block;
+	box-sizing: border-box;
+	width: 120%;
+}
+.calendar img {
+	position: absolute;
+	top: 0px;
+	right: -23px;
+	bottom: 0;
+	height: 100%;
+	width: auto;
+}
+#navigationbar {
+	background: url(../images/listing2504.png);
+	height: 110px;
+	background-size: cover;                      /* <------ */
+	background-repeat: no-repeat;
+	background-position: center center;
+	border: none;
+}
+#navigation-container {
+	padding-top: 70px;
+}
+#defaultNavbar1 {
+	float: right;
+}
+#link_kho_nd, #link_canh_bao {
+	border-right: solid;
+	border-right-color: #ffffff;
+}
+#link_kho_nd, #link_canh_bao, #link_bao_cao {
+	height: 14px;
+	display: block;
+	vertical-align: text-top;
+	padding-bottom: 20px;
+}
+#horizontal-menubar {
+	height: 67px;
+	margin-top: -21px;
+	width: 100%;
+	background: url(../images/horizontalmenubackground.png) no-repeat;
+	background-size: cover;
+	background-position: center center;
+	overflow: hidden;
+}
+#admin-area {
+	float: left;
+	width: 20.1%;
+	height: inherit;
+	background: url(../images/adminbackground.png) no-repeat;
+	background-size: cover;
+	background-position: center center;
+	min-width: 80px;
+	overflow: hidden;
+	align-items: center;
+	vertical-align: middle;
+}
+#avatar_container {
+	width: 100%;
+	height: 100%;
+	vertical-align: middle;
+	align-self: center;
+	margin-top: 15px;
+}
+#avatar_container a {
+	align-self: center;
+	vertical-align: middle;
+	width: 89px;
+	height: 10px;
+	font-family: 'Segoe UI';
+	color: #ffffff;
+	font-size: 14px;
+	font-weight: 700;
+	line-height: 0;
+}
+#horizontal-menubar table {
+	float: right;
+	width: auto;
+	height: 100%;
+	margin-left: 40px;
+}
+#content {
+	width: 100%;
+	height: auto;
+}
+#left-menu-tree {
+	padding-left: 0px;
+}
+#left-menu-tree .container-fluid {
+	width: 19%;
+	background-color: #f1f1f1;
+	float: left;
+	margin-left: -3px;
+}
+#left-menu-tree-layer1 {
+	width: 100%;
+	margin-top: 20px;
+}
+#left-menu-tree-layer1 div {
+	overflow-y: hidden;
+	overflow-x: auto;
+	height: 100%;
+}
+#tong-so {
+	float: left;
+}
+#pager {
+	float: right;
+}
+.footer {
+	text-align: right;
+	vertical-align: middle;
+	line-height: 40px;
+	width: 100%;
+	height: 39px;
+	border: solid;
+	float: left;
+	margin-left: -5px;
+	background: #7d7d7d;
+	font-family: 'SegoeUI';
+	color: #ffffff;
+	font-size: 14px;
+	font-weight: 400;
+}
+.table-first-row {
+	height: 19px;
+	width: 100%;
+	margin-top: 5px;
+	margin-bottom: 0px;
+}
+.midle-content {
+	float: left;
+	margin-top: 20px;
+	margin-left: 23px;
+	margin-right: 10px;
+	width: 77%;
+	height: 100%;
+}
+.boder-right {
+	border-right: 1px solid #333333;
+}
+.horizontal-menubar-row1 {
+	width: 80%;
+	display: inline-block;
+	margin-top: 5px;
+	float: left;
+}
+.horizontal-menubar-column1 {
+	float: left;
+	display: inline;
+	margin-left: 5%;
+}
+.horizontal-menubar-column2 {
+	float: left;
+	display: inline;
+	margin-left: 5%;
+}
+.horizontal-menubar-column3 {
+	float: left;
+	display: inline;
+	margin-left: 10%;
+}
+.horizontal-menubar-row2 {
+	width: 80%;
+	float: left;
+	display: inline-block;
+	margin-top: -10px;
+}
+.horizontal-menubar-detail-row1 {
+	width: 80%;
+	display: inline-block;
+	margin-top: 5px;
+}
+.horizontal-menubar-detail-column {
+	float: left;
+	display: inline;
+	margin-left: 5%;
+}
+html {
+	font-family: sans-serif;
+	-webkit-text-size-adjust: 100%;
+	-ms-text-size-adjust: 100%;
+}
+body {
+	margin: 0 auto;
+	width: 100%;
+	background: url(../images/midlecontent-background.png) no-repeat;
+	background-position: center center;
+	background-size: cover;
+	min-width: 1058px;
+}

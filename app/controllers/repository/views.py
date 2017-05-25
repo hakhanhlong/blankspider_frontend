@@ -50,9 +50,9 @@ def get_data_from_service_filter_by_timing(sid, ptimingid, page=0):
 @repository.route('/filter-by-timing/<sid>/<ptimingid>/<page>', methods=['GET'])
 def content_filter_by_timing(sid, ptimingid, page=0):
     aDict = get_data_from_service_filter_by_timing(sid, ptimingid, page)
-    print("items = "+str(len(aDict['items'])))
-    return render_template('repository/datatable-middle-content.html', contents=aDict['items'], pagination=aDict['pagingnation'],
-                           params={'sid': sid, 'ptimingid': ptimingid})
+    print("items = " + str(len(aDict['items'])))
+    return render_template('/data_table.html', contents=aDict['items'], pagination=aDict['pagingnation'],
+                           params={'sid': sid, 'ptimingid': ptimingid, 'pageid': 1})
 
 
 @repository.route('/', methods=['GET'])
@@ -79,9 +79,12 @@ def index(page=0):
         aDict = get_data_from_service_filter_by_default(page)
     except Exception as ex:
         flash('ERROR:' + ex, 'danger')
-
-    return render_template('repository/index2.html', sources=sources, contents=aDict['items'],
-                           pagination=aDict['pagingnation'])
+    if page == 0:
+        return render_template('repository/index2.html', sources=sources, contents=aDict['items'],
+                               pagination=aDict['pagingnation'], params={'pageid': 0})
+    else:
+        return render_template('/data_table.html', sources=sources, contents=aDict['items'],
+                               pagination=aDict['pagingnation'], params={'pageid': 0})
 
 
 @repository.route('/detail/<cid>', methods=['GET'])

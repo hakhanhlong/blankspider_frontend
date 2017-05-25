@@ -136,6 +136,24 @@ function pagination_ajax_content_default(obj) {
     });
 }
 
+function pagination_ajax_content_default_v2(obj) {
+
+
+    var page = $(obj).attr('page');
+
+    $('.table-responsive').html('Xin đợi trong giây lát ...');
+    $.ajax('/repository/' + page, {
+        success: function (data) {
+
+            $('.midle-content').html(data);
+
+        },
+        error: function () {
+            console.log('ERROR: GET CONTENT');
+        }
+    });
+}
+
 function pagination_ajax_search_content(obj) {
     var page = $(obj).attr('page');
     var source = $('#select-baodientu-repository').val();

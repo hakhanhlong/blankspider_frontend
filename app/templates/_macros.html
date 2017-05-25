@@ -50,7 +50,7 @@
 
     {% if pagination.has_prev %}
       <li>
-        <a href="javascript:;" onclick="pagination_ajax_content_default(this);" aria-label="Previous" id="filter-timing"
+        <a href="javascript:;" onclick="pagination_ajax_content_default_v2(this);" aria-label="Previous" id="filter-timing"
          page="{{pagination.prev_num}}">
           <span aria-hidden="true">&laquo;</span>
         </a>
@@ -61,12 +61,12 @@
       {% if p %}
         {% if p != pagination.page %}
           <li>
-            <a href="javascript:;" onclick="pagination_ajax_content_default(this);" id="filter-timing"
+            <a href="javascript:;" onclick="pagination_ajax_content_default_v2(this);" id="filter-timing"
              page="{{p}}">{{ p }}</a>
           </li>
         {% else %}
           <li class="active">
-            <a href="javascript:;" onclick="pagination_ajax_content_default(this);" id="filter-timing"
+            <a href="javascript:;" onclick="pagination_ajax_content_default_v2(this);" id="filter-timing"
              page="{{p}}">{{ p }}</a>
           </li>
         {% endif %}
@@ -79,7 +79,7 @@
 
     {% if pagination.has_next %}
       <li>
-        <a href="javascript:;" onclick="pagination_ajax_content_default(this);" aria-label="Next" id="filter-timing"
+        <a href="javascript:;" onclick="pagination_ajax_content_default_v2(this);" aria-label="Next" id="filter-timing"
          page="{{pagination.next_num}}">
           <span aria-hidden="true">&raquo;</span>
         </a>

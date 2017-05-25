@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Lưu chiểu báo chí - listing</title>
+
+    <!-- Bootstrap -->
+    <link href="" rel="stylesheet">
+    <link href="{{url_for('static', filename='css/bootstrap.css')}}" rel="stylesheet">
+    <link href="{{url_for('static', filename='css/datepicker.css')}}" rel="stylesheet">
+    <link href="{{url_for('static', filename='css/luuchieubaochi.css')}}" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+<nav class="navbar navbar-default" id="navigationbar">
+    <div id="navigation-container" class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button id="btn_collapsed" type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#defaultNavbar1"><span class="sr-only">Toggle navigation</span><span
+                    class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="defaultNavbar1">
+            <ul class="nav navbar-nav navbar-right">
+                <li class="text-center" id="link_kho_nd"><a href="#">KHO NỘI DUNG</a></li>
+                <li class="text-center" id="link_canh_bao"><a href="#">CẢNH BÁO</a></li>
+                <li class="text-center" id="link_bao_cao"><a href="#">BÁO CÁO</a></li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container-fluid -->
+</nav>
+<div id="horizontal-menubar">
+    <div id="admin-area" class="row text-center pagination-centered">
+        <div id="avatar_container"><img src="../static/images/adminavatar.png"/> <a href="#" id="link_user_name">Adminstrator</a>
+        </div>
+    </div>
+    {% block horizontalmenubar %}
+
+    {% endblock %}
+</div>
+<div id="content">
+    <div id="left-menu-tree">
+        <div class="container-fluid">
+            <div id="left-menu-tree-layer1">
+                <div>
+                    <ul class="nav">
+                        {%if sources %}
+                        {% for source in sources%}
+                        <li>
+                            <label class="tree-toggler nav-header"><img src="../static/images/opened-folder.png"/>
+                                {{source.name}} ({{source|count}})</label>
+                            <ul class="nav nav-list tree">
+                                {%if source.timings%}
+                                {%for timing in source.timings%}
+                                {%if timing.published_at%}
+                                <li><a href="javascript:;" page="1" class="menu-tree-link"
+                                       sourceid="{{timing.source_id}}" timingid="{{timing._id}}"><img
+                                        src="../static/images/link-arrow.png"/>{{timing.published_at.strftime('%d/%m/%y')}}</a>
+                                </li>
+                                {%endif%}
+                                {%endfor%}
+                                {%endif%}
+                            </ul>
+                        </li>
+                        {%endfor%}
+                        {%endif%}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% block midlecontent %}
+
+
+    {% endblock %}
+</div>
+<div class="footer"> Copy right luu chieu bao chi 2017</div>
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script type="text/javascript" src="{{url_for('static', filename='scripts/jquery-1.11.3.min.js')}}"></script>
+<script type="text/javascript" src="{{url_for('static', filename='scripts/bootstrap-datepicker.js')}}"></script>
+<script type="text/javascript" src="{{url_for('static', filename='scripts/bootstrap.js')}}"></script>
+<script type="text/javascript" src="{{url_for('static', filename='scripts/frontend.js')}}"></script>
+
+<script type="text/javascript">
+
+    $(function () {
+        $('#txt-date-from-picker').datepicker();
+        $('#txt-date-to-picker').datepicker();
+    });
+
+</script>
+{% block javascript %}
+
+
+{% endblock %}
+</body>
+</html>

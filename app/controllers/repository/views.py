@@ -46,18 +46,7 @@ def get_data_from_service_filter_by_timing(sid, ptimingid, page=0):
     return aDict
 
 
-@repository.route('/filter-by-timing/<sid>/<ptimingid>/', methods=['GET'])
-@repository.route('/filter-by-timing/<sid>/<ptimingid>/<page>', methods=['GET'])
-def content_filter_by_timing(sid, ptimingid, page=0):
-    aDict = get_data_from_service_filter_by_timing(sid, ptimingid, page)
-    print("items = " + str(len(aDict['items'])))
-    return render_template('/data_table.html', contents=aDict['items'], pagination=aDict['pagingnation'],
-                           params={'sid': sid, 'ptimingid': ptimingid, 'pageid': 1})
-
-
-@repository.route('/', methods=['GET'])
-@repository.route('/<page>', methods=['GET'])
-def index(page=0):
+def get_source():
     sources = source_impl.get_all_active(True)
     _request = RequestHelpers()
     _requestURL = RequestURL()
@@ -76,9 +65,25 @@ def index(page=0):
                     break
             x.timings = timings
             # ------------------------------------------------------------------------------------------------------------------
-        aDict = get_data_from_service_filter_by_default(page)
     except Exception as ex:
         flash('ERROR:' + ex, 'danger')
+    return sources
+
+
+@repository.route('/filter-by-timing/<sid>/<ptimingid>/', methods=['GET'])
+@repository.route('/filter-by-timing/<sid>/<ptimingid>/<page>', methods=['GET'])
+def content_filter_by_timing(sid, ptimingid, page=0):
+    aDict = get_data_from_service_filter_by_timing(sid, ptimingid, page)
+    print("items = " + str(len(aDict['items'])))
+    return render_template('/data_table.html', contents=aDict['items'], pagination=aDict['pagingnation'],
+                           params={'sid': sid, 'ptimingid': ptimingid, 'pageid': 1})
+
+
+@repository.route('/', methods=['GET'])
+@repository.route('/<page>', methods=['GET'])
+def index(page=0):
+    sources = get_source()
+    aDict = get_data_from_service_filter_by_default(page)
     if page == 0:
         return render_template('repository/index2.html', sources=sources, contents=aDict['items'],
                                pagination=aDict['pagingnation'], params={'pageid': 0})
@@ -89,6 +94,7 @@ def index(page=0):
 
 @repository.route('/detail/<cid>', methods=['GET'])
 def detail(cid):
+    print("cid = " + cid)
     cont = content_impl.get_byid(cid)
     # n_dict = json.loads(cont.data)
     data_master = []
@@ -97,10 +103,12 @@ def detail(cid):
         for item in cont.data:
             for k, v in item.items():
                 data_master.append({'key': k, 'value': json.loads(v)})
+                print("key = " + k + "value = " + v)
     except Exception as ex:
         flash('ERROR:' + ex.message, 'danger')
-
-    return render_template('repository/detail.html', data=data_master, link_href=cont.href, contentid=cid)
+    return render_template('repository/pagedetail.html', sources=get_source(), data=data_master, link_href=cont.href,
+                           contentid=cid,
+                           params={'pageid': 2})
 
 
 @repository.route('/detail-html/<cid>/<idx>', methods=['GET'])

@@ -53,6 +53,7 @@ $(document).ready(function () {
         });
     });
 
+
     $('#btn-search').click(function () {
         var source = $('#select-baodientu-repository').val();
         var tag = $('#select-tag').val();
@@ -118,6 +119,25 @@ function pagination_ajax(obj) {
     });
 }
 
+function pagination_ajax_v2(obj) {
+
+    var sourceid = $(obj).attr('sourceid');
+    var timingid = $(obj).attr('timingid');
+    var page = $(obj).attr('page');
+
+    $('.midle-content').html('Xin đợi trong giây lát ...');
+    $.ajax('/repository/filter-by-timing/' + sourceid + '/' + timingid + '/' + page, {
+        success: function (data) {
+
+            $('.midle-content').html(data);
+
+        },
+        error: function () {
+            console.log('ERROR: GET CONTENT');
+        }
+    });
+}
+
 function pagination_ajax_content_default(obj) {
 
 
@@ -141,7 +161,7 @@ function pagination_ajax_content_default_v2(obj) {
 
     var page = $(obj).attr('page');
 
-    $('.table-responsive').html('Xin đợi trong giây lát ...');
+    $('.midle-content').html('Xin đợi trong giây lát ...');
     $.ajax('/repository/' + page, {
         success: function (data) {
 

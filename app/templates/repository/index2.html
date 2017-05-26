@@ -8,7 +8,7 @@
         <p>
             <label class="label-text-style">Tòa soạn: </label>
             <label class="custom-select">
-                <select class="horizontal-menu-border-style" id="select-baodientu-repository">
+                <select style="width: 213px;" class="horizontal-menu-border-style" id="select-baodientu-repository">
                     {% for source in sources%}
                     <option value="{{source.id}}">{{source.name}}</option>
                     {% endfor %}
@@ -21,7 +21,7 @@
             <label class="label-text-style">Từ khóa: </label>
             <label>
                 <input style="width: 233px;" class="horizontal-menu-border-style input-text-style" type="text"
-                       placeholder="Nhập từ khóa...">
+                       placeholder="Nhập từ khóa..." id="txt-search">
             </label>
         </p>
     </div>
@@ -38,7 +38,7 @@
         <p>
             <label class="label-text-style">Chuyên mục: </label>
             <label class="custom-select ">
-                <select class="horizontal-menu-border-style">
+                <select style="width: 189px;" class="horizontal-menu-border-style" id="select-tag">
                     <option>Tất cả</option>
                     <option>Tình yêu</option>
                     <option>Tình báo</option>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+{% extends "listing.html"%}
+{% import "bootstrap/wtf.html" as wtf%}
+{% block title %}LUU CHIEU BAO CHI - LISTING{% endblock %}
+{% block horizontalmenubar %}
+{%for item in data%}
+<div class="horizontal-menubar-detail-row1">
+    <div class="horizontal-menubar-detail-column">
+        <label class="label-detail-text-style">Tòa soạn: </label>
+        <label class="label-text-style">VnExpress</label>
+    </div>
+    <div class="horizontal-menubar-detail-column">
+        <label class="label-detail-text-style">Tiêu đề: </label>
+        <label class="label-text-style">{{item['value']['title']}} </label>
+    </div>
+</div>
+<div class="horizontal-menubar-detail-row1">
+    <div class="horizontal-menubar-detail-column">
+        <label class="label-detail-text-style">Chuyên mục: </label>
+        <label class="label-text-style">Thời sự</label>
+    </div>
+    <div class="horizontal-menubar-detail-column">
+        <label class="label-detail-text-style">Ngày đăng tải: </label>
+        <label class="label-text-style">{{item['value']['published_at']}}</label>
+    </div>
+    <div class="horizontal-menubar-detail-column">
+        <label class="label-detail-text-style">Ngày lưi chiểu: </label>
+        <label class="label-text-style">{{item['value']['published_at']}}</label>
+    </div>
+    <div class="horizontal-menubar-detail-column"><a href="{{link_href}}" class="label-detail-text-style">Bài viết
+        gốc </a></div>
+</div>
+{%endfor%}
+{%endblock%}
+{% block midlecontent %}
+{%for item in data%}
+<div class="midle-content">
+    <div class="midle-content-navigationbar"><a href="../listing.html" class="boder-right"
+                                                style="text-align: center; padding-right: 5px; margin-right:5px;">HOME</a>
+        <a href="#">KHO NỘI DUNG</a></div>
+    <div id="post" style="background: #FFFFFF; overflow: hidden">
+        <div class="panel panel-collapse">
+            <div class="panel-heading" role="tab">
+                <h1 class="panel-title">
+                    <a style="font-size:24px;">
+                        {{item['value']['title']}}
+                    </a>
+                </h1>
+
+            </div>
+            <div>
+                <div class="panel-body" style="max-width: 1000px">
+                    <i>{{item['value']['published_at']}}</i>
+                    <span class="pull-right"></span>
+                    <span class="pull-right">&nbsp;&nbsp;</span>
+                    <span class="pull-right"></span>
+                    <div class="lead">{{item['value']['description']}}</div>
+                    <div>{{item['value']['content']|safe}}</div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+{%endfor%}
+{%endblock%}

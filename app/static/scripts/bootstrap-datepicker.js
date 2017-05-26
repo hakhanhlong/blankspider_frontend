@@ -18,20 +18,17 @@
  * ========================================================= */
 
 $(document).ready(function () {
-    const CLOSED_FOLDER_ICON = "../static/images/folderIcon.png";
-    const OPENED_FOLDER_ICON = "../static/images/opened-folder.png";
     const TAG = "img";
-    const KEY_WORD = "opened";
     $('label.tree-toggler').click(function (event) {
         $(this).parent().children('ul.tree').toggle(300);
         var childrents = event.target.childNodes;
         for (i = 0; i < childrents.length; i++) {
             if (childrents[i].nodeName.toLowerCase() == TAG) {
-                var src = childrents[i].src;
-                if (src.toLowerCase().indexOf(KEY_WORD) >= 0) {
-                    childrents[i].src = CLOSED_FOLDER_ICON;
+                if (childrents[i].style.display == "none") {
+                    childrents[i].style.display = "inline";
+
                 } else {
-                    childrents[i].src = OPENED_FOLDER_ICON;
+                    childrents[i].style.display = "none";
                 }
             }
         }

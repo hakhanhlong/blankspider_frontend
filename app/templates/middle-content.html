@@ -25,13 +25,13 @@
     </table>
     {%if params%}
     {%if params.pageid == 1%}
-        {{ pagination_ajax(pagination, sid=params.sid, timingid=params.ptimingid) }}
+    {{ pagination_ajax(pagination, sid=params.sid, timingid=params.ptimingid) }}
     {%endif%}
     {%if params.pageid == 0%}
     {{ pagination_ajax_content_default(pagination) }}
     {%endif%}
     {%else%}
-<h1>xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</h1>
+    #TODO if pageid not 0 , not 1, implement for search function
     {%endif%}
 </div>
 {%endblock%}

@@ -29,7 +29,7 @@
         <button class="horizontal-menu-border-style"
                 style="width: 100%; height: 100%; background-color: #f1f1f1;font-family: 'Segoe UI'; color: #003366; font-size: 14px;font-weight: 500; margin-top: 20%; "
                 id="btn-search">
-            <img src="../static/images/filter.png"/> Bộ lọc
+            <img src="{{url_for('static', filename='images/filter.png')}}"/> Bộ lọc
         </button>
     </div>
 </div>
@@ -52,12 +52,12 @@
         <label class="calendar">
             <input id="txt-date-from-picker" data-date-format="dd/mm/yyyy"
                    class="horizontal-menu-border-style input-text-style" type="text" readonly>
-            <img src="../static/images/datetimepickericon.png"/> </label>
+            <img src="{{url_for('static', filename='images/datetimepickericon.png')}}"/> </label>
         <label class="label-text-style" style="margin-left: 9%;">-</label>
         <label class="calendar">
             <input id="txt-date-to-picker" data-date-format="dd/mm/yyyy"
                    class="horizontal-menu-border-style input-text-style" type="text" readonly>
-            <img src="../static/images/datetimepickericon.png"/> </label>
+            <img src="{{url_for('static', filename='images/datetimepickericon.png')}}"/> </label>
     </div>
 </div>
 {% endblock %}

@@ -17,6 +17,10 @@ from core.api.request_helpers import RequestHelpers
 from core.api.request_url import RequestURL
 from core.control.pagination import Pagination
 
+PAGE_DETAIL = 2  # previous page =2 = pagedetail.html
+PAGE_FILTER_DEFAULT = 0  # previous page = 0 = index2.html
+PAGE_FILTER_BY_TIMING = 1  # previous page = 1 = datatable.html(inside index2)
+
 
 def get_data_from_service_filter_by_default(page=0):
     content_service = ContentService()
@@ -72,28 +76,41 @@ def get_source():
 
 @repository.route('/filter-by-timing/<sid>/<ptimingid>/', methods=['GET'])
 @repository.route('/filter-by-timing/<sid>/<ptimingid>/<page>', methods=['GET'])
-def content_filter_by_timing(sid, ptimingid, page=0):
+@repository.route('/filter-by-timing/<sid>/<ptimingid>/<page>/<pageid>', methods=['GET'])
+def content_filter_by_timing(sid, ptimingid, page=0, pageid=-1):
     aDict = get_data_from_service_filter_by_timing(sid, ptimingid, page)
     print("items = " + str(len(aDict['items'])))
-    return render_template('/data_table.html', contents=aDict['items'], pagination=aDict['pagingnation'],
-                           params={'sid': sid, 'ptimingid': ptimingid, 'pageid': 1})
+    if int(pageid) != PAGE_DETAIL:
+        return render_template('/data_table.html', contents=aDict['items'], pagination=aDict['pagingnation'],
+                               params={'sid': sid, 'ptimingid': ptimingid, 'pageid': PAGE_FILTER_BY_TIMING})
+    else:
+        return render_template('repository/index2.html', sources=get_source(), contents=aDict['items'],
+                               pagination=aDict['pagingnation'], params={'pageid': PAGE_FILTER_DEFAULT})
 
 
 @repository.route('/', methods=['GET'])
 @repository.route('/<page>', methods=['GET'])
-def index(page=0):
+@repository.route('/<page>/<pageid>', methods=['GET'])
+def index(page=0, pageid=0):
     sources = get_source()
     aDict = get_data_from_service_filter_by_default(page)
-    if page == 0:
+    print("page = " + str(page) + "pageid = " + str(pageid))
+    if pageid == int(PAGE_FILTER_DEFAULT) and int(page) == 0:
         return render_template('repository/index2.html', sources=sources, contents=aDict['items'],
-                               pagination=aDict['pagingnation'], params={'pageid': 0})
-    else:
+                               pagination=aDict['pagingnation'], params={'pageid': PAGE_FILTER_DEFAULT})
+    elif pageid == PAGE_DETAIL:
+        return render_template('repository/index2.html', sources=sources, contents=aDict['items'],
+                               pagination=aDict['pagingnation'], params={'pageid': PAGE_FILTER_DEFAULT})
+    elif pageid == PAGE_FILTER_DEFAULT and int(page) > 0:
         return render_template('/data_table.html', sources=sources, contents=aDict['items'],
-                               pagination=aDict['pagingnation'], params={'pageid': 0})
+                               pagination=aDict['pagingnation'], params={'pageid': PAGE_FILTER_DEFAULT})
 
 
 @repository.route('/detail/<cid>', methods=['GET'])
-def detail(cid):
+@repository.route('/detail/<cid>/<page>', methods=['GET'])
+@repository.route('/detail/<cid>/<page>/<prepageid>', methods=['GET'])
+@repository.route('/detail/<cid>/<page>/<prepageid>/<sid>', methods=['GET'])
+def detail(cid, page=0, prepageid=0, sid=0):
     print("cid = " + cid)
     cont = content_impl.get_byid(cid)
     # n_dict = json.loads(cont.data)
@@ -108,7 +125,25 @@ def detail(cid):
         flash('ERROR:' + ex.message, 'danger')
     return render_template('repository/pagedetail.html', sources=get_source(), data=data_master, link_href=cont.href,
                            contentid=cid,
-                           params={'pageid': 2})
+                           params={'pageid': PAGE_DETAIL, 'page': page, 'prepageid': prepageid, 'sid': sid})
+
+
+@repository.route('/detail-iframe/<cid>/<idx>', methods=['GET'])
+def detail_iframe(cid, idx):
+    print("cid = " + cid)
+    cont = content_impl.get_byid(cid)
+    # n_dict = json.loads(cont.data)
+    data_master = []
+
+    try:
+        for item in cont.data:
+            for k, v in item.items():
+                data_master.append({'key': k, 'value': json.loads(v)})
+                print("key = " + k + "value = " + v)
+    except Exception as ex:
+        flash('ERROR:' + ex.message, 'danger')
+    return render_template('repository/detailiframe.html', sources=get_source(), data=data_master, link_href=cont.href,
+                           contentid=cid, index=idx)
 
 
 @repository.route('/detail-html/<cid>/<idx>', methods=['GET'])

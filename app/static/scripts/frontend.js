@@ -40,12 +40,29 @@ $(document).ready(function () {
         var sourceid = $(this).attr('sourceid');
         var timingid = $(this).attr('timingid');
         var page = $(this).attr('page');
+        var pageid = $(this).attr('pageid');
+        if (pageid == 0) {
+            $.ajax('/repository/filter-by-timing/' + sourceid + '/' + timingid + '/' + page + '/' + pageid, {
+                success: function (data) {
+                    $('.midle-content').html(data);
 
+                },
+                error: function () {
+                    console.log('ERROR: GET CONTENT');
+                }
+            });
+        } else {
+            $(location).attr('href', '/repository/filter-by-timing/' + sourceid + '/' + timingid + '/' + page + '/' + pageid);
+        }
 
-        $.ajax('/repository/filter-by-timing/' + sourceid + '/' + timingid + '/' + page, {
+    });
+
+    $('#show_iframe').on('click', function () {
+        var cid = $(this).attr('cid');
+        var idx = $(this).attr('idx');
+        $.ajax('/repository/detail-iframe/' + cid + '/' + idx, {
             success: function (data) {
-                  $('.midle-content').html(data);
-
+                $('.midle-content').html(data);
             },
             error: function () {
                 console.log('ERROR: GET CONTENT');

@@ -72,7 +72,8 @@
                                 {%if source.timings%}
                                 {%for timing in source.timings%}
                                 {%if timing.published_at%}
-                                <li><a href="javascript:;" page="1" class="menu-tree-link"
+                                <li><a href="javascript:;" page="1" pageid="{{params.pageid}}"
+                                       prepageid="{{params.prepageid}}" class="menu-tree-link"
                                        sourceid="{{timing.source_id}}" timingid="{{timing._id}}"><img
                                         src="{{url_for('static', filename='images/link-arrow.png')}}"/> {{
                                     moment(timing.published_at).format('DD/MM/YYYY')}} ({{timing.count}})</a>

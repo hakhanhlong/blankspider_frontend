@@ -35,33 +35,69 @@
 {% block midlecontent %}
 {%for item in data%}
 <div class="midle-content">
-    <div class="midle-content-navigationbar"><a href="../listing.html" class="boder-right"
-                                                style="text-align: center; padding-right: 5px; margin-right:5px;">HOME</a>
-        <a href="#">KHO NỘI DUNG</a></div>
-    <div id="post" style="background: #FFFFFF; overflow: hidden">
-        <div class="panel panel-collapse">
-            <div class="panel-heading" role="tab">
-                <h1 class="panel-title">
-                    <a style="font-size:24px;">
-                        {{item['value']['title']}}
-                    </a>
-                </h1>
+    <div class="midle-content-navigationbar" style="width: 100%;"><a href="../listing.html" class="boder-right"
+                                                                     style="text-align: center; padding-right: 5px; margin-right:5px;">HOME</a>
+        <a href="#">KHO NỘI DUNG</a>
+        <!--<a id="show_iframe" href="javascript:;" cid="{{contentid}}" , idx="{{loop.index-1}}" style="float: right;">XEM-->
+        <!--TOÀN BỘ NỘI DUNG TRANG</a>-->
+        <a style="float: right" data-toggle="modal"
+           href="#modalDefault{{loop.index}}">TOÀN BỘ NỘI DUNG TRANG</a>
 
-            </div>
-            <div>
-                <div class="panel-body" style="max-width: 1000px">
+    </div>
+    <div>
+        <div id="post" style="background: #FFFFFF; overflow: hidden; margin: 0 auto;">
+            <div style="margin: 0 auto;">
+                <div class="panel-heading" role="tab" style="margin: 0 auto;">
+                </div>
+                <div class="panel-body" style="max-width: 1000px; margin: 0 auto; ">
+                    <h1 class="panel-title" style="font-size:34px;margin: 0 auto; font-weight: bold">
+
+                        {{item['value']['title']}}
+                    </h1>
+                    <br/>
+                    <br/>
+                    <br/>
                     <i>{{item['value']['published_at']}}</i>
                     <span class="pull-right"></span>
                     <span class="pull-right">&nbsp;&nbsp;</span>
                     <span class="pull-right"></span>
                     <div class="lead">{{item['value']['description']}}</div>
-                    <div>{{item['value']['content']|safe}}</div>
+                    <div style="margin: 0 auto;">{{item['value']['content']|safe}}</div>
 
                 </div>
             </div>
         </div>
-
+        <div style="width: 100%">
+            <div style="margin-top: 20px; width: 100%;">
+                <nav aria-label="Page navigation example" style="display: inline-block; width: 100%;">
+                    <div id="tong-so" style="margin-top: 5px; margin-right: 10px;"><label>Phiên bản:</label></div>
+                    <ul class="pagination">
+                        <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    </ul>
+                    <div style="float: right; margin-right: 20px;" href=""><a>< Quay lại</a></div>
+                </nav>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modalDefault{{loop.index}}" tabindex="-1" role="dialog" aria-hidden="true"
+         style="display: none;">
+        <div class="modal-dialog modal-lg" style="width:1024px;">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <iframe src="{{url_for('repository.detail_html', cid=contentid, idx=loop.index-1)}}"
+                            frameborder="0" scrolling="no"
+                            style="width:1024px;" onload="resizeIframe(this);">
+                    </iframe>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
+<script type="text/javascript">
+    function resizeIframe(obj) {
+        obj.style.height = 0;
+        obj.style.height = obj.contentWindow.document.body.scrollHeight + 'px';
+    }
+</script>
 {%endfor%}
 {%endblock%}

@@ -2,35 +2,40 @@
 {% import "bootstrap/wtf.html" as wtf%}
 {% block title %}BLANKSPIDER - FRONTEND{% endblock %}
 {% block content%}
-
-    <ol class="breadcrumb">
-        <li><a href="/">HOME</a></li>
-    </ol>
-    <div class="card">
-        <div class="card-header">
-            <h2>NGUỒN
-            <small>Danh sách nguồn đang lưu chiểu</small></h2>
-        </div>
-
-        <div class="card-body table-responsive">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>TÊN NGUỒN</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {%if sources %}
-                        {%for source in sources%}
-                            <tr>
-                                <td>{{loop.index}}</td>
-                                <td><a href="/repository"><strong>{{source.name}}</strong></a></td>
-                            </tr>
-                       {%endfor%}
-                    {%endif%}
-                </tbody>
-            </table>
-        </div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(location).attr('href', '/repository');
+    });
+</script>
+<ol class="breadcrumb">
+    <li><a href="/">HOME</a></li>
+</ol>
+<div class="card">
+    <div class="card-header">
+        <h2>NGUỒN
+            <small>Danh sách nguồn đang lưu chiểu</small>
+        </h2>
     </div>
+
+    <div class="card-body table-responsive">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>TÊN NGUỒN</th>
+            </tr>
+            </thead>
+            <tbody>
+            {%if sources %}
+            {%for source in sources%}
+            <tr>
+                <td>{{loop.index}}</td>
+                <td><a href="/repository"><strong>{{source.name}}</strong></a></td>
+            </tr>
+            {%endfor%}
+            {%endif%}
+            </tbody>
+        </table>
+    </div>
+</div>
 {%endblock%}

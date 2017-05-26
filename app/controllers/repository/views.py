@@ -7,6 +7,7 @@ from . import repository
 from core.dataimpl import tag_impl
 from core.dataimpl import content_impl
 from core.dataimpl import source_impl
+from core.dataimpl import configuration_impl
 import json
 
 from flask_moment import Moment
@@ -16,6 +17,10 @@ from datetime import datetime
 from core.api.request_helpers import RequestHelpers
 from core.api.request_url import RequestURL
 from core.control.pagination import Pagination
+
+from lxml import html, etree
+from io import StringIO, BytesIO
+import re
 
 PAGE_DETAIL = 2  # previous page =2 = pagedetail.html
 PAGE_FILTER_DEFAULT = 0  # previous page = 0 = index2.html
@@ -111,39 +116,67 @@ def index(page=0, pageid=0):
 @repository.route('/detail/<cid>/<page>/<prepageid>', methods=['GET'])
 @repository.route('/detail/<cid>/<page>/<prepageid>/<sid>', methods=['GET'])
 def detail(cid, page=0, prepageid=0, sid=0):
-    print("cid = " + cid)
     cont = content_impl.get_byid(cid)
+    configuration = configuration_impl.get_config('SOURCE', cont.source_id)
     # n_dict = json.loads(cont.data)
     data_master = []
 
     try:
         for item in cont.data:
             for k, v in item.items():
-                data_master.append({'key': k, 'value': json.loads(v)})
-                print("key = " + k + "value = " + v)
+
+                _val = json.loads(v)
+                content = _val['content']
+                try:
+                    if configuration['config']['PARSERVIDEOS']:
+                        configs = configuration['config']['PARSERVIDEOS']['data']
+                        array_player = []
+                        array_embeded_player = []
+                        array_player_id = []
+                        htmlparser = etree.HTMLParser(recover=True, remove_blank_text=True)
+                        # tree = etree.parse(StringIO(content), htmlparser)
+                        tree = etree.fromstring(str(content), htmlparser)
+
+                        attribute = configs['attribute']
+                        attribute_pattern_value = attribute['step']['1']['field_value']
+
+                        pattern = configs['pattern']
+                        pattern_value = pattern['step']['1']['field_value']
+
+                        players = tree.xpath(pattern_value)
+                        # players = tree.find(pattern_value)
+                        # players = tree.find('.//div')
+
+
+
+                        embeded_player = configs['format_player']['step']['1']['field_value']
+                        for x in players:
+                            # array_player_id.append()
+                            array_player_id.append(dict(x.attrib)[attribute_pattern_value])  # get value by attribute
+                            array_player.append(str(etree.tostring(x, pretty_print=True)))
+
+                            embeded = embeded_player.replace("{1}", dict(x.attrib)[attribute_pattern_value])
+                            array_embeded_player.append(embeded)
+
+                            x.append(etree.HTML(embeded))
+
+                        content = etree.tostring(tree, method='html', pretty_print=True)
+
+                        _val['content'] = str(content).replace('\\n', "").replace('\\t', "").replace("b'", "")
+
+
+
+                except Exception as error:
+                    pass
+
+                # data_master.append({'key': k, 'value': json.loads(v)})
+                data_master.append({'key': k, 'value': _val})
     except Exception as ex:
         flash('ERROR:' + ex.message, 'danger')
+
     return render_template('repository/pagedetail.html', sources=get_source(), data=data_master, link_href=cont.href,
                            contentid=cid,
                            params={'pageid': PAGE_DETAIL, 'page': page, 'prepageid': prepageid, 'sid': sid})
-
-
-@repository.route('/detail-iframe/<cid>/<idx>', methods=['GET'])
-def detail_iframe(cid, idx):
-    print("cid = " + cid)
-    cont = content_impl.get_byid(cid)
-    # n_dict = json.loads(cont.data)
-    data_master = []
-
-    try:
-        for item in cont.data:
-            for k, v in item.items():
-                data_master.append({'key': k, 'value': json.loads(v)})
-                print("key = " + k + "value = " + v)
-    except Exception as ex:
-        flash('ERROR:' + ex.message, 'danger')
-    return render_template('repository/detailiframe.html', sources=get_source(), data=data_master, link_href=cont.href,
-                           contentid=cid, index=idx)
 
 
 @repository.route('/detail-html/<cid>/<idx>', methods=['GET'])
@@ -162,3 +195,66 @@ def detail_html(cid, idx):
     # return data_master[0]['value']['html_data'].replace("document.domain", "")
     return render_template('repository/detail_html.html',
                            data=data_master[0]['value']['html_data'].replace("document.domain", ""))
+
+
+# @repository.route('/detail/<cid>', methods=['GET'])
+# def detail(cid):
+#     cont = content_impl.get_byid(cid)
+#     configuration = configuration_impl.get_config('SOURCE', cont.source_id)
+#     # n_dict = json.loads(cont.data)
+#     data_master = []
+#
+#     try:
+#         for item in cont.data:
+#             for k, v in item.items():
+#
+#                 _val = json.loads(v)
+#                 content = _val['content']
+#                 try:
+#                     if configuration['config']['PARSERVIDEOS']:
+#                         configs = configuration['config']['PARSERVIDEOS']['data']
+#                         array_player = []
+#                         array_embeded_player = []
+#                         array_player_id = []
+#                         htmlparser = etree.HTMLParser(recover=True, remove_blank_text=True)
+#                         # tree = etree.parse(StringIO(content), htmlparser)
+#                         tree = etree.fromstring(str(content), htmlparser)
+#
+#                         attribute = configs['attribute']
+#                         attribute_pattern_value = attribute['step']['1']['field_value']
+#
+#                         pattern = configs['pattern']
+#                         pattern_value = pattern['step']['1']['field_value']
+#
+#                         players = tree.xpath(pattern_value)
+#                         # players = tree.find(pattern_value)
+#                         # players = tree.find('.//div')
+#
+#
+#
+#                         embeded_player = configs['format_player']['step']['1']['field_value']
+#                         for x in players:
+#                             # array_player_id.append()
+#                             array_player_id.append(dict(x.attrib)[attribute_pattern_value])  # get value by attribute
+#                             array_player.append(str(etree.tostring(x, pretty_print=True)))
+#
+#                             embeded = embeded_player.replace("{1}", dict(x.attrib)[attribute_pattern_value])
+#                             array_embeded_player.append(embeded)
+#
+#                             x.append(etree.HTML(embeded))
+#
+#                         content = etree.tostring(tree, method='html', pretty_print=True)
+#
+#                         _val['content'] = str(content).replace('\\n', "").replace('\\t', "").replace("b'", "")
+#
+#
+#
+#                 except Exception as error:
+#                     pass
+#
+#                 # data_master.append({'key': k, 'value': json.loads(v)})
+#                 data_master.append({'key': k, 'value': _val})
+#     except Exception as ex:
+#         flash('ERROR:' + ex.message, 'danger')
+#
+#     return render_template('repository/detail.html', data=data_master, link_href=cont.href, contentid=cid)

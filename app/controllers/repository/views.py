@@ -18,6 +18,7 @@ from core.api.request_url import RequestURL
 
 from lxml import html, etree
 from io import StringIO, BytesIO
+import  re
 
 
 
@@ -68,9 +69,10 @@ def detail(cid):
                         array_player = []
                         array_embeded_player = []
                         array_player_id = []
-                        htmlparser = etree.HTMLParser(recover=True)
+                        htmlparser = etree.HTMLParser(recover=True, remove_blank_text=True)
                         #tree = etree.parse(StringIO(content), htmlparser)
                         tree =  etree.fromstring(str(content), htmlparser)
+
 
 
                         attribute = configs['attribute']
@@ -97,8 +99,9 @@ def detail(cid):
                             x.append(etree.HTML(embeded))
 
 
-                        content = etree.tostring(tree, pretty_print=True, method='html')
-                        _val['content'] = content
+                        content = etree.tostring(tree, method='html', pretty_print=True)
+
+                        _val['content'] = str(content).replace('\\n',"").replace('\\t',"").replace("b'", "")
 
 
 

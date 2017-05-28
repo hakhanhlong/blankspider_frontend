@@ -11,7 +11,7 @@
     </div>
     <div class="horizontal-menubar-detail-column">
         <label class="label-detail-text-style">Tiêu đề: </label>
-        <label class="label-text-style">{{item['value']['title']}} </label>
+        <label id="txt_title" class="label-text-style">{{item['value']['title']}} </label>
     </div>
 </div>
 <div class="horizontal-menubar-detail-row1">
@@ -21,11 +21,11 @@
     </div>
     <div class="horizontal-menubar-detail-column">
         <label class="label-detail-text-style">Ngày đăng tải: </label>
-        <label class="label-text-style">{{item['value']['published_at']}}</label>
+        <label id="txt_pulished_at" class="label-text-style">{{item['value']['published_at']}}</label>
     </div>
     <div class="horizontal-menubar-detail-column">
-        <label class="label-detail-text-style">Ngày lưi chiểu: </label>
-        <label class="label-text-style">{{item['value']['published_at']}}</label>
+        <label class="label-detail-text-style">Ngày lưu chiểu: </label>
+        <label id="txt_luuchieu_at" class="label-text-style">{{item['value']['published_at']}}</label>
     </div>
     <div class="horizontal-menubar-detail-column"><a href="{{link_href}}" class="label-detail-text-style">Bài viết
         gốc </a></div>
@@ -98,6 +98,28 @@
         obj.style.height = 0;
         obj.style.height = obj.contentWindow.document.body.scrollHeight + 'px';
     }
+    var title = $("#txt_title").text();
+    var pulished_at = $("#txt_pulished_at").text();
+    var luuchieu_at = $("#txt_luuchieu_at").text();
+    if (title.length >= 75) {
+        title = title.substring(0, 75) + "...";
+        $("#txt_title").html(title);
+    }
+    var i = pulished_at.indexOf("|");
+    var j = luuchieu_at.indexOf("|");
+    if (i > 0) {
+        pulished_at = pulished_at.substring(0, i);
+    } else if (pulished_at.indexOf("-") > 0) {
+        pulished_at = pulished_at.substring(0, pulished_at.indexOf("-"));
+    }
+    if (j > 0) {
+        luuchieu_at = luuchieu_at.substring(0, j);
+    } else if (luuchieu_at.indexOf("-") > 0) {
+        luuchieu_at = luuchieu_at.substring(0, luuchieu_at.indexOf("-"));
+    }
+    $("#txt_pulished_at").html(pulished_at);
+    $("#txt_luuchieu_at").html(luuchieu_at);
+
 </script>
 {%endfor%}
 {%endblock%}

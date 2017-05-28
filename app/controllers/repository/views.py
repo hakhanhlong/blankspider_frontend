@@ -25,6 +25,7 @@ import re
 PAGE_DETAIL = 2  # previous page =2 = pagedetail.html
 PAGE_FILTER_DEFAULT = 0  # previous page = 0 = index2.html
 PAGE_FILTER_BY_TIMING = 1  # previous page = 1 = datatable.html(inside index2)
+PAGE_SEARCH = 3
 
 
 def get_data_from_service_filter_by_default(page=0):
@@ -196,6 +197,24 @@ def detail_html(cid, idx):
     return render_template('repository/detail_html.html',
                            data=data_master[0]['value']['html_data'].replace("document.domain", ""))
 
+
+@repository.route('/search/', methods=['GET'])
+@repository.route('/search/<source>/<tag>/<published>/<kw>/<page>', methods=['GET'])
+def content_search(source='', tag='', published='', kw='', page=0):
+    content_service = ContentService()
+
+    if published is not '*':
+        published = published.split('-')[::-1]
+        published = '-'.join(published)
+
+    content = content_service.search(source, tag, published, kw, int(page), 50)
+    count_items = content['response']['numFound']
+    pagination = Pagination(int(page), 50, count_items)
+
+    data_master = []
+    for item in content['response']['docs']:
+        data_master.append(item)
+    return render_template('/data_table.html', contents=data_master, pagination = pagination,params={'pageid':PAGE_SEARCH})
 
 # @repository.route('/detail/<cid>', methods=['GET'])
 # def detail(cid):

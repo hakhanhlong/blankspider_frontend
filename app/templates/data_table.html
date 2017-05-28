@@ -1,6 +1,6 @@
 {%extends "_layoutblank.html"%}
 {% block content %}
-<table class="table table-striped table-bordered">
+<table id="data_table" class="table table-striped table-bordered">
     <thead>
     <tr style="background: #7d7d7d; font-family: 'Segoe UI';color: #333333;font-size: 14px;font-weight: 700;">
         <th>#</th>
@@ -29,7 +29,8 @@
 {%if params.pageid == 0%}
 {{ pagination_ajax_content_default(pagination) }}
 {%endif%}
-{%else%}
-#TODO if pageid not 0 , not 1, implement for search function
+{%if params.pageid == 3%}
+{{pagination_ajax_search_content(pagination)}}
+{%endif%}
 {%endif%}
 {% endblock %}

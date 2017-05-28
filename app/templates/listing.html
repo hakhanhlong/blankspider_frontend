@@ -67,7 +67,9 @@
                                     src="{{url_for('static', filename='images/opened-folder.png')}}"/>
                                 <img src="{{url_for('static', filename='images/folderIcon.png')}}"
                                      style="display: none"/>
-                                {{source.name}} ({{source|count}})</label>
+                                <span style="word-wrap: break-word;">
+                                {{source.name}} ({{source|count}})
+                                </span></label>
                             <ul class="nav nav-list tree">
                                 {%if source.timings%}
                                 {%for timing in source.timings%}
@@ -95,6 +97,15 @@
 
     {% endblock %}
 </div>
+<div class="busy_mark"
+     style="display: none; width: 500px; height: 500px; margin: 0 auto;margin-left: 50%; position: fixed">
+    <img src="{{url_for('static', filename='images/ajax-loader.gif')}}"/> Xin chờ trong giây lát...
+</div>
+<div class="error_message"
+     style="display: none; width: 500px; height: 500px; margin: 0 auto;margin-left: 50%; position: fixed">
+    <h1 style="color: red;font-size:34px; font-weight: bold;">Đã xảy ra lỗi, vui lòng kiểm tra lại đường truyền
+        Internet...!</h1>
+</div>
 <div class="footer"> Copy right luu chieu bao chi 2017</div>
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <!-- Include all compiled plugins (below), or include individual files as needed -->
@@ -102,6 +113,7 @@
 <script type="text/javascript" src="{{url_for('static', filename='scripts/bootstrap-datepicker.js')}}"></script>
 <script type="text/javascript" src="{{url_for('static', filename='scripts/bootstrap.js')}}"></script>
 <script type="text/javascript" src="{{url_for('static', filename='scripts/frontend.js')}}"></script>
+
 
 <script type="text/javascript">
 

@@ -67,9 +67,8 @@
                                     src="{{url_for('static', filename='images/opened-folder.png')}}"/>
                                 <img src="{{url_for('static', filename='images/folderIcon.png')}}"
                                      style="display: none"/>
-                                <span style="word-wrap: break-word;">
                                 {{source.name}} ({{source|count}})
-                                </span></label>
+                            </label>
                             <ul class="nav nav-list tree">
                                 {%if source.timings%}
                                 {%for timing in source.timings%}

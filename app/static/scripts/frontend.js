@@ -274,6 +274,7 @@ function pagination_ajax_search_content_v2(obj) {
 }
 
 function display_busy_mark() {
+    $('.error_message').css("display", "none");
     $('.midle-content').css("display", "none");
     $('.busy_mark').css("display", "block");
 }

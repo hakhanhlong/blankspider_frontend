@@ -1,5 +1,6 @@
 @charset "utf-8";
 /* CSS Document */
+
 .label-detail-text-style {
 	font-family: 'Segoe UI';
 	color: #ffffff;
@@ -341,6 +342,7 @@ background: orange;
 	float: left;
 	display: inline;
 	margin-left: 5%;
+    overflow-x: hidden;
 }
 html {
 	font-family: sans-serif;
@@ -353,5 +355,5 @@ body {
 	background: url(../images/midlecontent-background.png) no-repeat;
 	background-position: center center;
 	background-size: cover;
-	min-width: 1058px;
+	min-width: 1084px;
 }

@@ -3,13 +3,26 @@
 {% from "_macros.html" import pagination_ajax_page_version with context%}
 {% block title %}LUU CHIEU BAO CHI - BAI VIET{% endblock %}
 {% block horizontalmenubar %}
+<style>
+    @media screen and (max-width: 1180px) /* height >= 820 px */ {
+        .horizontal-menubar-detail-column {
+            margin-left: 1.5%;
+        }
+    }
+
+     @media screen and (min-width: 1629px) /* height >= 820 px */ {
+        .horizontal-menubar-detail-column {
+            margin-left: 10%;
+        }
+    }
+</style>
 {%for item in data%}
 <div id="menubar_{{loop.index}}" style="display: none;">
     <h6 id="total_count" style="display: none">{{pagination.total_count}}</h6>
     <div class="horizontal-menubar-detail-row1">
         <div class="horizontal-menubar-detail-column">
             <label class="label-detail-text-style">Tòa soạn: </label>
-            <label class="label-text-style">VnExpress</label>
+            <label class="label-text-style">{{source.name}}</label>
         </div>
         <div class="horizontal-menubar-detail-column">
             <label class="label-detail-text-style">Tiêu đề: </label>
@@ -19,7 +32,7 @@
     <div class="horizontal-menubar-detail-row1">
         <div class="horizontal-menubar-detail-column">
             <label class="label-detail-text-style">Chuyên mục: </label>
-            <label class="label-text-style">Thời sự</label>
+            <label class="label-text-style">{{tagname}}</label>
         </div>
         <div class="horizontal-menubar-detail-column">
             <label class="label-detail-text-style">Ngày đăng tải: </label>

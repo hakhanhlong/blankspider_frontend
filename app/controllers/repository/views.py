@@ -35,6 +35,9 @@ def get_data_from_service_filter_by_default(page=0):
     pagination = Pagination(int(page), 50, count_items)
     data_master = []
     for item in content['response']['docs']:
+        print("datatable item =============================")
+        print(item)
+        print("=====================================")
         data_master.append(item)
     aDict = {}
     aDict['items'] = data_master
@@ -112,13 +115,21 @@ def index(page=0, pageid=0):
                                pagination=aDict['pagingnation'], params={'pageid': PAGE_FILTER_DEFAULT})
 
 
-@repository.route('/detail/<cid>', methods=['GET'])
-@repository.route('/detail/<cid>/<page>', methods=['GET'])
-@repository.route('/detail/<cid>/<page>/<prepageid>', methods=['GET'])
-@repository.route('/detail/<cid>/<page>/<prepageid>/<sid>', methods=['GET'])
-@repository.route('/detail/<cid>/<page>/<prepageid>/<sid>/<ptimingid>', methods=['GET'])
-def detail(cid, page=0, prepageid=0, sid=0, ptimingid=0):
+@repository.route('/detail/<cid>/<sid>/<tagname>', methods=['GET'])
+@repository.route('/detail/<cid>/<page>/<sid>/<tagname>', methods=['GET'])
+@repository.route('/detail/<cid>/<page>/<prepageid>/<sid>/<tagname>', methods=['GET'])
+@repository.route('/detail/<cid>/<page>/<prepageid>/<sid>/<ptimingid>/<tagname>', methods=['GET'])
+def detail(cid, page=0, prepageid=0, sid=0, ptimingid=0,tagname=''):
     cont = content_impl.get_byid(cid)
+    s = source_impl.get_by_id(sid)
+    print("source ==========================================")
+    print("sourceid = " + str(s.id))
+    print("source name = " + str(s.name))
+    print("====================================================")
+    print("cont ===================")
+    print(cont)
+    print("cont.data ==================")
+    print(cont.data)
     configuration = configuration_impl.get_config('SOURCE', cont.source_id)
     # n_dict = json.loads(cont.data)
     data_master = []
@@ -126,8 +137,11 @@ def detail(cid, page=0, prepageid=0, sid=0, ptimingid=0):
     try:
         for item in cont.data:
             for k, v in item.items():
-
+                print("items====================")
+                print(item)
                 _val = json.loads(v)
+                print("val========================")
+                print(_val)
                 content = _val['content']
                 try:
                     if configuration['config']['PARSERVIDEOS']:
@@ -177,7 +191,7 @@ def detail(cid, page=0, prepageid=0, sid=0, ptimingid=0):
         flash('ERROR:' + ex.message, 'danger')
     pagination = Pagination(int(1), 1, len(data_master))
     return render_template('repository/pagedetail.html', sources=get_source(), data=data_master, link_href=cont.href,
-                           contentid=cid, pagination=pagination,
+                           contentid=cid, pagination=pagination, source=s, tagname=tagname,
                            params={'pageid': PAGE_DETAIL, 'page': page, 'prepageid': prepageid, 'sid': sid,
                                    'ptimingid': ptimingid})
 
@@ -227,14 +241,15 @@ def content_search(source='', tag='', published='', kw='', page=0):
                                    'pageid': PAGE_SEARCH})
 
 
-@repository.route('/search_to_detail/<cid>/<source>/<tag>/<published>/<kw>/<page>', methods=['GET'])
-def search_to_detail(cid, source, tag, published, kw, page):
+@repository.route('/search_to_detail/<cid>/<source>/<tag>/<published>/<kw>/<page>/<sid>/<tagname>', methods=['GET'])
+def search_to_detail(cid, source, tag, published, kw, page, sid, tagname):
     print("-------------search_to_detail-------------")
     print(source)
     print(tag)
     print(published)
     print(kw)
     print(page)
+    s = source_impl.get_by_id(sid)
     cont = content_impl.get_byid(cid)
     configuration = configuration_impl.get_config('SOURCE', cont.source_id)
     # n_dict = json.loads(cont.data)
@@ -295,7 +310,7 @@ def search_to_detail(cid, source, tag, published, kw, page):
     pagination = Pagination(int(1), 1, len(data_master))
     return render_template('repository/pagedetail.html', sources=get_source(), data=data_master, link_href=cont.href,
                            pagination=pagination,
-                           contentid=cid,
+                           contentid=cid, source=s, tagname=tagname,
                            params={'source': source, 'tag': tag, 'published': published, 'kw': kw,
                                    'pageid': PAGE_DETAIL, 'page': page, 'prepageid': PAGE_SEARCH})
 

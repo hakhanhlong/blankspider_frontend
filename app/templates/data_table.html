@@ -16,13 +16,14 @@
         <td>{{loop.index}}</td>
         <td>
             {%if params.pageid|int == 0%}
-            <a href="{{url_for('repository.detail', cid=item.id, page=pagination.page, prepageid=0)}}">
+            <a href="{{url_for('repository.detail', cid=item.id, page=pagination.page, prepageid=0,sid=item.source_id,tagname=item['tag_name'])}}">
                 {{item['title']}}</a>
             {%elif params.pageid|int == 1%}
-            <a href="{{url_for('repository.detail', cid=item.id, page=pagination.page,prepageid=1, sid=params.sid, ptimingid=params.ptimingid)}}">
+            <a href="{{url_for('repository.detail', cid=item.id, page=pagination.page,prepageid=1, sid=item.source_id, ptimingid=params.ptimingid, tagname=item['tag_name'])}}">
                 {{item['title']}}</a>
             {%elif params.pageid|int == 3%}
-            <a data-date-format="dd/mm/yyyy" href="{{url_for('repository.search_to_detail', cid=item.id, source=params.source,tag=params.tag,published=params.published,kw=params.kw,page=pagination.page)}}">
+            <a data-date-format="dd/mm/yyyy"
+               href="{{url_for('repository.search_to_detail', cid=item.id, source=params.source,tag=params.tag,published=params.published,kw=params.kw,page=pagination.page,sid=item.source_id, tagname=item['tag_name'])}}">
                 {{item['title']}}</a>
             {%endif%}
 

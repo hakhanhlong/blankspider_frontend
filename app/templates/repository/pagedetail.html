@@ -1,125 +1,150 @@
-<!DOCTYPE html>
 {% extends "listing.html"%}
 {% import "bootstrap/wtf.html" as wtf%}
-{% block title %}LUU CHIEU BAO CHI - LISTING{% endblock %}
+{% from "_macros.html" import pagination_ajax_page_version with context%}
+{% block title %}LUU CHIEU BAO CHI - BAI VIET{% endblock %}
 {% block horizontalmenubar %}
 {%for item in data%}
-<div class="horizontal-menubar-detail-row1">
-    <div class="horizontal-menubar-detail-column">
-        <label class="label-detail-text-style">Tòa soạn: </label>
-        <label class="label-text-style">VnExpress</label>
+<div id="menubar_{{loop.index}}" style="display: none;">
+    <h6 id="total_count" style="display: none">{{pagination.total_count}}</h6>
+    <div class="horizontal-menubar-detail-row1">
+        <div class="horizontal-menubar-detail-column">
+            <label class="label-detail-text-style">Tòa soạn: </label>
+            <label class="label-text-style">VnExpress</label>
+        </div>
+        <div class="horizontal-menubar-detail-column">
+            <label class="label-detail-text-style">Tiêu đề: </label>
+            <label id="txt_title_{{loop.index}}" class="label-text-style">{{item['value']['title']}} </label>
+        </div>
     </div>
-    <div class="horizontal-menubar-detail-column">
-        <label class="label-detail-text-style">Tiêu đề: </label>
-        <label id="txt_title" class="label-text-style">{{item['value']['title']}} </label>
+    <div class="horizontal-menubar-detail-row1">
+        <div class="horizontal-menubar-detail-column">
+            <label class="label-detail-text-style">Chuyên mục: </label>
+            <label class="label-text-style">Thời sự</label>
+        </div>
+        <div class="horizontal-menubar-detail-column">
+            <label class="label-detail-text-style">Ngày đăng tải: </label>
+            <label id="txt_pulished_at_{{loop.index}}"
+                   class="label-text-style">{{item['value']['published_at']}}</label>
+        </div>
+        <div class="horizontal-menubar-detail-column">
+            <label class="label-detail-text-style">Ngày lưu chiểu: </label>
+            <label id="txt_luuchieu_at_{{loop.index}}"
+                   class="label-text-style ">{{item['value']['published_at']}}</label>
+        </div>
+        <div class="horizontal-menubar-detail-column"><a href="{{link_href}}" class="label-detail-text-style">Bài viết
+            gốc </a></div>
     </div>
-</div>
-<div class="horizontal-menubar-detail-row1">
-    <div class="horizontal-menubar-detail-column">
-        <label class="label-detail-text-style">Chuyên mục: </label>
-        <label class="label-text-style">Thời sự</label>
-    </div>
-    <div class="horizontal-menubar-detail-column">
-        <label class="label-detail-text-style">Ngày đăng tải: </label>
-        <label id="txt_pulished_at" class="label-text-style">{{item['value']['published_at']}}</label>
-    </div>
-    <div class="horizontal-menubar-detail-column">
-        <label class="label-detail-text-style">Ngày lưu chiểu: </label>
-        <label id="txt_luuchieu_at" class="label-text-style">{{item['value']['published_at']}}</label>
-    </div>
-    <div class="horizontal-menubar-detail-column"><a href="{{link_href}}" class="label-detail-text-style">Bài viết
-        gốc </a></div>
 </div>
 {%endfor%}
 {%endblock%}
 {% block midlecontent %}
 {%for item in data%}
-<div class="midle-content">
-    <div class="midle-content-navigationbar" style="width: 100%;"><a href="/" class="boder-right"
-                                                                     style="text-align: center; padding-right: 5px; margin-right:5px;">HOME</a>
-        <a href="/repository">KHO NỘI DUNG</a>
-        <!--<a id="show_iframe" href="javascript:;" cid="{{contentid}}" , idx="{{loop.index-1}}" style="float: right;">XEM-->
-        <!--TOÀN BỘ NỘI DUNG TRANG</a>-->
-        <a style="float: right" data-toggle="modal"
-           href="#modalDefault{{loop.index}}">XEM TOÀN BỘ NỘI DUNG TRANG</a>
-
-    </div>
+<div id="middle_{{loop.index}}" style="display: none" class="midle-content">
     <div>
-        <div id="post" style="background: #FFFFFF; overflow: hidden; margin: 0 auto;">
-            <div style="margin: 0 auto;">
-                <div class="panel-heading" role="tab" style="margin: 0 auto;">
+        <div class="midle-content-navigationbar" style="width: 100%;"><a href="/" class="boder-right"
+                                                                         style="text-align: center; padding-right: 5px; margin-right:5px;">HOME</a>
+            <a href="/repository">KHO NỘI DUNG</a>
+            <a style="float: right" data-toggle="modal"
+               href="#modalDefault{{loop.index}}">XEM TOÀN BỘ NỘI DUNG TRANG</a>
+
+        </div>
+        <div>
+            <div id="post" style="background: #FFFFFF; overflow: hidden; margin: 0 auto;">
+                <div style="margin: 0 auto;">
+                    <div class="panel-heading" role="tab" style="margin: 0 auto;">
+                    </div>
+                    <div class="panel-body" style="max-width: 1000px; margin: 0 auto; ">
+                        <h1 class="panel-title" style="font-size:34px;margin: 0 auto; font-weight: bold">
+
+                            {{item['value']['title']}}
+                        </h1>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <i>{{item['value']['published_at']}}</i>
+                        <span class="pull-right"></span>
+                        <span class="pull-right">&nbsp;&nbsp;</span>
+                        <span class="pull-right"></span>
+                        <div class="lead">{{item['value']['description']}}</div>
+                        <div style="margin: 0 auto;">{{item['value']['content']|safe}}</div>
+
+                    </div>
                 </div>
-                <div class="panel-body" style="max-width: 1000px; margin: 0 auto; ">
-                    <h1 class="panel-title" style="font-size:34px;margin: 0 auto; font-weight: bold">
+            </div>
+            <div style="width: 100%">
+                <div style="margin-top: 20px; width: 100%;">
+                    <nav aria-label="Page navigation example" style="display: inline-block; width: 100%;">
+                        <div id="tong-so" style="margin-top: 5px; margin-right: 10px;"><label>Phiên bản:</label></div>
+                        <ul class="pagination">
+                            {{pagination_ajax_page_version(pagination,loop.index)}}
+                        </ul>
 
-                        {{item['value']['title']}}
-                    </h1>
-                    <br/>
-                    <br/>
-                    <br/>
-                    <i>{{item['value']['published_at']}}</i>
-                    <span class="pull-right"></span>
-                    <span class="pull-right">&nbsp;&nbsp;</span>
-                    <span class="pull-right"></span>
-                    <div class="lead">{{item['value']['description']}}</div>
-                    <div style="margin: 0 auto;">{{item['value']['content']|safe}}</div>
-
+                        <div style="float: right; margin-right: 20px;">
+                            {%if params.prepageid|int == 0%}
+                            <a href="{{url_for('repository.back_from_detail_to_filter_by_default', page=params.page)}}">
+                                < Quay lại
+                            </a>
+                            {%elif params.prepageid|int == 1%}
+                            <a href="{{url_for('repository.back_from_detail_to_filter_by_timing',sid=params.sid,ptimingid=params.ptimingid, page=params.page)}}">
+                                < Quay lại
+                            </a>
+                            {%elif params.prepageid|int == 3%}
+                            <a href="{{url_for('repository.back_from_detail_to_search',source=params.source,tag=params.tag, published=params.published, kw = params.kw, page=params.page)}}">
+                                < Quay lại
+                            </a>
+                            {%endif%}
+                        </div>
+                    </nav>
                 </div>
             </div>
         </div>
-        <div style="width: 100%">
-            <div style="margin-top: 20px; width: 100%;">
-                <nav aria-label="Page navigation example" style="display: inline-block; width: 100%;">
-                    <div id="tong-so" style="margin-top: 5px; margin-right: 10px;"><label>Phiên bản:</label></div>
-                    <ul class="pagination">
-                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                    </ul>
-                    <div style="float: right; margin-right: 20px;" ><a href="">< Quay lại</a></div>
-                </nav>
+        <div class="modal fade" id="modalDefault{{loop.index}}" tabindex="-1" role="dialog" aria-hidden="true"
+             style="display: none;">
+            <div class="modal-dialog modal-lg" style="width:1024px;">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <iframe src="{{url_for('repository.detail_html', cid=contentid, idx=loop.index-1)}}"
+                                frameborder="0" scrolling="no"
+                                style="width:1024px;" onload="resizeIframe(this);">
+                        </iframe>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-    <div class="modal fade" id="modalDefault{{loop.index}}" tabindex="-1" role="dialog" aria-hidden="true"
-         style="display: none;">
-        <div class="modal-dialog modal-lg" style="width:1024px;">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <iframe src="{{url_for('repository.detail_html', cid=contentid, idx=loop.index-1)}}"
-                            frameborder="0" scrolling="no"
-                            style="width:1024px;" onload="resizeIframe(this);">
-                    </iframe>
-                </div>
-            </div>
-        </div>
-    </div>
+
 </div>
+{%endfor%}
 <script type="text/javascript">
+    var total_count = $('#total_count').text();
+    for (var index = 1; index <= total_count; index++) {
+        var title = $('#txt_title_' + index).text();
+        var pulished_at = $('#txt_pulished_at_' + index).text();
+        var luuchieu_at = $('#txt_luuchieu_at_' + index).text();
+        if (title.length >= 75) {
+            title = title.substring(0, 75) + "...";
+            $('#txt_title_' + index).html(title);
+        }
+        var i = pulished_at.indexOf("|");
+        var j = luuchieu_at.indexOf("|");
+        if (i > 0) {
+            pulished_at = pulished_at.substring(0, i);
+        } else if (pulished_at.indexOf("-") > 0) {
+            pulished_at = pulished_at.substring(0, pulished_at.indexOf("-"));
+        }
+        if (j > 0) {
+            luuchieu_at = luuchieu_at.substring(0, j);
+        } else if (luuchieu_at.indexOf("-") > 0) {
+            luuchieu_at = luuchieu_at.substring(0, luuchieu_at.indexOf("-"));
+        }
+        $('#txt_pulished_at_' + index).html(pulished_at);
+        $('#txt_luuchieu_at_' + index).html(luuchieu_at);
+    }
     function resizeIframe(obj) {
         obj.style.height = 0;
         obj.style.height = obj.contentWindow.document.body.scrollHeight + 'px';
     }
-    var title = $("#txt_title").text();
-    var pulished_at = $("#txt_pulished_at").text();
-    var luuchieu_at = $("#txt_luuchieu_at").text();
-    if (title.length >= 75) {
-        title = title.substring(0, 75) + "...";
-        $("#txt_title").html(title);
-    }
-    var i = pulished_at.indexOf("|");
-    var j = luuchieu_at.indexOf("|");
-    if (i > 0) {
-        pulished_at = pulished_at.substring(0, i);
-    } else if (pulished_at.indexOf("-") > 0) {
-        pulished_at = pulished_at.substring(0, pulished_at.indexOf("-"));
-    }
-    if (j > 0) {
-        luuchieu_at = luuchieu_at.substring(0, j);
-    } else if (luuchieu_at.indexOf("-") > 0) {
-        luuchieu_at = luuchieu_at.substring(0, luuchieu_at.indexOf("-"));
-    }
-    $("#txt_pulished_at").html(pulished_at);
-    $("#txt_luuchieu_at").html(luuchieu_at);
-
+    $('#menubar_1').css("display", "block");
+    $('#middle_1').css("display", "block");
 </script>
-{%endfor%}
 {%endblock%}

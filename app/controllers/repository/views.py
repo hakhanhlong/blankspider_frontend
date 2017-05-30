@@ -91,7 +91,8 @@ def content_filter_by_timing(sid, ptimingid, page=0, pageid=-1):
                                params={'sid': sid, 'ptimingid': ptimingid, 'pageid': PAGE_FILTER_BY_TIMING})
     else:
         return render_template('repository/index2.html', sources=get_source(), contents=aDict['items'],
-                               pagination=aDict['pagingnation'], params={'pageid': PAGE_FILTER_DEFAULT})
+                               pagination=aDict['pagingnation'],
+                               params={'sid': sid, 'ptimingid': ptimingid, 'pageid': PAGE_FILTER_BY_TIMING})
 
 
 @repository.route('/', methods=['GET'])
@@ -100,7 +101,6 @@ def content_filter_by_timing(sid, ptimingid, page=0, pageid=-1):
 def index(page=0, pageid=0):
     sources = get_source()
     aDict = get_data_from_service_filter_by_default(page)
-    print("page = " + str(page) + "pageid = " + str(pageid))
     if pageid == int(PAGE_FILTER_DEFAULT) and int(page) == 0:
         return render_template('repository/index2.html', sources=sources, contents=aDict['items'],
                                pagination=aDict['pagingnation'], params={'pageid': PAGE_FILTER_DEFAULT})
@@ -116,7 +116,8 @@ def index(page=0, pageid=0):
 @repository.route('/detail/<cid>/<page>', methods=['GET'])
 @repository.route('/detail/<cid>/<page>/<prepageid>', methods=['GET'])
 @repository.route('/detail/<cid>/<page>/<prepageid>/<sid>', methods=['GET'])
-def detail(cid, page=0, prepageid=0, sid=0):
+@repository.route('/detail/<cid>/<page>/<prepageid>/<sid>/<ptimingid>', methods=['GET'])
+def detail(cid, page=0, prepageid=0, sid=0, ptimingid=0):
     cont = content_impl.get_byid(cid)
     configuration = configuration_impl.get_config('SOURCE', cont.source_id)
     # n_dict = json.loads(cont.data)
@@ -174,10 +175,11 @@ def detail(cid, page=0, prepageid=0, sid=0):
                 data_master.append({'key': k, 'value': _val})
     except Exception as ex:
         flash('ERROR:' + ex.message, 'danger')
-
+    pagination = Pagination(int(1), 1, len(data_master))
     return render_template('repository/pagedetail.html', sources=get_source(), data=data_master, link_href=cont.href,
-                           contentid=cid,
-                           params={'pageid': PAGE_DETAIL, 'page': page, 'prepageid': prepageid, 'sid': sid})
+                           contentid=cid, pagination=pagination,
+                           params={'pageid': PAGE_DETAIL, 'page': page, 'prepageid': prepageid, 'sid': sid,
+                                   'ptimingid': ptimingid})
 
 
 @repository.route('/detail-html/<cid>/<idx>', methods=['GET'])
@@ -201,6 +203,12 @@ def detail_html(cid, idx):
 @repository.route('/search/', methods=['GET'])
 @repository.route('/search/<source>/<tag>/<published>/<kw>/<page>', methods=['GET'])
 def content_search(source='', tag='', published='', kw='', page=0):
+    print("-------------content_search-------------")
+    print(source)
+    print(tag)
+    print(published)
+    print(kw)
+    print(page)
     content_service = ContentService()
 
     if published is not '*':
@@ -214,7 +222,123 @@ def content_search(source='', tag='', published='', kw='', page=0):
     data_master = []
     for item in content['response']['docs']:
         data_master.append(item)
-    return render_template('/data_table.html', contents=data_master, pagination = pagination,params={'pageid':PAGE_SEARCH})
+    return render_template('/data_table.html', contents=data_master, pagination=pagination,
+                           params={'source': source, 'tag': tag, 'published': published, 'kw': kw, 'page': page,
+                                   'pageid': PAGE_SEARCH})
+
+
+@repository.route('/search_to_detail/<cid>/<source>/<tag>/<published>/<kw>/<page>', methods=['GET'])
+def search_to_detail(cid, source, tag, published, kw, page):
+    print("-------------search_to_detail-------------")
+    print(source)
+    print(tag)
+    print(published)
+    print(kw)
+    print(page)
+    cont = content_impl.get_byid(cid)
+    configuration = configuration_impl.get_config('SOURCE', cont.source_id)
+    # n_dict = json.loads(cont.data)
+    data_master = []
+
+    try:
+        for item in cont.data:
+            for k, v in item.items():
+
+                _val = json.loads(v)
+                content = _val['content']
+                try:
+                    if configuration['config']['PARSERVIDEOS']:
+                        configs = configuration['config']['PARSERVIDEOS']['data']
+                        array_player = []
+                        array_embeded_player = []
+                        array_player_id = []
+                        htmlparser = etree.HTMLParser(recover=True, remove_blank_text=True)
+                        # tree = etree.parse(StringIO(content), htmlparser)
+                        tree = etree.fromstring(str(content), htmlparser)
+
+                        attribute = configs['attribute']
+                        attribute_pattern_value = attribute['step']['1']['field_value']
+
+                        pattern = configs['pattern']
+                        pattern_value = pattern['step']['1']['field_value']
+
+                        players = tree.xpath(pattern_value)
+                        # players = tree.find(pattern_value)
+                        # players = tree.find('.//div')
+
+
+
+                        embeded_player = configs['format_player']['step']['1']['field_value']
+                        for x in players:
+                            # array_player_id.append()
+                            array_player_id.append(dict(x.attrib)[attribute_pattern_value])  # get value by attribute
+                            array_player.append(str(etree.tostring(x, pretty_print=True)))
+
+                            embeded = embeded_player.replace("{1}", dict(x.attrib)[attribute_pattern_value])
+                            array_embeded_player.append(embeded)
+
+                            x.append(etree.HTML(embeded))
+
+                        content = etree.tostring(tree, method='html', pretty_print=True)
+
+                        _val['content'] = str(content).replace('\\n', "").replace('\\t', "").replace("b'", "")
+
+
+
+                except Exception as error:
+                    pass
+
+                # data_master.append({'key': k, 'value': json.loads(v)})
+                data_master.append({'key': k, 'value': _val})
+    except Exception as ex:
+        flash('ERROR:' + ex.message, 'danger')
+    pagination = Pagination(int(1), 1, len(data_master))
+    return render_template('repository/pagedetail.html', sources=get_source(), data=data_master, link_href=cont.href,
+                           pagination=pagination,
+                           contentid=cid,
+                           params={'source': source, 'tag': tag, 'published': published, 'kw': kw,
+                                   'pageid': PAGE_DETAIL, 'page': page, 'prepageid': PAGE_SEARCH})
+
+
+@repository.route('/back_from_detail_to_filter_by_default/<page>', methods=['GET'])
+def back_from_detail_to_filter_by_default(page):
+    aDict = get_data_from_service_filter_by_default(page)
+    return render_template('repository/index2.html', sources=get_source(), contents=aDict['items'],
+                           pagination=aDict['pagingnation'], params={'pageid': PAGE_FILTER_DEFAULT})
+
+
+@repository.route('/back_from_detail_to_filter_by_timing/<sid>/<ptimingid>/<page>', methods=['GET'])
+def back_from_detail_to_filter_by_timing(sid, ptimingid, page):
+    aDict = get_data_from_service_filter_by_timing(sid, ptimingid, page)
+    return render_template('repository/index2.html', sources=get_source(), contents=aDict['items'],
+                           pagination=aDict['pagingnation'],
+                           params={'pageid': PAGE_FILTER_BY_TIMING, 'sid': sid, 'ptimingid': ptimingid})
+
+
+@repository.route('/back_from_detail_to_search/<source>/<tag>/<published>/<kw>/<page>', methods=['GET'])
+def back_from_detail_to_search(source='', tag='', published='', kw='', page=0):
+    content_service = ContentService()
+    print("-------------back_from_detail_to_search-------------")
+    print(source)
+    print(tag)
+    print(published)
+    print(kw)
+    print(page)
+    if published is not '*':
+        published = published.split('-')[::-1]
+        published = '-'.join(published)
+
+    content = content_service.search(source, tag, published, kw, int(page), 50)
+    count_items = content['response']['numFound']
+    pagination = Pagination(int(page), 50, count_items)
+
+    data_master = []
+    for item in content['response']['docs']:
+        data_master.append(item)
+    return render_template('repository/index2.html', sources=get_source(), contents=data_master,
+                           pagination=pagination,
+                           params={'source': source, 'tag': tag, 'published': published, 'kw': kw, 'page': page,
+                                   'pageid': PAGE_SEARCH})
 
 # @repository.route('/detail/<cid>', methods=['GET'])
 # def detail(cid):

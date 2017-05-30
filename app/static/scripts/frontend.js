@@ -1,3 +1,7 @@
+var PAGE_DETAIL = 2;
+var PAGE_FILTER_DEFAULT = 0;
+var PAGE_FILTER_BY_TIMING = 1;
+var PAGE_SEARCH = 3;
 $(document).ready(function () {
 
     $('#select-baodientu-repository').change(function () {
@@ -44,7 +48,7 @@ $(document).ready(function () {
         var timingid = $(this).attr('timingid');
         var page = $(this).attr('page');
         var pageid = $(this).attr('pageid');
-        if (pageid == 0) {
+        if (pageid == PAGE_FILTER_DEFAULT || pageid == PAGE_FILTER_BY_TIMING || pageid == PAGE_SEARCH) {
             $.ajax('/repository/filter-by-timing/' + sourceid + '/' + timingid + '/' + page + '/' + pageid, {
                 success: function (data) {
                     hide_busy_mark();
@@ -193,7 +197,6 @@ function pagination_ajax_content_default_v2(obj) {
     display_busy_mark();
     var page = $(obj).attr('page');
 
-    $('.midle-content').html('Xin đợi trong giây lát ...');
     $.ajax('/repository/' + page, {
         success: function (data) {
             hide_busy_mark();
@@ -272,6 +275,22 @@ function pagination_ajax_search_content_v2(obj) {
         }
     });
 }
+
+function pagination_ajax_page_version(obj) {
+    var page = $(obj).attr('page');
+    var totalCount = $(obj).attr('totalcount');
+    for (var i = 1; i <= totalCount; i++) {
+
+        if (page == i) {
+            $('#menubar_' + i).css("display", "block");
+            $('#middle_' + i).css("display", "block");
+        } else {
+            $('#menubar_' + i).css("display", "none");
+            $('#middle_' + i).css("display", "none");
+        }
+    }
+}
+
 
 function display_busy_mark() {
     $('.error_message').css("display", "none");

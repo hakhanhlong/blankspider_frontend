@@ -1,0 +1,68 @@
+{%extends "_layoutblank.html"%}
+<div class="midle-content-navigationbar" style="width: 100%;"><a href="/" class="boder-right"
+                                                                 style="text-align: center; padding-right: 5px; margin-right:5px;">HOME</a>
+    <a href="/repository">KHO NỘI DUNG</a>
+    <a style="float: right" data-toggle="modal"
+       href="#modalDefault{{1}}">XEM TOÀN BỘ NỘI DUNG TRANG</a>
+
+</div>
+<div>
+    <div id="post" style="background: #FFFFFF; overflow: hidden; margin: 0 auto;">
+        <div style="margin: 0 auto;">
+            <div class="panel-heading" role="tab" style="margin: 0 auto;">
+            </div>
+            <div class="panel-body" style="max-width: 1000px; margin: 0 auto; ">
+                <h1 class="panel-title" style="font-size:34px;margin: 0 auto; font-weight: bold">
+
+                    {{data['value']['title']}}
+                </h1>
+                <br/>
+                <br/>
+                <br/>
+                <i>{{data['value']['published_at']}}</i>
+                <span class="pull-right"></span>
+                <span class="pull-right">&nbsp;&nbsp;</span>
+                <span class="pull-right"></span>
+                <div class="lead">{{data['value']['description']}}</div>
+                <div style="margin: 0 auto;">{{data['value']['content']|safe}}</div>
+
+            </div>
+        </div>
+    </div>
+    <div style="width: 100%">
+        <div style="margin-top: 20px; width: 100%;">
+            <nav aria-label="Page navigation example" style="display: inline-block; width: 100%;">
+                <div id="tong-so" style="margin-top: 5px; margin-right: 10px;"><label>Phiên bản:</label></div>
+                {{pagination_ajax_search_content(pagination)}}
+                <div style="float: right; margin-right: 20px;">
+                    {%if params.prepageid|int == 0%}
+                    <a href="{{url_for('repository.back_from_detail_to_filter_by_default', page=params.page)}}">
+                        < Quay lại
+                    </a>
+                    {%elif params.prepageid|int == 1%}
+                    <a href="{{url_for('repository.back_from_detail_to_filter_by_timing',sid=params.sid,ptimingid=params.ptimingid, page=params.page)}}">
+                        < Quay lại
+                    </a>
+                    {%elif params.prepageid|int == 3%}
+                    <a href="{{url_for('repository.back_from_detail_to_search',source=params.source,tag=params.tag, published=params.published, kw = params.kw, page=params.page)}}">
+                        < Quay lại
+                    </a>
+                    {%endif%}
+                </div>
+            </nav>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modalDefault{{1}}" tabindex="-1" role="dialog" aria-hidden="true"
+     style="display: none;">
+    <div class="modal-dialog modal-lg" style="width:1024px;">
+        <div class="modal-content">
+            <div class="modal-body">
+                <iframe src="{{url_for('repository.detail_html', cid=contentid, idx=0)}}"
+                        frameborder="0" scrolling="no"
+                        style="width:1024px;" onload="resizeIframe(this);">
+                </iframe>
+            </div>
+        </div>
+    </div>
+</div>

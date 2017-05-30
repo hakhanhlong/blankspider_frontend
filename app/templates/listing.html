@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Lưu chiểu báo chí - listing</title>
+    <title>{%block title%}Lưu chiểu báo chí - listing{%endblock%}</title>
 
     <!-- Bootstrap -->
     <link href="" rel="stylesheet">
@@ -97,7 +97,7 @@
     {% endblock %}
 </div>
 <div class="busy_mark"
-     style="display: none; width: 500px; height: 500px; margin: 0 auto;margin-left: 50%; position: fixed">
+     style="display: none; width: 500px; height: 500px; margin-top: 15%;margin-left: 50%; position: fixed">
     <img src="{{url_for('static', filename='images/ajax-loader.gif')}}"/> Xin chờ trong giây lát...
 </div>
 <div class="error_message"

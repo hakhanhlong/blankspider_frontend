@@ -136,3 +136,51 @@
   </ul>
 
 {% endmacro %}
+
+
+{% macro pagination_ajax_page_version(pagination,currentpage) %}
+
+  <ul class="pagination pull-right lv-body">
+
+    {% if pagination.has_prev %}
+      <li>
+        <a href="javascript:;" onclick="pagination_ajax_page_version(this);" aria-label="Previous" id="filter-timing"
+         page="{{pagination.prev_num}}" totalcount="{{pagination.total_count}}">
+          <span aria-hidden="true">&laquo;</span>
+        </a>
+      </li>
+    {% endif %}
+
+    {% for p in pagination.iter_pages(left_edge=1, left_current=2, right_current=3, right_edge=1) %}
+      {% if p %}
+        {% if p != currentpage %}
+          <li>
+            <a href="javascript:;" onclick="pagination_ajax_page_version(this);" id="filter-timing"
+             page="{{p}}" totalcount="{{pagination.total_count}}">{{ p }}</a>
+          </li>
+        {% else %}
+          <li class="active">
+            <a href="javascript:;" onclick="pagination_ajax_page_version(this);" id="filter-timing"
+             page="{{p}}" totalcount="{{pagination.total_count}}">{{ p }}</a>
+          </li>
+        {% endif %}
+      {% else %}
+        <li class="disabled">
+          <span class="ellipsis">&hellip;</span>
+        </li>
+      {% endif %}
+    {% endfor %}
+
+    {% if pagination.has_next %}
+      <li>
+        <a href="javascript:;" onclick="pagination_ajax_page_version(this);" aria-label="Next" id="filter-timing"
+         page="{{pagination.next_num}}" totalcount="{{pagination.total_count}}">
+          <span aria-hidden="true">&raquo;</span>
+        </a>
+      </li>
+    {% endif %}
+
+  </ul>
+
+{% endmacro %}
+

@@ -243,9 +243,10 @@ def content_search(source='', tag='', published='', kw='', page=0):
 
 @repository.route('/search_to_detail/<cid>/<source>/<tag>/<published>/<kw>/<page>/<sid>/<tagname>', methods=['GET'])
 def search_to_detail(cid, source, tag, published, kw, page, sid, tagname):
-    year, month, day = published.split("-")
-    print(year + " " + month + " " + day)
-    published = day + "-" + month + "-" + year
+    if published is not '*':
+        year, month, day = published.split("-")
+        print(year + " " + month + " " + day)
+        published = day + "-" + month + "-" + year
     print("-------------search_to_detail-------------")
     print(source)
     print(tag)

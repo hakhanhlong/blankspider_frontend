@@ -426,3 +426,6 @@ body {
     background-size: cover;
     min-width: 1084px;
 }
+iframe {
+    position: relative;
+}

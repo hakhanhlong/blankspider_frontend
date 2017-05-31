@@ -119,7 +119,7 @@ def index(page=0, pageid=0):
 @repository.route('/detail/<cid>/<page>/<sid>/<tagname>', methods=['GET'])
 @repository.route('/detail/<cid>/<page>/<prepageid>/<sid>/<tagname>', methods=['GET'])
 @repository.route('/detail/<cid>/<page>/<prepageid>/<sid>/<ptimingid>/<tagname>', methods=['GET'])
-def detail(cid, page=0, prepageid=0, sid=0, ptimingid=0,tagname=''):
+def detail(cid, page=0, prepageid=0, sid=0, ptimingid=0, tagname=''):
     cont = content_impl.get_byid(cid)
     s = source_impl.get_by_id(sid)
     print("source ==========================================")
@@ -243,6 +243,9 @@ def content_search(source='', tag='', published='', kw='', page=0):
 
 @repository.route('/search_to_detail/<cid>/<source>/<tag>/<published>/<kw>/<page>/<sid>/<tagname>', methods=['GET'])
 def search_to_detail(cid, source, tag, published, kw, page, sid, tagname):
+    year, month, day = published.split("-")
+    print(year + " " + month + " " + day)
+    published = day + "-" + month + "-" + year
     print("-------------search_to_detail-------------")
     print(source)
     print(tag)

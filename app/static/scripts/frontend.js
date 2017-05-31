@@ -2,8 +2,12 @@ var PAGE_DETAIL = 2;
 var PAGE_FILTER_DEFAULT = 0;
 var PAGE_FILTER_BY_TIMING = 1;
 var PAGE_SEARCH = 3;
+var scroll_position = 0;
+var POSITION_TO_SCROLL_TO = 204;
 $(document).ready(function () {
-
+    $(window).scroll(function () {
+        scroll_position = $(window).scrollTop();
+    })
     $('#select-baodientu-repository').change(function () {
         $('#select-tag option').remove();
         $.ajax('/ajax/tag/get_by_source/' + this.value, {
@@ -53,7 +57,7 @@ $(document).ready(function () {
                 success: function (data) {
                     hide_busy_mark();
                     $('.midle-content').html(data);
-
+                    return scroll_to_top();
                 },
                 error: function () {
                     display_error_mesage();
@@ -164,7 +168,7 @@ function pagination_ajax_v2(obj) {
         success: function (data) {
             hide_busy_mark();
             $('.midle-content').html(data);
-
+            return scroll_to_top();
         },
         error: function () {
             display_error_mesage();
@@ -201,7 +205,7 @@ function pagination_ajax_content_default_v2(obj) {
         success: function (data) {
             hide_busy_mark();
             $('.midle-content').html(data);
-
+            return scroll_to_top();
         },
         error: function () {
             display_error_mesage();
@@ -267,7 +271,7 @@ function pagination_ajax_search_content_v2(obj) {
         success: function (data) {
             hide_busy_mark();
             $('.midle-content').html(data);
-
+            return scroll_to_top();
         },
         error: function () {
             display_error_mesage();
@@ -289,6 +293,7 @@ function pagination_ajax_page_version(obj) {
             $('#middle_' + i).css("display", "none");
         }
     }
+    return scroll_to_top();
 }
 
 
@@ -313,5 +318,13 @@ function display_error_mesage() {
 function hide_error_message() {
     $('.midle-content').css("display", "block");
     $('.error_message').css("display", "none");
+}
+
+function scroll_to_top() {
+    if (scroll_position > POSITION_TO_SCROLL_TO) {
+        $('html,body').animate({scrollTop: POSITION_TO_SCROLL_TO}, 1000);
+        return false;
+    }
+    return true;
 }
 

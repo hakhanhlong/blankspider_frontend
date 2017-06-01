@@ -5,8 +5,8 @@
     font-size: 16px;
     font-weight: 400;
     letter-spacing: -1.2px;
-    text-decoration: underline;
     text-align: justify;
+    width: 50%;
 }
 
 .datatable_other_columns {
@@ -22,6 +22,7 @@
     font-size: 14px;
     font-weight: 700;
     text-align: justify;
+    overflow: hidden;
 }
 
 .label-detail-text-style {
@@ -256,6 +257,7 @@ a img {
 #admin-area {
     float: left;
     width: 20.1%;
+    padding-left: 2%;
     height: inherit;
     background: url(../images/adminbackground.png) no-repeat;
     background-size: cover;
@@ -267,7 +269,7 @@ a img {
 }
 
 #avatar_container {
-    width: 100%;
+    width: 90%;
     height: 100%;
     vertical-align: middle;
     align-self: center;
@@ -298,11 +300,17 @@ a img {
 }
 
 #left-menu-tree {
+    min-width: 192px;
+    width: 19%;
     padding-left: 0px;
+    overflow-y: scroll;
+    float: left;
 }
 
 #left-menu-tree .container-fluid {
-    width: 19%;
+    /*width: 19%;*/
+    /*height: 100%;*/
+    width: 100%;
     background-color: #f1f1f1;
     float: left;
     margin-left: -3px;
@@ -314,7 +322,6 @@ a img {
 }
 
 #left-menu-tree-layer1 div {
-    overflow-y: hidden;
     overflow-x: auto;
     height: 100%;
 }
@@ -345,6 +352,7 @@ a img {
     color: #ffffff;
     font-size: 14px;
     font-weight: 400;
+    z-index: 100;
 }
 
 .table-first-row {
@@ -355,12 +363,11 @@ a img {
 }
 
 .midle-content {
-    float: left;
+    float: right;
     margin-top: 20px;
     margin-left: 23px;
     margin-right: 10px;
     width: 77%;
-    height: 100%;
 }
 
 .boder-right {
@@ -412,8 +419,9 @@ a img {
     overflow-x: hidden;
 }
 
-html {
-    font-family: 'Segoe UI'; !important;
+html, body {
+    font-family: 'Segoe UI';
+!important;
     -webkit-text-size-adjust: 100%;
     -ms-text-size-adjust: 100%;
 }
@@ -425,7 +433,90 @@ body {
     background-position: center center;
     background-size: cover;
     min-width: 1084px;
+    overflow-x: hidden;
 }
+
 iframe {
     position: relative;
 }
+
+.text-center {
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 700;
+    text-align: justify;
+
+}
+
+/*.table_body {*/
+/*max-height: 1440px;*/
+/*overflow-y: scroll;*/
+/*}*/
+
+/*thead, tbody { display: block; }*/
+
+/*tbody {*/
+/*height: 1400px;       !* Just for the demo          *!*/
+/*overflow-y: auto;    !* Trigger vertical scroll    *!*/
+/*overflow-x: hidden;  !* Hide the horizontal scroll *!*/
+/*}*/
+/*thead {*/
+/*display: table-header-group;*/
+/*vertical-align: middle;*/
+/*}*/
+
+/*table {*/
+/*border-collapse: collapse;*/
+/*border-spacing: 0;*/
+/*}*/
+
+/*tr {*/
+/*display: table-row;*/
+/*vertical-align: inherit;*/
+/*border-color: inherit;*/
+/*}*/
+
+/*th {*/
+/*background-color: red;*/
+/*margin: 0;*/
+/*display: table-cell;*/
+/*vertical-align: inherit;*/
+/*height: 50px;*/
+/*}*/
+
+/*table tbody {*/
+/*border-right: 20px solid transparent;*/
+/*}*/
+
+/*#table-wrapper {*/
+/*overflow-x: hidden;*/
+/*position: relative;*/
+/*display: block;*/
+/*}*/
+
+/*#table-scroll {*/
+/*overflow-x: hidden;*/
+/*display: block;*/
+/*max-height: 1450px;*/
+/*overflow-y: scroll;*/
+/*}*/
+
+/*#table-wrapper table {*/
+/*width: 100%;*/
+
+/*}*/
+
+/*table {*/
+/*display: table;*/
+/*width: 100%;*/
+/*}*/
+
+/*#table-wrapper table thead th .text {*/
+/*top: -0.01px;*/
+/*position: absolute;*/
+/*height: 50px;*/
+/*width: 100%;*/
+/*margin-left: -8px;*/
+/*border: 1px solid #DEDACF;*/
+/*background-color: #CCCCCC;*/
+/*}*/

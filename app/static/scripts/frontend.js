@@ -5,9 +5,37 @@ var PAGE_SEARCH = 3;
 var scroll_position = 0;
 var POSITION_TO_SCROLL_TO = 204;
 $(document).ready(function () {
+    $('#left-menu-tree').bind('mousewheel DOMMouseScroll', function (e) {
+        var scrollTo = null;
+
+        if (e.type == 'mousewheel') {
+            scrollTo = (e.originalEvent.wheelDelta * -1);
+        }
+        else if (e.type == 'DOMMouseScroll') {
+            scrollTo = 40 * e.originalEvent.detail;
+        }
+
+        if (scrollTo) {
+            e.preventDefault();
+            $(this).scrollTop(scrollTo + $(this).scrollTop());
+        }
+    });
+    var windowHeight = $(window).height() - $('#footer').height();
+    $('#container-fluid').css({min_height: windowHeight});
     $(window).scroll(function () {
         scroll_position = $(window).scrollTop();
-    })
+        if (scroll_position >= POSITION_TO_SCROLL_TO) {
+            var height = $(window).height() - $('#footer').height() - 5;
+            $('#left-menu-tree').css({
+                position: 'fixed',
+                top: 0,
+                z_index: -1,
+                height: height
+            });
+        } else {
+            $('#left-menu-tree').css({position: 'relative'});
+        }
+    });
     $('#select-baodientu-repository').change(function () {
         $('#select-tag option').remove();
         $.ajax('/ajax/tag/get_by_source/' + this.value, {
@@ -17,7 +45,7 @@ $(document).ready(function () {
                     $('#select-tag').append('<option value="' + item._id + '">' + item.name + ' (' + item.count + ')' + '</option>');
                 });
 
-                $('#select-tag').selectpicker('refresh');
+                //  $('#select-tag').selectpicker('refresh');
             },
             error: function () {
                 display_error_mesage();
@@ -163,7 +191,6 @@ function pagination_ajax_v2(obj) {
     var timingid = $(obj).attr('timingid');
     var page = $(obj).attr('page');
 
-    $('.midle-content').html('Xin đợi trong giây lát ...');
     $.ajax('/repository/filter-by-timing/' + sourceid + '/' + timingid + '/' + page, {
         success: function (data) {
             hide_busy_mark();
@@ -299,29 +326,29 @@ function pagination_ajax_page_version(obj) {
 
 function display_busy_mark() {
     $('.error_message').css("display", "none");
-    $('.midle-content').css("display", "none");
+    $('.midle-content').css("visibility", "hidden");
     $('.busy_mark').css("display", "block");
 }
 
 function hide_busy_mark() {
     $('.error_message').css("display", "none");
-    $('.midle-content').css("display", "block");
+    $('.midle-content').css("visibility", "visible");
     $('.busy_mark').css("display", "none");
 }
 
 function display_error_mesage() {
-    $('.midle-content').css("display", "none");
+    $('.midle-content').css("visibility", "hidden");
     $('.error_message').css("display", "block");
     $('.busy_mark').css("display", "none");
 }
 
 function hide_error_message() {
-    $('.midle-content').css("display", "block");
+    $('.midle-content').css("visibility", "visible");
     $('.error_message').css("display", "none");
 }
 
 function scroll_to_top() {
-    if (scroll_position > POSITION_TO_SCROLL_TO) {
+    if (scroll_position >= POSITION_TO_SCROLL_TO) {
         $('html,body').animate({scrollTop: POSITION_TO_SCROLL_TO}, 1000);
         return false;
     }

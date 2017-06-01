@@ -56,7 +56,7 @@
 </div>
 <div id="content">
     <div id="left-menu-tree">
-        <div class="container-fluid">
+        <div class="container-fluid" id="container-fluid">
             <div id="left-menu-tree-layer1">
                 <div>
                     <ul class="nav">
@@ -97,15 +97,15 @@
     {% endblock %}
 </div>
 <div class="busy_mark"
-     style="display: none; width: 500px; height: 500px; margin-top: 15%;margin-left: 50%; position: fixed">
+     style="display: none; width: 500px; height: 500px; margin-top: 12%;margin-left: 50%; position: fixed;font-size:14px">
     <img src="{{url_for('static', filename='images/ajax-loader.gif')}}"/> Xin chờ trong giây lát...
 </div>
 <div class="error_message"
      style="display: none; width: 500px; height: 500px; margin: 0 auto;margin-left: 50%; position: fixed">
-    <h1 style="color: red;font-size:34px; font-weight: bold;">Đã xảy ra lỗi, vui lòng kiểm tra lại đường truyền
+    <h1 style="color: red;font-size:24px; font-weight: bold;">Đã xảy ra lỗi, vui lòng kiểm tra lại đường truyền
         Internet...!</h1>
 </div>
-<div class="footer"> Copy right luu chieu bao chi 2017</div>
+<div class="footer" id="footer"> Copy right luu chieu bao chi 2017</div>
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script type="text/javascript" src="{{url_for('static', filename='scripts/jquery-1.11.3.min.js')}}"></script>

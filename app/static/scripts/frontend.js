@@ -55,24 +55,24 @@ $(document).ready(function () {
 
     }).change();
 
-    $('.lv-body').on('click', '#filter-timing', function () {
-        var sourceid = $(this).attr('sourceid');
-        var timingid = $(this).attr('timingid');
-        var page = $(this).attr('page');
-
-
-        $.ajax('/ajax/content/filter_by_ptiming/' + sourceid + '/' + timingid + '/' + page, {
-            success: function (data) {
-
-                $('.table-responsive').html(data);
-
-            },
-            error: function () {
-                display_error_mesage();
-                console.log('ERROR: GET CONTENT');
-            }
-        });
-    });
+    // $('.lv-body').on('click', '#filter-timing', function () {
+    //     var sourceid = $(this).attr('sourceid');
+    //     var timingid = $(this).attr('timingid');
+    //     var page = $(this).attr('page');
+    //
+    //
+    //     $.ajax('/ajax/content/filter_by_ptiming/' + sourceid + '/' + timingid + '/' + page, {
+    //         success: function (data) {
+    //
+    //             $('.table-responsive').html(data);
+    //
+    //         },
+    //         error: function () {
+    //             display_error_mesage();
+    //             console.log('ERROR: GET CONTENT');
+    //         }
+    //     });
+    // });
 
     $('.menu-tree-link').on('click', function () {
         display_busy_mark();

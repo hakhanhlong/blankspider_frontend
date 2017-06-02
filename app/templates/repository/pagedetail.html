@@ -10,23 +10,23 @@
         }
     }
 
-     @media screen and (min-width: 1529px) /* height >= 820 px */ {
+    @media screen and (min-width: 1529px) /* height >= 820 px */ {
         .horizontal-menubar-detail-column {
             margin-left: 7%;
         }
     }
 
-     @media screen and (min-width: 1560px) /* height >= 820 px */ {
-         .horizontal-menubar-detail-column {
-             margin-left: 10%;
-         }
-     }
+    @media screen and (min-width: 1560px) /* height >= 820 px */ {
+        .horizontal-menubar-detail-column {
+            margin-left: 10%;
+        }
+    }
 
     @media screen and (min-width: 1629px) /* height >= 820 px */ {
-         .horizontal-menubar-detail-column {
-             margin-left: 10%;
-         }
-     }
+        .horizontal-menubar-detail-column {
+            margin-left: 10%;
+        }
+    }
 </style>
 {%for item in data%}
 <div id="menubar_{{loop.index}}" style="display: none;">
@@ -44,7 +44,7 @@
     <div class="horizontal-menubar-detail-row1">
         <div class="horizontal-menubar-detail-column">
             <label class="label-detail-text-style">Chuyên mục: </label>
-            <label class="label-text-style">{{tagname}}</label>
+            <label class="label-text-style">{{item['value']['tag_name']}}</label>
         </div>
         <div class="horizontal-menubar-detail-column">
             <label class="label-detail-text-style">Ngày đăng tải: </label>
@@ -56,7 +56,8 @@
             <label id="txt_luuchieu_at_{{loop.index}}"
                    class="label-text-style ">{{item['value']['published_at']}}</label>
         </div>
-        <div class="horizontal-menubar-detail-column"><a href="{{link_href}}" class="label-detail-text-style" target="_blank">Bài viết
+        <div class="horizontal-menubar-detail-column"><a href="{{link_href}}" class="label-detail-text-style"
+                                                         target="_blank">Bài viết
             gốc </a></div>
     </div>
 </div>
@@ -166,7 +167,7 @@
         $('#txt_luuchieu_at_' + index).html(luuchieu_at);
     }
     function resizeIframe(obj) {
-        obj.style.height = 0;
+        alert("iframe resized");
         obj.style.height = obj.contentWindow.document.body.scrollHeight + 'px';
     }
     $('#menubar_1').css("display", "block");

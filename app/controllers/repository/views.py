@@ -232,9 +232,15 @@ def content_search(source='', tag='', published='', kw='', page=0):
     content = content_service.search(source, tag, published, kw, int(page), 50)
     count_items = content['response']['numFound']
     pagination = Pagination(int(page), 50, count_items)
-
+    print("====countItems=====")
+    print(count_items)
+    print("========content===========")
+    print(content)
     data_master = []
     for item in content['response']['docs']:
+        print("=====item=======")
+        print(item)
+        print("================")
         data_master.append(item)
     return render_template('/data_table.html', contents=data_master, pagination=pagination,
                            params={'source': source, 'tag': tag, 'published': published, 'kw': kw, 'page': page,

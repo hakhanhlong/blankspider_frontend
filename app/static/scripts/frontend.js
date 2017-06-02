@@ -5,6 +5,10 @@ var PAGE_SEARCH = 3;
 var scroll_position = 0;
 var POSITION_TO_SCROLL_TO = 204;
 $(document).ready(function () {
+    $(window).resize(function () {
+        var windowHeight = $(window).height();
+        $('#left-menu-tree').css({height: windowHeight});
+    });
     $('#left-menu-tree').bind('mousewheel DOMMouseScroll', function (e) {
         var scrollTo = null;
 
@@ -20,6 +24,7 @@ $(document).ready(function () {
             $(this).scrollTop(scrollTo + $(this).scrollTop());
         }
     });
+
     var windowHeight = $(window).height() - $('#footer').height();
     $('#container-fluid').css({min_height: windowHeight});
     $(window).scroll(function () {

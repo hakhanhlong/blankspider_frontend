@@ -5,9 +5,14 @@ var PAGE_SEARCH = 3;
 var scroll_position = 0;
 var POSITION_TO_SCROLL_TO = 204;
 $(document).ready(function () {
+    reset_leftMenuTree_height();
     $(window).resize(function () {
         var windowHeight = $(window).height();
-        $('#left-menu-tree').css({height: windowHeight});
+        if (scroll_position >= POSITION_TO_SCROLL_TO) {
+            $('#left-menu-tree').css({height: windowHeight});
+        } else {
+            reset_leftMenuTree_height();
+        }
     });
     $('#left-menu-tree').bind('mousewheel DOMMouseScroll', function (e) {
         var scrollTo = null;
@@ -26,7 +31,6 @@ $(document).ready(function () {
     });
 
     var windowHeight = $(window).height() - $('#footer').height();
-    $('#container-fluid').css({min_height: windowHeight});
     $(window).scroll(function () {
         scroll_position = $(window).scrollTop();
         if (scroll_position >= POSITION_TO_SCROLL_TO) {
@@ -39,6 +43,7 @@ $(document).ready(function () {
             });
         } else {
             $('#left-menu-tree').css({position: 'relative'});
+            reset_leftMenuTree_height();
         }
     });
     $('#select-baodientu-repository').change(function () {
@@ -358,5 +363,11 @@ function scroll_to_top() {
         return false;
     }
     return true;
+}
+
+function reset_leftMenuTree_height() {
+    var elementOffset = $('#left-menu-tree').offset().top;
+    var apply_height = $(window).height() - Math.abs(($(window).scrollTop() - elementOffset));
+    $('#left-menu-tree').css({height: apply_height});
 }
 

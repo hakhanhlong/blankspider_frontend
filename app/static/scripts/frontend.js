@@ -34,7 +34,13 @@ $(document).ready(function () {
     $(window).scroll(function () {
         scroll_position = $(window).scrollTop();
         if (scroll_position >= POSITION_TO_SCROLL_TO) {
-            var height = $(window).height() - $('#footer').height() - 5;
+
+            var height = 0;
+            if (isFooterViewOnScreen()) {
+                height = $(window).height() - $('#footer').height() - 5;
+            } else {
+                height = $(window).height();
+            }
             $('#left-menu-tree').css({
                 position: 'fixed',
                 top: 0,
@@ -369,5 +375,15 @@ function reset_leftMenuTree_height() {
     var elementOffset = $('#left-menu-tree').offset().top;
     var apply_height = $(window).height() - Math.abs(($(window).scrollTop() - elementOffset));
     $('#left-menu-tree').css({height: apply_height});
+}
+
+function isFooterViewOnScreen() {
+    var docViewTop = $(window).scrollTop();
+    var docViewBottom = docViewTop + $(window).height();
+
+    var elemTop = $('.footer').offset().top;
+    var elemBottom = elemTop + $('.footer').height();
+
+    return ((elemBottom <= docViewBottom) && (elemTop >= docViewTop));
 }
 

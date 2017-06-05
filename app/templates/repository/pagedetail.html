@@ -111,7 +111,7 @@
                                 < Quay lại
                             </a>
                             {%elif params.prepageid|int == 1%}
-                            <a href="{{url_for('repository.back_from_detail_to_filter_by_timing',sid=params.sid,ptimingid=params.ptimingid, page=params.page)}}">
+                            <a href="{{url_for('repository.back_from_detail_to_filter_by_timing',sid=source.id,ptimingid=params.ptimingid, page=params.page)}}">
                                 < Quay lại
                             </a>
                             {%elif params.prepageid|int == 3%}

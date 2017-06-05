@@ -35,6 +35,7 @@
             <label class="label-text-style">Tòa soạn: </label>
             <label class="custom-select">
                 <select style="width: 213px;" class="horizontal-menu-border-style" id="select-baodientu-repository">
+                    <option value="*">Tất cả</option>
                     {% for source in sources%}
                     <option value="{{source.id}}">{{source.name}}</option>
                     {% endfor %}

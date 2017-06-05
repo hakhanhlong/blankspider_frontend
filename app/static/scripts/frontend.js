@@ -45,7 +45,7 @@ $(document).ready(function () {
         $('#select-tag option').remove();
         $.ajax('/ajax/tag/get_by_source/' + this.value, {
             success: function (data) {
-
+                $('#select-tag').append('<option value="*">' + 'Tất cả' + '</option>');
                 $.each(data, function (index, item) {
                     $('#select-tag').append('<option value="' + item._id + '">' + item.name + ' (' + item.count + ')' + '</option>');
                 });

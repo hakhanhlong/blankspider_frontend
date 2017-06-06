@@ -5,6 +5,10 @@ var PAGE_SEARCH = 3;
 var scroll_position = 0;
 var POSITION_TO_SCROLL_TO = 204;
 $(document).ready(function () {
+    $('.open_popup').on('click', function () {
+        var index = $(this).attr('index');
+        resize_iframe(index);
+    });
     reset_leftMenuTree_height();
     $(window).resize(function () {
         var windowHeight = $(window).height();
@@ -387,3 +391,7 @@ function isFooterViewOnScreen() {
     return ((elemBottom <= docViewBottom) && (elemTop >= docViewTop));
 }
 
+function resize_iframe(index) {
+    $('#modalDefault' + index).css({display: "block"});
+    document.getElementById("iframe_" + index).style.height = document.getElementById("iframe_" + index).contentWindow.document.body.scrollHeight + 'px';
+}

@@ -71,7 +71,8 @@
                                                                          style="text-align: center; padding-right: 5px; margin-right:5px;">HOME</a>
             <a href="/repository">KHO NỘI DUNG</a>
             <a style="float: right" data-toggle="modal"
-               href="#modalDefault{{loop.index}}">XEM TOÀN BỘ NỘI DUNG TRANG</a>
+               href="#modalDefault{{loop.index}}" index="{{loop.index}}" class="open_popup">XEM TOÀN BỘ NỘI DUNG
+                TRANG</a>
 
         </div>
         <div>
@@ -129,9 +130,10 @@
             <div class="modal-dialog modal-lg" style="width:1024px;">
                 <div class="modal-content">
                     <div class="modal-body">
-                        <iframe src="{{url_for('repository.detail_html', cid=contentid, idx=loop.index-1)}}"
+                        <iframe id="iframe_{{loop.index}}"
+                                src="{{url_for('repository.detail_html', cid=contentid, idx=loop.index-1)}}"
                                 frameborder="0" scrolling="no"
-                                style="width:1024px;" onload="resizeIframe(this);">
+                                style="width:1024px;">
                         </iframe>
                     </div>
                 </div>
@@ -166,9 +168,9 @@
         $('#txt_pulished_at_' + index).html(pulished_at);
         $('#txt_luuchieu_at_' + index).html(luuchieu_at);
     }
-    function resizeIframe(obj) {
-        obj.style.height = obj.contentWindow.document.body.scrollHeight + 'px';
-    }
+    //    function resizeIframe(obj) {
+    //        obj.style.height = obj.contentWindow.document.body.scrollHeight + 'px';
+    //    }
     $('#menubar_1').css("display", "block");
     $('#middle_1').css("display", "block");
 </script>

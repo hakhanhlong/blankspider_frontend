@@ -62,7 +62,17 @@ $(document).ready(function () {
             success: function (data) {
                 $('#select-tag').append('<option value="*">' + 'Tất cả' + '</option>');
                 $.each(data, function (index, item) {
-                    $('#select-tag').append('<option value="' + item._id + '">' + item.name + ' (' + item.count + ')' + '</option>');
+                    var savedid = $('#lbl_tag').text();
+                    var item_id = item._id;
+                    if (savedid == item_id) {
+                        $('#select-tag').append('<option value="' + item._id
+                            + '"selected>' + item.name + ' ('
+                            + item.count + ')' + '</option>');
+                    }
+                    else {
+                        $('#select-tag').append('<option value="' + item._id
+                            + '">' + item.name + ' (' + item.count + ')' + '</option>');
+                    }
                 });
 
                 //  $('#select-tag').selectpicker('refresh');
@@ -167,7 +177,11 @@ $(document).ready(function () {
             }
         });
     });
-
+    var savedDate = $('#lbl_published').text();
+    if (savedDate != null && savedDate != "") {
+        savedDate = convertFormatDate(savedDate);
+        $('#txt-date-from-picker').val(savedDate);
+    }
 });
 
 function init_repository() {
@@ -393,5 +407,16 @@ function isFooterViewOnScreen() {
 
 function resize_iframe(index) {
     $('#modalDefault' + index).css({display: "block"});
-    document.getElementById("iframe_" + index).style.height = document.getElementById("iframe_" + index).contentWindow.document.body.scrollHeight + 'px';
+    document.getElementById("iframe_" + index)
+        .style.height = document.getElementById("iframe_" + index)
+            .contentWindow.document.body.scrollHeight + 'px';
+}
+
+function convertFormatDate(date) {
+    var returnDate = date.split("-");
+    var year = returnDate[0];
+    var month = returnDate[1];
+    var day = returnDate[2];
+    date = day + "/" + month + "/" + year;
+    return date;
 }

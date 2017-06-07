@@ -30,6 +30,8 @@
 
 </style>
 <div class="horizontal-menubar-row1">
+    <label id="lbl_published" style="display: none">{{params.published}}</label>
+    <label id="lbl_tag" style="display: none">{{params.tag}}</label>
     <div class="horizontal-menubar-column1">
         <p>
             <label class="label-text-style">Tòa soạn: </label>
@@ -37,7 +39,11 @@
                 <select style="width: 213px;" class="horizontal-menu-border-style" id="select-baodientu-repository">
                     <option value="*">Tất cả</option>
                     {% for source in sources%}
+                    {%if source.id|string() == params.source%}
+                    <option value="{{source.id}}" selected>{{source.name}}</option>
+                    {%else%}
                     <option value="{{source.id}}">{{source.name}}</option>
+                    {%endif%}
                     {% endfor %}
                 </select>
             </label>
@@ -47,8 +53,13 @@
         <p>
             <label class="label-text-style">Từ khóa: </label>
             <label>
+                {%if params.kw != "" and params.kw !="*"%}
+                <input style="width: 233px;" class="horizontal-menu-border-style input-text-style" type="text"
+                       placeholder="Nhập từ khóa..." id="txt-search" value="{{params.kw}}">
+                {%else%}
                 <input style="width: 233px;" class="horizontal-menu-border-style input-text-style" type="text"
                        placeholder="Nhập từ khóa..." id="txt-search">
+                {%endif%}
             </label>
         </p>
     </div>
@@ -66,10 +77,7 @@
             <label class="label-text-style">Chuyên mục: </label>
             <label class="custom-select ">
                 <select style="width: 189px;" class="horizontal-menu-border-style" id="select-tag">
-                    <option>Tất cả</option>
-                    <option>Tình yêu</option>
-                    <option>Tình báo</option>
-                    <option>Giới tính</option>
+                    <option value="*">Tất cả</option>
                 </select>
             </label>
         </p>
@@ -77,8 +85,13 @@
     <div class="horizontal-menubar-column2">
         <label class="label-text-style">Ngày:</label>
         <label class="calendar">
+            {%if params.published != "*" and params.published!=""%}
+            <input id="txt-date-from-picker" value="{{params.published}}" data-date-format="dd/mm/yyyy"
+                   class="horizontal-menu-border-style input-text-style" type="text" readonly>
+            {%else%}
             <input id="txt-date-from-picker" data-date-format="dd/mm/yyyy"
                    class="horizontal-menu-border-style input-text-style" type="text" readonly>
+            {%endif%}
             <img src="{{url_for('static', filename='images/datetimepickericon.png')}}"/> </label>
         <label class="label-text-style" style="margin-left: 9%;">-</label>
         <label class="calendar">

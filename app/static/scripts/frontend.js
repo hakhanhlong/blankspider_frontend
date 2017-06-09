@@ -53,6 +53,11 @@ $(document).ready(function () {
     });
     reset_leftMenuTree_height();
     $(window).resize(function () {
+        if ($(window).width() >= 769) {
+            $('#defaultNavbar1').css({background: 'transparent'});
+        } else {
+            $('#defaultNavbar1').css({background: '#134e70'});
+        }
         if ($(window).width() > MOBILE_WIDTH) {
             var windowHeight = $(window).height();
             if (scroll_position >= POSITION_TO_SCROLL_TO) {

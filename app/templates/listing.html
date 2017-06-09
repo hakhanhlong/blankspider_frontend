@@ -55,6 +55,12 @@
             }
 
         }
+
+        @media screen and (min-width: 769px) {
+            #defaultNavbar1 {
+                background: transparent;
+            }
+        }
     </style>
 </head>
 <body>
@@ -143,7 +149,8 @@
 </div>
 <div id="btn_slide_right">
     <button>
-        <img id="open_menutree" src="{{url_for('static', filename='images/circle-36-512.png')}}" style="width: 100%;height: 100%">
+        <img id="open_menutree" src="{{url_for('static', filename='images/circle-36-512.png')}}"
+             style="width: 100%;height: 100%">
         <img id="close_menutree" src="{{url_for('static', filename='images/close-left-menutree.png')}}"
              style="width: 100%;height: 100%;display: none">
     </button>

@@ -521,6 +521,7 @@ function open_left_menu_tree() {
     $('#left-menu-tree').animate({
         left: "+=" + destination + "px",
     }, 1000);
+    $('#left-menu-tree').css({top: 0});
     $('#btn_slide_right').animate({
         left: "+=" + destination + "px",
     }, 1000);

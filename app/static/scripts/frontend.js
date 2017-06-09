@@ -53,7 +53,6 @@ $(document).ready(function () {
     });
     reset_leftMenuTree_height();
     $(window).resize(function () {
-        $('#txt-search').val($(window).width());
         if ($(window).width() > MOBILE_WIDTH) {
             var windowHeight = $(window).height();
             if (scroll_position >= POSITION_TO_SCROLL_TO) {

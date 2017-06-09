@@ -28,15 +28,56 @@
         }
     }
 
+    @media screen and (max-width: 840px) {
+
+        #horizontal-menubar-row2 {
+            margin-top: 5px;
+        }
+
+        #horizontal-menubar-column2 {
+            margin-left: 15%;
+        }
+
+        #horizontal-menubar-date {
+            margin-left: 15%;
+        }
+
+        .horizontal-menubar-column1 {
+            margin-left: 15%;
+        }
+
+        #txt-search,#select-baodientu-repository,#select-tag {
+            width: 150px;
+        }
+    }
+
+    @media screen and (min-width: 841px) {
+        #horizontal-menubar-row2 {
+            margin-top: -15px;
+        }
+
+        #horizontal-menubar-column2 {
+            margin-left: 5%;
+        }
+
+        #horizontal-menubar-date {
+            margin-left: 5%;
+        }
+
+        .horizontal-menubar-column1 {
+            margin-left: 5%;
+        }
+    }
+
 </style>
 <div class="horizontal-menubar-row1">
     <label id="lbl_published" style="display: none">{{params.published}}</label>
     <label id="lbl_tag" style="display: none">{{params.tag}}</label>
-    <div class="horizontal-menubar-column1">
+    <div id="horizontal-menubar-column1" class="horizontal-menubar-column1">
         <p>
             <label class="label-text-style">Tòa soạn: </label>
             <label class="custom-select">
-                <select style="width: 213px;" class="horizontal-menu-border-style" id="select-baodientu-repository">
+                <select class="horizontal-menu-border-style" id="select-baodientu-repository">
                     <option value="*">Tất cả</option>
                     {% for source in sources%}
                     {%if source.id|string() == params.source%}
@@ -49,40 +90,40 @@
             </label>
         </p>
     </div>
-    <div class="horizontal-menubar-column2">
+    <div id="horizontal-menubar-column2" class="horizontal-menubar-column2">
         <p>
             <label class="label-text-style">Từ khóa: </label>
             <label>
                 {%if params.kw != "" and params.kw !="*"%}
-                <input style="width: 233px;" class="horizontal-menu-border-style input-text-style" type="text"
+                <input class="horizontal-menu-border-style input-text-style" type="text"
                        placeholder="Nhập từ khóa..." id="txt-search" value="{{params.kw}}">
                 {%else%}
-                <input style="width: 233px;" class="horizontal-menu-border-style input-text-style" type="text"
+                <input class="horizontal-menu-border-style input-text-style" type="text"
                        placeholder="Nhập từ khóa..." id="txt-search">
                 {%endif%}
             </label>
         </p>
     </div>
-    <div class="horizontal-menubar-column3">
+    <div id="horizontal-menubar-column3" class="horizontal-menubar-column3">
         <button id="btn-search" class="horizontal-menu-border-style"
-                style="z-index: 1000; width: 100%; height: 100%; background-color: #f1f1f1; color: #003366; font-size: 14px;font-weight: 500; margin-top: 20%;position: relative "
+                style="z-index: 1; width: 100%; height: 100%; background-color: #f1f1f1; color: #003366; font-size: 14px;font-weight: 500; margin-top: 20%;position: relative "
                 id="btn-search">
             <img src="{{url_for('static', filename='images/filter.png')}}"/> Bộ lọc
         </button>
     </div>
 </div>
-<div class="horizontal-menubar-row2">
+<div id="horizontal-menubar-row2" class="horizontal-menubar-row2">
     <div class="horizontal-menubar-column1">
         <p>
             <label class="label-text-style">Chuyên mục: </label>
             <label class="custom-select ">
-                <select style="width: 189px;" class="horizontal-menu-border-style" id="select-tag">
+                <select class="horizontal-menu-border-style" id="select-tag">
                     <option value="*">Tất cả</option>
                 </select>
             </label>
         </p>
     </div>
-    <div class="horizontal-menubar-column2">
+    <div id="horizontal-menubar-date" class="horizontal-menubar-column2">
         <label class="label-text-style">Ngày:</label>
         <label class="calendar">
             {%if params.published != "*" and params.published!=""%}

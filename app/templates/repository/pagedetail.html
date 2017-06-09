@@ -27,6 +27,28 @@
             margin-left: 10%;
         }
     }
+
+    @media screen and (max-width: 840px) {
+        .horizontal-menubar-detail-column {
+            margin-left: 20px;
+        }
+
+        .post_container {
+            margin-top: 20px;
+        }
+
+    }
+
+    @media screen and (min-width: 841px) {
+        .horizontal-menubar-detail-column {
+            margin-left: 5%;
+        }
+
+        .post_container {
+            margin-top: 0px;
+        }
+    }
+
 </style>
 {%for item in data%}
 <div id="menubar_{{loop.index}}" style="display: none;">
@@ -75,7 +97,7 @@
                 TRANG</a>
 
         </div>
-        <div>
+        <div class="post_container">
             <div id="post" style="background: #FFFFFF; overflow: hidden; margin: 0 auto;">
                 <div style="margin: 0 auto;">
                     <div class="panel-heading" role="tab" style="margin: 0 auto;">

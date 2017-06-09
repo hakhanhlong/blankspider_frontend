@@ -307,6 +307,7 @@ a img {
     padding-left: 0px;
     overflow-y: scroll;
     float: left;
+    z-index: 2;
 }
 
 #left-menu-tree .container-fluid {
@@ -446,6 +447,27 @@ iframe {
     font-weight: 700;
     text-align: justify;
 
+}
+
+#txt-search {
+    width: 233px;
+}
+
+#select-baodientu-repository {
+    width: 213px;
+}
+
+#select-tag {
+    width: 189px;
+}
+
+#btn_slide_right {
+    display: none;
+    position: fixed;
+    left: -5px;
+    width: 40px;
+    height: 40px;
+    background-color: transparent;
 }
 
 /*.table_body {*/

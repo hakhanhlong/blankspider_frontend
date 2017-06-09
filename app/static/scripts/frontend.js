@@ -44,7 +44,7 @@ $(document).ready(function () {
         if (isLeftMenuTreeDisplay == false) {
             open_left_menu_tree();
         } else {
-            close_left_menu_tree();
+            close_left_menu_tree(0);
         }
     });
     $('.open_popup').on('click', function () {
@@ -65,6 +65,10 @@ $(document).ready(function () {
             } else {
                 reset_leftMenuTree_height();
             }
+            if (isLeftMenuTreeDisplay == true) {
+                close_left_menu_tree(1);
+            }
+            $('#btn_slide_right').css({display: 'none'});
         }
         resize_for_mobile();
     });
@@ -112,7 +116,7 @@ $(document).ready(function () {
             } else {
                 $('#btn_slide_right').css({display: 'none'});
                 if (isLeftMenuTreeDisplay) {
-                    close_left_menu_tree();
+                    close_left_menu_tree(1);
                 }
             }
         }
@@ -503,7 +507,7 @@ function resize_for_mobile() {
         $('#btn-search').css("margin-top", 20 + "%");
         $('.midle-content').css({float: 'right', width: 77 + '%'});
         if (scroll_position >= POSITION_TO_SCROLL_TO) {
-            $('#left-menu-tree').css({position: 'absolute', left: 0});
+            $('#left-menu-tree').css({position: 'fixed', left: 0});
         } else {
             $('#left-menu-tree').css({position: 'relative', left: 0});
         }
@@ -525,16 +529,25 @@ function open_left_menu_tree() {
     $('#left-menu-tree').css({height: h, top: 5});
 }
 
-function close_left_menu_tree() {
+function close_left_menu_tree(speed) {
     $('#open_menutree').css({display: 'block'});
     $('#close_menutree').css({display: 'none'});
     var destination = $('#left-menu-tree').width();
-    $('#left-menu-tree').animate({
-        left: "-=" + destination + "px",
-    }, 1000);
-    $('#btn_slide_right').animate({
-        left: "-=" + destination + "px",
-    }, 1000);
+    if (speed == 0) {
+        $('#left-menu-tree').animate({
+            left: "-=" + destination + "px",
+        }, 1000);
+        $('#btn_slide_right').animate({
+            left: "-=" + destination + "px",
+        }, 1000);
+    } else {
+        $('#left-menu-tree').animate({
+            left: "-=" + destination + "px",
+        }, 1);
+        $('#btn_slide_right').animate({
+            left: "-=" + destination + "px",
+        }, 1);
+    }
     isLeftMenuTreeDisplay = false;
 }
 

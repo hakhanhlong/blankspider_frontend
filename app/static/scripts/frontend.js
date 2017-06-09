@@ -53,7 +53,7 @@ $(document).ready(function () {
     });
     reset_leftMenuTree_height();
     $(window).resize(function () {
-        if ($(window).width() >= 769) {
+        if ($(window).width() >= 750) {
             $('#defaultNavbar1').css({background: 'transparent'});
         } else {
             $('#defaultNavbar1').css({background: '#134e70'});

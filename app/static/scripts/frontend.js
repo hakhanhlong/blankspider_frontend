@@ -243,7 +243,7 @@ $(document).ready(function () {
         });
     });
     var savedDate = $('#lbl_published').text();
-    if (savedDate != null && savedDate != "") {
+    if (savedDate != null && savedDate != "" && savedDate != "*") {
         savedDate = convertFormatDate(savedDate);
         $('#txt-date-from-picker').val(savedDate);
     }

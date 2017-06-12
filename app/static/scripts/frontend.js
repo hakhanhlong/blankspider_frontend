@@ -428,7 +428,7 @@ function display_busy_mark() {
     $('.midle-content').css("visibility", "hidden");
     var left = (($(window).width() / 2) - ($('.busy_mark').width() / 2))
         + $('#left-menu-tree').width();
-    var top = ($(window).height() / 2) - ($('.busy_mark').height() / 2)
+    var top = (($(window).height() / 2) - ($('.busy_mark').height() / 2))
         + $('#navigationbar').height() + $('#horizontal-menubar').height();
     $('.busy_mark').css({display: 'block', top: top, left: left});
 }
@@ -443,7 +443,7 @@ function display_error_mesage() {
     $('.midle-content').css("visibility", "hidden");
     var left = (($(window).width() / 2) - ($('.error_message').width() / 2))
         + $('#left-menu-tree').width();
-    var top = ($(window).height() / 2) - ($('.error_message').height() / 2)
+    var top = (($(window).height() / 2) - ($('.error_message').height() / 2))
         + $('#navigationbar').height() + $('#horizontal-menubar').height();
     $('.error_message').css({display: 'block', top: top, left: left});
     $('.busy_mark').css("display", "none");

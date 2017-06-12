@@ -426,7 +426,11 @@ function pagination_ajax_page_version(obj) {
 function display_busy_mark() {
     $('.error_message').css("display", "none");
     $('.midle-content').css("visibility", "hidden");
-    $('.busy_mark').css("display", "block");
+    var left = (($(window).width() / 2) - ($('.busy_mark').width() / 2))
+        + $('#left-menu-tree').width();
+    var top = ($(window).height() / 2) - ($('.busy_mark').height() / 2)
+        + $('#navigationbar').height() + $('#horizontal-menubar').height();
+    $('.busy_mark').css({display: 'block', top: top, left: left});
 }
 
 function hide_busy_mark() {
@@ -437,7 +441,11 @@ function hide_busy_mark() {
 
 function display_error_mesage() {
     $('.midle-content').css("visibility", "hidden");
-    $('.error_message').css("display", "block");
+    var left = (($(window).width() / 2) - ($('.error_message').width() / 2))
+        + $('#left-menu-tree').width();
+    var top = ($(window).height() / 2) - ($('.error_message').height() / 2)
+        + $('#navigationbar').height() + $('#horizontal-menubar').height();
+    $('.error_message').css({display: 'block', top: top, left: left});
     $('.busy_mark').css("display", "none");
 }
 

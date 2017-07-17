@@ -76,7 +76,7 @@ def get_source():
             x.timings = timings
             # ------------------------------------------------------------------------------------------------------------------
     except Exception as ex:
-        flash('ERROR:' + ex, 'danger')
+        flash('ERROR:' + ex.message, 'danger')
     return sources
 
 

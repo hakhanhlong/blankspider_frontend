@@ -1,5 +1,5 @@
 # -*- coding:utf-8 -*-
-from flask import render_template, jsonify, flash
+from flask import render_template, jsonify, flash,session
 from flask.ext.login import login_required
 
 from core.api.services.content_service import ContentService
@@ -26,8 +26,8 @@ PAGE_DETAIL = 2  # previous page =2 = pagedetail.html
 PAGE_FILTER_DEFAULT = 0  # previous page = 0 = index2.html
 PAGE_FILTER_BY_TIMING = 1  # previous page = 1 = datatable.html(inside index2)
 PAGE_SEARCH = 3
-
-
+userNameDefault = "admin"
+passwordDefault = "admin"
 def get_data_from_service_filter_by_default(page=0):
     content_service = ContentService()
     content = content_service.list_by_default(int(page), 50)
@@ -98,17 +98,31 @@ def content_filter_by_timing(sid, ptimingid, page=0, pageid=-1):
 @repository.route('/<page>', methods=['GET'])
 @repository.route('/<page>/<pageid>', methods=['GET'])
 def index(page=0, pageid=0):
-    sources = get_source()
-    aDict = get_data_from_service_filter_by_default(page)
-    if pageid == int(PAGE_FILTER_DEFAULT) and int(page) == 0:
-        return render_template('repository/index2.html', sources=sources, contents=aDict['items'],
-                               pagination=aDict['pagingnation'], params={'pageid': PAGE_FILTER_DEFAULT})
-    elif pageid == PAGE_DETAIL:
-        return render_template('repository/index2.html', sources=sources, contents=aDict['items'],
-                               pagination=aDict['pagingnation'], params={'pageid': PAGE_FILTER_DEFAULT})
-    elif pageid == PAGE_FILTER_DEFAULT and int(page) > 0:
-        return render_template('/data_table.html', sources=sources, contents=aDict['items'],
-                               pagination=aDict['pagingnation'], params={'pageid': PAGE_FILTER_DEFAULT})
+    if not session.get('logged_in'):
+        return render_template("login.html")
+    else:
+        sources = get_source()
+        aDict = get_data_from_service_filter_by_default(page)
+        if pageid == int(PAGE_FILTER_DEFAULT) and int(page) == 0:
+            return render_template('repository/index2.html', sources=sources, contents=aDict['items'],
+                                   pagination=aDict['pagingnation'], params={'pageid': PAGE_FILTER_DEFAULT})
+        elif pageid == PAGE_DETAIL:
+            return render_template('repository/index2.html', sources=sources, contents=aDict['items'],
+                                   pagination=aDict['pagingnation'], params={'pageid': PAGE_FILTER_DEFAULT})
+        elif pageid == PAGE_FILTER_DEFAULT and int(page) > 0:
+            return render_template('/data_table.html', sources=sources, contents=aDict['items'],
+                                   pagination=aDict['pagingnation'], params={'pageid': PAGE_FILTER_DEFAULT})
+
+
+@repository.route('/<username>/<password>', methods=['POST'])
+def login(username ="", password =""):
+    print("login is running xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
+    print("user name = "+username +"password = "+password)
+    if username == userNameDefault and password == passwordDefault:
+        session['logged_in'] = True
+        return "1"
+    else:
+        return render_template("login.html")
 
 
 @repository.route('/detail/<cid>/', methods=['GET'])
@@ -116,6 +130,8 @@ def index(page=0, pageid=0):
 @repository.route('/detail/<cid>/<page>/<prepageid>/', methods=['GET'])
 @repository.route('/detail/<cid>/<page>/<prepageid>/<ptimingid>/', methods=['GET'])
 def detail(cid, page=0, prepageid=0, ptimingid=0):
+    if not session.get('logged_in'):
+        return render_template("login.html")
     cont = content_impl.get_byid(cid)
     s = source_impl.get_by_id(cont.source_id)
     configuration = configuration_impl.get_config('SOURCE', cont.source_id)
@@ -182,6 +198,8 @@ def detail(cid, page=0, prepageid=0, ptimingid=0):
 
 @repository.route('/detail-html/<cid>/<idx>', methods=['GET'])
 def detail_html(cid, idx):
+    if not session.get('logged_in'):
+        return render_template("login.html")
     cont = content_impl.get_byid(cid)
     # n_dict = json.loads(cont.data)
     data_master = []
@@ -201,6 +219,8 @@ def detail_html(cid, idx):
 @repository.route('/search/', methods=['GET'])
 @repository.route('/search/<source>/<tag>/<published>/<kw>/<page>', methods=['GET'])
 def content_search(source='', tag='', published='', kw='', page=0):
+    if not session.get('logged_in'):
+        return render_template("login.html")
     content_service = ContentService()
     if published is not '*':
         published = published.split('-')[::-1]
@@ -219,6 +239,8 @@ def content_search(source='', tag='', published='', kw='', page=0):
 
 @repository.route('/search_to_detail/<cid>/<source>/<tag>/<published>/<kw>/<page>', methods=['GET'])
 def search_to_detail(cid, source, tag, published, kw, page):
+    if not session.get('logged_in'):
+        return render_template("login.html")
     if published is not '*':
         year, month, day = published.split("-")
         published = day + "-" + month + "-" + year
@@ -290,6 +312,8 @@ def search_to_detail(cid, source, tag, published, kw, page):
 
 @repository.route('/back_from_detail_to_filter_by_default/<page>', methods=['GET'])
 def back_from_detail_to_filter_by_default(page):
+    if not session.get('logged_in'):
+        return render_template("login.html")
     aDict = get_data_from_service_filter_by_default(page)
     return render_template('repository/index2.html', sources=get_source(), contents=aDict['items'],
                            pagination=aDict['pagingnation'], params={'pageid': PAGE_FILTER_DEFAULT})
@@ -297,6 +321,8 @@ def back_from_detail_to_filter_by_default(page):
 
 @repository.route('/back_from_detail_to_filter_by_timing/<sid>/<ptimingid>/<page>', methods=['GET'])
 def back_from_detail_to_filter_by_timing(sid, ptimingid, page):
+    if not session.get('logged_in'):
+        return render_template("login.html")
     aDict = get_data_from_service_filter_by_timing(sid, ptimingid, page)
     return render_template('repository/index2.html', sources=get_source(), contents=aDict['items'],
                            pagination=aDict['pagingnation'],
@@ -305,6 +331,8 @@ def back_from_detail_to_filter_by_timing(sid, ptimingid, page):
 
 @repository.route('/back_from_detail_to_search/<source>/<tag>/<published>/<kw>/<page>', methods=['GET'])
 def back_from_detail_to_search(source='', tag='', published='', kw='', page=0):
+    if not session.get('logged_in'):
+        return render_template("login.html")
     content_service = ContentService()
     if published is not '*':
         published = published.split('-')[::-1]

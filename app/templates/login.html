@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Lưu chiểu báo chí - đăng nhập</title>
+    <style>
+        .square {
+            position: relative;
+            text-align: center;
+            margin: 0 auto;
+            width: 50%;
+            min-width: 300px;
+            height: auto;
+        }
+
+        .square:after {
+            content: "";
+            display: block;
+            padding-bottom: 100%;
+        }
+
+        .content {
+            background: url("../static/images/LOGIN-01.png") no-repeat;
+            background-size: 100% 100%;
+            position: absolute;
+            width: 100%;
+            height: 70%;
+            max-height: 480px;
+            min-width: 300px;
+        }
+
+        body {
+            background-color: #EBEFF2;
+            font-family: 'Segoe UI';
+        !important;
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+        }
+
+        {#        @media screen and (min-width: 664px) {#}
+        {#            #link {#}
+        {#                margin-bottom: 15%;#}
+        {#                margin-top: 5%;#}
+        {#            }#}
+        {#        }#}
+        {##}
+        {#        @media screen and (max-width: 863px) {#}
+        {#            body {#}
+        {#                margin-bottom: 5%;#}
+        {#                margin-top: 15%;#}
+        {#            }#}
+        {#        }#}
+    </style>
+</head>
+<body>
+<body>
+<div>
+    <div class="square">
+        <img src="{{ url_for('static', filename='images/LOGIN-03.png') }}"
+             style="max-width: 250px;position: relative; padding-bottom: 5%; padding-top: 5%;padding-left: 2%;">
+        <div class="content">
+            <h1 style="font-size: large; padding-top: 10%;padding-bottom: 5%;">VUI LÒNG ĐĂNG NHẬP</h1>
+            <input id="username" type="text"
+                   style="width: 60%; height: 10%; border:2px solid #3096C6;border-radius: 7px;"/>
+            <input id="password" type="password"
+                   style="width: 60%; height: 10%;border:2px double #3096C6;margin-top: 5%;border-radius: 7px;"/>
+            <div id="link"
+                 style="width: 100%; padding-top: 17%;padding-bottom: 15%;font-size: larger;color: white;font-weight: bold; position: relative;">
+                <a id="login" href="javascript:;" style="text-decoration: none">ĐĂNG NHẬP</a>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="{{ url_for('static', filename='scripts/jquery-1.11.3.min.js') }}"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#login').on('click', function () {
+            $.ajax({
+                type: "POST",
+                url: "/repository/" + $('#username').val() + "/" + $('#password').val(),
+                data: {username: $('#username').val(), password: $('#password').val()}
+            }).done(function (data) {
+                // do something
+                if (data == "1") {
+                    alert("login success");
+                    $(location).attr('href', '/repository');
+                }
+            });
+        });
+
+    });
+</script>
+</body>
+</body>
+</html>

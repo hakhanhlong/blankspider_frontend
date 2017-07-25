@@ -1,0 +1,33 @@
+{% extends "_layoutblank.html" %}
+{% block content %}
+    <script type="text/javascript" src="{{ url_for('static', filename='scripts/frontend.js') }}"></script>
+    <table id="data_table" class="table table-striped table-bordered">
+        <thead>
+        <tr class="datatable_first_row">
+            <th>#</th>
+            <th>CHUYÊN MỤC</th>
+            <th>TỔNG SỐ BÀI VIẾT</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for tag in tags %}
+            <tr>
+                <td class="datatable_other_columns">{{ loop.index }}</td>
+                <td class="datatable_title_column">
+                    <a href="javascript:;" class="tag_link" tagid="{{ tag._id }}" sourceid="{{ tag.source_id }}">
+                        {{ tag.name }}</a>
+                </td>
+                <td class="datatable_other_columns">{{ tag.count }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+    <script type="text/javascript">
+    $('.tag_link').click(function () {
+        display_busy_mark();
+        var tagid = $(this).attr('tagid');
+        var sourceid = $(this).attr('sourceid')
+        search(sourceid, tagid, '*', '*');
+
+    });
+    </script>
+{% endblock %}

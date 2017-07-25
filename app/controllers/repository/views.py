@@ -3,6 +3,8 @@ from flask import render_template, jsonify, flash,session
 from flask.ext.login import login_required
 
 from core.api.services.content_service import ContentService
+
+from blankspider_frontend.core.api.services.tag_service import TagService
 from . import repository
 from core.dataimpl import tag_impl
 from core.dataimpl import content_impl
@@ -26,6 +28,8 @@ PAGE_DETAIL = 2  # previous page =2 = pagedetail.html
 PAGE_FILTER_DEFAULT = 0  # previous page = 0 = index2.html
 PAGE_FILTER_BY_TIMING = 1  # previous page = 1 = datatable.html(inside index2)
 PAGE_SEARCH = 3
+PAGE_REPORT_SOURCE = 4;
+PAGE_REPORT_TAG = 5;
 userNameDefault = "admin"
 passwordDefault = "admin"
 def get_data_from_service_filter_by_default(page=0):
@@ -102,6 +106,14 @@ def index(page=0, pageid=0):
         return render_template("login.html")
     else:
         sources = get_source()
+        # for item in sources:
+        #     print("name = "+str(item.name))
+        #     print("created_date = "+str(item.created_date))
+        #     tag_service = TagService()
+        #     tags = tag_service.get_by_source(str(item.id))
+        #     print(len(tags))
+        #     for i in tags:
+        #         print("count i ="+str(i))
         aDict = get_data_from_service_filter_by_default(page)
         if pageid == int(PAGE_FILTER_DEFAULT) and int(page) == 0:
             return render_template('repository/index2.html', sources=sources, contents=aDict['items'],
@@ -114,7 +126,7 @@ def index(page=0, pageid=0):
                                    pagination=aDict['pagingnation'], params={'pageid': PAGE_FILTER_DEFAULT})
 
 
-@repository.route('/<username>/<password>', methods=['POST'])
+@repository.route('/login/<username>/<password>', methods=['POST'])
 def login(username ="", password =""):
     print("login is running xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
     print("user name = "+username +"password = "+password)
@@ -349,6 +361,21 @@ def back_from_detail_to_search(source='', tag='', published='', kw='', page=0):
                            pagination=pagination,
                            params={'source': source, 'tag': tag, 'published': published, 'kw': kw, 'page': page,
                                    'pageid': PAGE_SEARCH})
+
+
+@repository.route('/report_source/', methods=['GET'])
+def report_source():
+    sources = get_source();
+    tag_service = TagService()
+    for source in sources:
+        source.tags = tag_service.get_by_source(str(source.id))
+    return render_template('source_datatable.html',sources = sources,params={'pageid': PAGE_REPORT_SOURCE})
+
+@repository.route('/report_tag/<sid>', methods=['GET'])
+def report_tag(sid):
+    tag_service = TagService()
+    tags = tag_service.get_by_source(str(sid))
+    return render_template('tag_datatable.html',tags = tags,params={'pageid': PAGE_REPORT_TAG})
 
 # @repository.route('/detail/<cid>', methods=['GET'])
 # def detail(cid):

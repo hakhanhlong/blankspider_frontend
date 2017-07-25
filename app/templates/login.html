@@ -77,7 +77,7 @@
         $('#login').on('click', function () {
             $.ajax({
                 type: "POST",
-                url: "/repository/" + $('#username').val() + "/" + $('#password').val(),
+                url: "/repository/login/" + $('#username').val() + "/" + $('#password').val(),
                 data: {username: $('#username').val(), password: $('#password').val()}
             }).done(function (data) {
                 // do something

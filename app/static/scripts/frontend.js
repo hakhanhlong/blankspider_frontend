@@ -10,6 +10,34 @@ var MOBILE_SCROLL_POSITION = 350;
 var mobile_check = false;
 var tablet_check = false;
 var is_navigationbar_opened = false;
+
+function search(source, tag, published, kw) {
+    if (!kw) {
+        kw = "*";
+    }
+
+    if (!published) {
+        published = "*";
+    }
+
+    var newchar = '-'
+    published = published.split('/').join(newchar);
+
+    var url = '/repository/search/' + source + '/' + tag + '/' + published + '/' + kw + '/1';
+    $.ajax(encodeURI(url), {
+        success: function (data) {
+            hide_busy_mark();
+            $('.midle-content').css("display", "block");
+            $('.midle-content').html(data);
+
+        },
+        error: function () {
+            display_error_mesage();
+            console.log('ERROR: GET CONTENT');
+        }
+    });
+}
+
 $(document).ready(function () {
     window.mobilecheck = function () {
         (function (a) {
@@ -193,6 +221,21 @@ $(document).ready(function () {
 
     });
 
+    $('#report_source').on('click', function () {
+        display_busy_mark();
+        $.ajax('/repository/report_source/', {
+            success: function (data) {
+                hide_busy_mark();
+                $('.midle-content').html(data);
+                return scroll_to_top();
+            },
+            error: function () {
+                display_error_mesage();
+                console.log('ERROR: GET CONTENT');
+            }
+        });
+    });
+
     $('#show_iframe').on('click', function () {
         display_busy_mark();
         var cid = $(this).attr('cid');
@@ -216,32 +259,12 @@ $(document).ready(function () {
         var tag = $('#select-tag').val();
         var kw = $('#txt-search').val();
         var published = $('#txt-date-from-picker').val();
+        search(source, tag, published, kw);
 
-        if (!kw) {
-            kw = "*";
-        }
-
-        if (!published) {
-            published = "*";
-        }
-
-        var newchar = '-'
-        published = published.split('/').join(newchar);
-
-        var url = '/repository/search/' + source + '/' + tag + '/' + published + '/' + kw + '/1';
-        $.ajax(encodeURI(url), {
-            success: function (data) {
-                hide_busy_mark();
-                $('.midle-content').css("display", "block");
-                $('.midle-content').html(data);
-
-            },
-            error: function () {
-                display_error_mesage();
-                console.log('ERROR: GET CONTENT');
-            }
-        });
     });
+
+
+
     var savedDate = $('#lbl_published').text();
     if (savedDate != null && savedDate != "" && savedDate != "*") {
         savedDate = convertFormatDate(savedDate);
@@ -376,11 +399,10 @@ function pagination_ajax_search_content(obj) {
 function pagination_ajax_search_content_v2(obj) {
     display_busy_mark();
     var page = $(obj).attr('page');
-    var source = $('#select-baodientu-repository').val();
-    var tag = $('#select-tag').val();
-    var kw = $('#txt-search').val();
-    var published = $('#txt-date-from-picker').val();
-
+    var source = $(obj).attr('source');
+    var tag = $(obj).attr('tag');
+    var kw = $(obj).attr('kw');
+    var published = $(obj).attr('published');
     if (!kw) {
         kw = "*";
     }

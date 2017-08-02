@@ -102,8 +102,7 @@ def content_filter_by_timing(sid, ptimingid, page=0, pageid=-1):
 @repository.route('/<page>', methods=['GET'])
 @repository.route('/<page>/<pageid>', methods=['GET'])
 def index(page=0, pageid=0):
-    # if not session.get('logged_in'):
-    if True:
+    if not session.get('logged_in'):
         return render_template("login.html")
     else:
         sources = get_source()

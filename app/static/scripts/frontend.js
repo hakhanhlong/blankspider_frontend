@@ -179,6 +179,19 @@ $(document).ready(function () {
 
     }).change();
 
+    $('#txt-search').change(function () {
+        $(document).keypress(function (e) {
+            if (e.which == 13) {
+                display_busy_mark();
+                var source = $('#select-baodientu-repository').val();
+                var tag = $('#select-tag').val();
+                var kw = $('#txt-search').val();
+                var published = $('#txt-date-from-picker').val();
+                search(source, tag, published, kw);
+            }
+        });
+    });
+
     // $('.lv-body').on('click', '#filter-timing', function () {
     //     var sourceid = $(this).attr('sourceid');
     //     var timingid = $(this).attr('timingid');

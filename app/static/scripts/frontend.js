@@ -31,7 +31,8 @@ function search(source, tag, published, kw) {
             $('.midle-content').html(data);
 
         },
-        error: function () {
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            alert(errorThrown);
             display_error_mesage();
             console.log('ERROR: GET CONTENT');
         }
@@ -262,7 +263,6 @@ $(document).ready(function () {
         search(source, tag, published, kw);
 
     });
-
 
 
     var savedDate = $('#lbl_published').text();
@@ -504,7 +504,7 @@ function resize_iframe(index) {
     $('#modalDefault' + index).css({display: "block"});
     document.getElementById("iframe_" + index)
         .style.height = document.getElementById("iframe_" + index)
-            .contentWindow.document.body.scrollHeight + 'px';
+        .contentWindow.document.body.scrollHeight + 'px';
 }
 
 function convertFormatDate(date) {
@@ -581,6 +581,7 @@ function close_left_menu_tree(speed) {
     }
     isLeftMenuTreeDisplay = false;
 }
+
 function fast_close_leftmenutree() {
     isLeftMenuTreeDisplay = false;
     $('#btn_slide_right').css({display: 'none', left: -1});

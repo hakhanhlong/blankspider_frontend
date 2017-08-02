@@ -4,7 +4,7 @@ from flask.ext.login import login_required
 
 from core.api.services.content_service import ContentService
 
-from blankspider_frontend.core.api.services.tag_service import TagService
+import core.api.services.tag_service
 from . import repository
 from core.dataimpl import tag_impl
 from core.dataimpl import content_impl
@@ -102,7 +102,8 @@ def content_filter_by_timing(sid, ptimingid, page=0, pageid=-1):
 @repository.route('/<page>', methods=['GET'])
 @repository.route('/<page>/<pageid>', methods=['GET'])
 def index(page=0, pageid=0):
-    if not session.get('logged_in'):
+    # if not session.get('logged_in'):
+    if True:
         return render_template("login.html")
     else:
         sources = get_source()
@@ -366,14 +367,14 @@ def back_from_detail_to_search(source='', tag='', published='', kw='', page=0):
 @repository.route('/report_source/', methods=['GET'])
 def report_source():
     sources = get_source();
-    tag_service = TagService()
+    tag_service = blankspider_frontend.core.api.services.tag_service.TagService()
     for source in sources:
         source.tags = tag_service.get_by_source(str(source.id))
     return render_template('source_datatable.html',sources = sources,params={'pageid': PAGE_REPORT_SOURCE})
 
 @repository.route('/report_tag/<sid>', methods=['GET'])
 def report_tag(sid):
-    tag_service = TagService()
+    tag_service = blankspider_frontend.core.api.services.tag_service.TagService()
     tags = tag_service.get_by_source(str(sid))
     return render_template('tag_datatable.html',tags = tags,params={'pageid': PAGE_REPORT_TAG})
 

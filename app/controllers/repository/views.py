@@ -80,7 +80,7 @@ def get_source():
             x.timings = timings
             # ------------------------------------------------------------------------------------------------------------------
     except Exception as ex:
-        flash('ERROR:' + ex.message, 'danger')
+        flash('ERROR:' + str(ex.message), 'danger')
     return sources
 
 
@@ -128,7 +128,6 @@ def index(page=0, pageid=0):
 
 @repository.route('/login/<username>/<password>', methods=['POST'])
 def login(username ="", password =""):
-    print("login is running xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
     print("user name = "+username +"password = "+password)
     if username == userNameDefault and password == passwordDefault:
         session['logged_in'] = True
@@ -366,14 +365,14 @@ def back_from_detail_to_search(source='', tag='', published='', kw='', page=0):
 @repository.route('/report_source/', methods=['GET'])
 def report_source():
     sources = get_source();
-    tag_service = blankspider_frontend.core.api.services.tag_service.TagService()
+    tag_service = core.api.services.tag_service.TagService()
     for source in sources:
         source.tags = tag_service.get_by_source(str(source.id))
     return render_template('source_datatable.html',sources = sources,params={'pageid': PAGE_REPORT_SOURCE})
 
 @repository.route('/report_tag/<sid>', methods=['GET'])
 def report_tag(sid):
-    tag_service = blankspider_frontend.core.api.services.tag_service.TagService()
+    tag_service = core.api.services.tag_service.TagService()
     tags = tag_service.get_by_source(str(sid))
     return render_template('tag_datatable.html',tags = tags,params={'pageid': PAGE_REPORT_TAG})
 

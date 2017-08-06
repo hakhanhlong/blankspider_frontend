@@ -1,12 +1,12 @@
 # -*- coding:utf-8 -*-
-from flask import render_template, jsonify, flash,session
+from flask import render_template, jsonify, flash, session
 from flask.ext.login import login_required
 
 from core.api.services.content_service import ContentService
 
 import core.api.services.tag_service
 from . import repository
-from core.dataimpl import tag_impl
+from core.dataimpl import tag_impl, content_img_impl
 from core.dataimpl import content_impl
 from core.dataimpl import source_impl
 from core.dataimpl import configuration_impl
@@ -30,8 +30,11 @@ PAGE_FILTER_BY_TIMING = 1  # previous page = 1 = datatable.html(inside index2)
 PAGE_SEARCH = 3
 PAGE_REPORT_SOURCE = 4;
 PAGE_REPORT_TAG = 5;
+IMAGE_URL = "http://img.lcbc.digicomdemo.vn/"
 userNameDefault = "admin"
 passwordDefault = "admin"
+
+
 def get_data_from_service_filter_by_default(page=0):
     content_service = ContentService()
     content = content_service.list_by_default(int(page), 50)
@@ -102,6 +105,7 @@ def content_filter_by_timing(sid, ptimingid, page=0, pageid=-1):
 @repository.route('/<page>', methods=['GET'])
 @repository.route('/<page>/<pageid>', methods=['GET'])
 def index(page=0, pageid=0):
+    # session['logged_in'] = False
     if not session.get('logged_in'):
         return render_template("login.html")
     else:
@@ -127,8 +131,7 @@ def index(page=0, pageid=0):
 
 
 @repository.route('/login/<username>/<password>', methods=['POST'])
-def login(username ="", password =""):
-    print("user name = "+username +"password = "+password)
+def login(username="", password=""):
     if username == userNameDefault and password == passwordDefault:
         session['logged_in'] = True
         return "1"
@@ -145,12 +148,14 @@ def detail(cid, page=0, prepageid=0, ptimingid=0):
         return render_template("login.html")
     cont = content_impl.get_byid(cid)
     s = source_impl.get_by_id(cont.source_id)
+    content_im = content_img_impl.getByContentId(cid)
     configuration = configuration_impl.get_config('SOURCE', cont.source_id)
     # n_dict = json.loads(cont.data)
     data_master = []
 
     try:
         for item in cont.data:
+            i = 0;
             for k, v in item.items():
                 _val = json.loads(v)
                 content = _val['content']
@@ -197,9 +202,22 @@ def detail(cid, page=0, prepageid=0, ptimingid=0):
                     pass
 
                 # data_master.append({'key': k, 'value': json.loads(v)})
+                # / mnt / storage / lcbc_storage / images / 201784 / J5W9aSaIgh.png
+                print("llllllllllllllllllllllllllllll"+str(len(content_im)))
+                if content_im is not None and len(content_im) >0:
+                    directory1, directory2, directory3, directory4, directory5, directory6, imageName = \
+                    content_im[i].images[0]['image_full_content'].split("/")
+                    directory7, directory8, directory9, directory10, directory11, directory12, imageName1 = \
+                    content_im[i].images[0]['image_filter_content'].split("/")
+                    _val['image_full_content'] = IMAGE_URL + directory6 + "/" + imageName
+                    _val['image_filter_content'] = IMAGE_URL + directory12 + "/" + imageName1
+                    print("name == ="+imageName)
+                    print("name2 = == "+imageName1)
                 data_master.append({'key': k, 'value': _val})
+                i = i + 1;
     except Exception as ex:
-        flash('ERROR:' + ex.message, 'danger')
+        print("error = ===================" + str(ex))
+        # flash('ERROR:' + ex.message, 'danger')
     pagination = Pagination(int(1), 1, len(data_master))
     return render_template('repository/pagedetail.html', sources=get_source(), data=data_master, link_href=cont.href,
                            contentid=cid, pagination=pagination, source=s,
@@ -368,13 +386,14 @@ def report_source():
     tag_service = core.api.services.tag_service.TagService()
     for source in sources:
         source.tags = tag_service.get_by_source(str(source.id))
-    return render_template('source_datatable.html',sources = sources,params={'pageid': PAGE_REPORT_SOURCE})
+    return render_template('source_datatable.html', sources=sources, params={'pageid': PAGE_REPORT_SOURCE})
+
 
 @repository.route('/report_tag/<sid>', methods=['GET'])
 def report_tag(sid):
     tag_service = core.api.services.tag_service.TagService()
     tags = tag_service.get_by_source(str(sid))
-    return render_template('tag_datatable.html',tags = tags,params={'pageid': PAGE_REPORT_TAG})
+    return render_template('tag_datatable.html', tags=tags, params={'pageid': PAGE_REPORT_TAG})
 
 # @repository.route('/detail/<cid>', methods=['GET'])
 # def detail(cid):

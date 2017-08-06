@@ -9,6 +9,10 @@
     width: 50%;
 }
 
+a{
+    cursor:pointer;
+}
+
 .datatable_other_columns {
     color: #333333;
     font-size: 14px;

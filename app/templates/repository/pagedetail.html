@@ -1,199 +1,253 @@
-{% extends "listing.html"%}
-{% import "bootstrap/wtf.html" as wtf%}
-{% from "_macros.html" import pagination_ajax_page_version with context%}
+{% extends "listing.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% from "_macros.html" import pagination_ajax_page_version with context %}
 {% block title %}LUU CHIEU BAO CHI - BAI VIET{% endblock %}
 {% block horizontalmenubar %}
-<style>
-    @media screen and (max-width: 1180px) /* height >= 820 px */ {
-        .horizontal-menubar-detail-column {
-            margin-left: 1.5%;
-        }
-    }
-
-    @media screen and (min-width: 1529px) /* height >= 820 px */ {
-        .horizontal-menubar-detail-column {
-            margin-left: 7%;
-        }
-    }
-
-    @media screen and (min-width: 1560px) /* height >= 820 px */ {
-        .horizontal-menubar-detail-column {
-            margin-left: 10%;
-        }
-    }
-
-    @media screen and (min-width: 1629px) /* height >= 820 px */ {
-        .horizontal-menubar-detail-column {
-            margin-left: 10%;
-        }
-    }
-
-    @media screen and (max-width: 840px) {
-        .horizontal-menubar-detail-column {
-            margin-left: 20px;
+    <style>
+        @media screen and (max-width: 1180px) /* height >= 820 px */ {
+            .horizontal-menubar-detail-column {
+                margin-left: 1.5%;
+            }
         }
 
-        .post_container {
-            margin-top: 20px;
+        @media screen and (min-width: 1529px) /* height >= 820 px */ {
+            .horizontal-menubar-detail-column {
+                margin-left: 7%;
+            }
         }
 
-    }
-
-    @media screen and (min-width: 841px) {
-        .horizontal-menubar-detail-column {
-            margin-left: 5%;
+        @media screen and (min-width: 1560px) /* height >= 820 px */ {
+            .horizontal-menubar-detail-column {
+                margin-left: 10%;
+            }
         }
 
-        .post_container {
-            margin-top: 0px;
+        @media screen and (min-width: 1629px) /* height >= 820 px */ {
+            .horizontal-menubar-detail-column {
+                margin-left: 10%;
+            }
         }
-    }
 
-</style>
-{%for item in data%}
-<div id="menubar_{{loop.index}}" style="display: none;">
-    <h6 id="total_count" style="display: none">{{pagination.total_count}}</h6>
-    <div class="horizontal-menubar-detail-row1">
-        <div class="horizontal-menubar-detail-column">
-            <label class="label-detail-text-style">Tòa soạn: </label>
-            <label class="label-text-style">{{source.name}}</label>
+        @media screen and (max-width: 840px) {
+            .horizontal-menubar-detail-column {
+                margin-left: 20px;
+            }
+
+            .post_container {
+                margin-top: 20px;
+            }
+
+        }
+
+        @media screen and (min-width: 841px) {
+            .horizontal-menubar-detail-column {
+                margin-left: 5%;
+            }
+
+            .post_container {
+                margin-top: 0px;
+            }
+        }
+
+        a {
+            cursor: pointer;
+        }
+    </style>
+    {% for item in data %}
+        <div id="menubar_{{ loop.index }}" style="display: none;">
+            <h6 id="total_count" style="display: none">{{ pagination.total_count }}</h6>
+            <div class="horizontal-menubar-detail-row1">
+                <div class="horizontal-menubar-detail-column">
+                    <label class="label-detail-text-style">Tòa soạn: </label>
+                    <label class="label-text-style">{{ source.name }}</label>
+                </div>
+                <div class="horizontal-menubar-detail-column">
+                    <label class="label-detail-text-style">Tiêu đề: </label>
+                    <label id="txt_title_{{ loop.index }}"
+                           class="label-text-style">{{ item['value']['title'] }} </label>
+                </div>
+            </div>
+            <div class="horizontal-menubar-detail-row1">
+                <div class="horizontal-menubar-detail-column">
+                    <label class="label-detail-text-style">Chuyên mục: </label>
+                    <label class="label-text-style">{{ item['value']['tag_name'] }}</label>
+                </div>
+                <div class="horizontal-menubar-detail-column">
+                    <label class="label-detail-text-style">Ngày đăng tải: </label>
+                    <label id="txt_pulished_at_{{ loop.index }}"
+                           class="label-text-style">{{ item['value']['published_at'] }}</label>
+                </div>
+                <div class="horizontal-menubar-detail-column">
+                    <label class="label-detail-text-style">Ngày lưu chiểu: </label>
+                    <label id="txt_luuchieu_at_{{ loop.index }}"
+                           class="label-text-style ">{{ item['value']['published_at'] }}</label>
+                </div>
+                <div class="horizontal-menubar-detail-column"><a href="{{ link_href }}" class="label-detail-text-style"
+                                                                 target="_blank">Bài viết
+                    gốc </a></div>
+            </div>
         </div>
-        <div class="horizontal-menubar-detail-column">
-            <label class="label-detail-text-style">Tiêu đề: </label>
-            <label id="txt_title_{{loop.index}}" class="label-text-style">{{item['value']['title']}} </label>
-        </div>
-    </div>
-    <div class="horizontal-menubar-detail-row1">
-        <div class="horizontal-menubar-detail-column">
-            <label class="label-detail-text-style">Chuyên mục: </label>
-            <label class="label-text-style">{{item['value']['tag_name']}}</label>
-        </div>
-        <div class="horizontal-menubar-detail-column">
-            <label class="label-detail-text-style">Ngày đăng tải: </label>
-            <label id="txt_pulished_at_{{loop.index}}"
-                   class="label-text-style">{{item['value']['published_at']}}</label>
-        </div>
-        <div class="horizontal-menubar-detail-column">
-            <label class="label-detail-text-style">Ngày lưu chiểu: </label>
-            <label id="txt_luuchieu_at_{{loop.index}}"
-                   class="label-text-style ">{{item['value']['published_at']}}</label>
-        </div>
-        <div class="horizontal-menubar-detail-column"><a href="{{link_href}}" class="label-detail-text-style"
-                                                         target="_blank">Bài viết
-            gốc </a></div>
-    </div>
-</div>
-{%endfor%}
-{%endblock%}
+    {% endfor %}
+{% endblock %}
 {% block midlecontent %}
-{%for item in data%}
-<div id="middle_{{loop.index}}" style="display: none" class="midle-content">
-    <div>
-        <div class="midle-content-navigationbar" style="width: 100%;"><a href="/" class="boder-right"
-                                                                         style="text-align: center; padding-right: 5px; margin-right:5px;">HOME</a>
-            <a href="/repository">KHO NỘI DUNG</a>
-            <a style="float: right" data-toggle="modal"
-               href="#modalDefault{{loop.index}}" index="{{loop.index}}" class="open_popup">XEM TOÀN BỘ NỘI DUNG
-                TRANG</a>
+    {% for item in data %}
+        <div id="middle_{{ loop.index }}" style="display: none" class="midle-content">
+            <div>
+                <div class="midle-content-navigationbar" style="width: 100%;"><a href="/" class="boder-right"
+                                                                                 style="text-align: center; padding-right: 5px; margin-right:5px;">HOME</a>
+                    <a href="/repository">KHO NỘI DUNG</a>
+                    <a style="float: right;" data-toggle="modal"
+                       href="#modalDefault{{ loop.index }}" index="{{ loop.index }}" class="open_popup">XEM TOÀN BỘ NỘI
+                        DUNG
+                        TRANG</a>
+                    <a id="baiviet_{{ loop.index }}" style="float: right;text-align: center; padding-right: 5px; margin-right:5px;"
+                       class="boder-right" onclick="displayPost({{ loop.index }})">XEM BÀI VIẾT</a>
+                    <a id="anhfull_{{ loop.index }}" style="float: right; text-align: center; padding-right: 5px; margin-right:5px;"
+                       class="boder-right" onclick="displayFullPageIMG({{ loop.index }})">XEM ẢNH CHỤP TOÀN BỘ TRANG</a>
+                    <a id="anhbai_{{ loop.index }}" style="float: right; text-align: center; padding-right: 5px; margin-right:5px;"
+                       class="boder-right" onclick="displayFilteredContentIMG({{ loop.index }})">XEM ẢNH CHỤP BÀI
+                        VIẾT</a>
 
-        </div>
-        <div class="post_container">
-            <div id="post" style="background: #FFFFFF; overflow: hidden; margin: 0 auto;">
-                <div style="margin: 0 auto;">
-                    <div class="panel-heading" role="tab" style="margin: 0 auto;">
-                    </div>
-                    <div class="panel-body" style="max-width: 1000px; margin: 0 auto; ">
-                        <h1 class="panel-title" style="font-size:34px;margin: 0 auto; font-weight: bold">
-
-                            {{item['value']['title']}}
-                        </h1>
-                        <br/>
-                        <br/>
-                        <br/>
-                        <i>{{item['value']['published_at']}}</i>
-                        <span class="pull-right"></span>
-                        <span class="pull-right">&nbsp;&nbsp;</span>
-                        <span class="pull-right"></span>
-                        <div class="lead">{{item['value']['description']}}</div>
-                        <div style="margin: 0 auto;">{{item['value']['content']|safe}}</div>
-
-                    </div>
                 </div>
-            </div>
-            <div style="width: 100%">
-                <div style="margin-top: 20px; width: 100%;">
-                    <nav aria-label="Page navigation example" style="display: inline-block; width: 100%;">
-                        <div id="tong-so" style="margin-top: 5px; margin-right: 10px;"><label>Phiên bản:</label></div>
-                        <ul class="pagination">
-                            {{pagination_ajax_page_version(pagination,loop.index)}}
-                        </ul>
+                <div class="post_container" style="margin: 0 auto">
+                    <img src="{{ item['value']['image_full_content'] }}" id="img_fullcontent_{{ loop.index }}"
+                         style="display: none;max-width: 100%">
+                    <img src="{{ item['value']['image_filter_content'] }}" id="img_filtered_content_{{ loop.index }}"
+                         style="display: none;margin-left: 30%;max-width: 100%">
+                    <div id="post_{{ loop.index }}" style="background: #FFFFFF; overflow: hidden; margin: 0 auto;">
+                        <div style="margin: 0 auto;">
+                            <div class="panel-heading" role="tab" style="margin: 0 auto;">
+                            </div>
+                            <div class="panel-body" style="max-width: 1000px; margin: 0 auto; ">
+                                <h1 class="panel-title" style="font-size:34px;margin: 0 auto; font-weight: bold">
 
-                        <div style="float: right; margin-right: 20px; color:  #3399ff;font-size:  14px;font-weight:  400;text-decoration:  underline;text-align:  justify;">
-                            {%if params.prepageid|int == 0%}
-                            <a href="{{url_for('repository.back_from_detail_to_filter_by_default', page=params.page)}}">
-                                < Quay lại
-                            </a>
-                            {%elif params.prepageid|int == 1%}
-                            <a href="{{url_for('repository.back_from_detail_to_filter_by_timing',sid=source.id,ptimingid=params.ptimingid, page=params.page)}}">
-                                < Quay lại
-                            </a>
-                            {%elif params.prepageid|int == 3%}
-                            <a href="{{url_for('repository.back_from_detail_to_search',source=params.source,tag=params.tag, published=params.published, kw = params.kw, page=params.page)}}">
-                                < Quay lại
-                            </a>
-                            {%endif%}
+                                    {{ item['value']['title'] }}
+                                </h1>
+                                <br/>
+                                <br/>
+                                <br/>
+                                <i>{{ item['value']['published_at'] }}</i>
+                                <span class="pull-right"></span>
+                                <span class="pull-right">&nbsp;&nbsp;</span>
+                                <span class="pull-right"></span>
+                                <div class="lead">{{ item['value']['description'] }}</div>
+                                <div style="margin: 0 auto;">{{ item['value']['content']|safe }}</div>
+
+                            </div>
                         </div>
-                    </nav>
+                    </div>
+                    <div style="width: 100%">
+                        <div style="margin-top: 20px; width: 100%;">
+                            <nav aria-label="Page navigation example" style="display: inline-block; width: 100%;">
+                                <div id="tong-so" style="margin-top: 5px; margin-right: 10px;"><label>Phiên bản:</label>
+                                </div>
+                                <ul class="pagination">
+                                    {{ pagination_ajax_page_version(pagination,loop.index) }}
+                                </ul>
+
+                                <div style="float: right; margin-right: 20px; color:  #3399ff;font-size:  14px;font-weight:  400;text-decoration:  underline;text-align:  justify;">
+                                    {% if params.prepageid|int == 0 %}
+                                        <a href="{{ url_for('repository.back_from_detail_to_filter_by_default', page=params.page) }}">
+                                            < Quay lại
+                                        </a>
+                                    {% elif params.prepageid|int == 1 %}
+                                        <a href="{{ url_for('repository.back_from_detail_to_filter_by_timing',sid=source.id,ptimingid=params.ptimingid, page=params.page) }}">
+                                            < Quay lại
+                                        </a>
+                                    {% elif params.prepageid|int == 3 %}
+                                        <a href="{{ url_for('repository.back_from_detail_to_search',source=params.source,tag=params.tag, published=params.published, kw = params.kw, page=params.page) }}">
+                                            < Quay lại
+                                        </a>
+                                    {% endif %}
+                                </div>
+                            </nav>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
-        <div class="modal fade" id="modalDefault{{loop.index}}" tabindex="-1" role="dialog" aria-hidden="true"
-             style="display: none;">
-            <div class="modal-dialog modal-lg" style="width:1024px;">
-                <div class="modal-content">
-                    <div class="modal-body">
-                        <iframe id="iframe_{{loop.index}}"
-                                src="{{url_for('repository.detail_html', cid=contentid, idx=loop.index-1)}}"
-                                frameborder="0" scrolling="no"
-                                style="width:1024px;">
-                        </iframe>
+                <div class="modal fade" id="modalDefault{{ loop.index }}" tabindex="-1" role="dialog" aria-hidden="true"
+                     style="display: none;">
+                    <div class="modal-dialog modal-lg" style="width:1024px;">
+                        <div class="modal-content">
+                            <div class="modal-body">
+                                <iframe id="iframe_{{ loop.index }}"
+                                        src="{{ url_for('repository.detail_html', cid=contentid, idx=loop.index-1) }}"
+                                        frameborder="0" scrolling="no"
+                                        style="width:1024px;">
+                                </iframe>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
 
-</div>
-{%endfor%}
-<script type="text/javascript">
-    var total_count = $('#total_count').text();
-    for (var index = 1; index <= total_count; index++) {
-        var title = $('#txt_title_' + index).text();
-        var pulished_at = $('#txt_pulished_at_' + index).text();
-        var luuchieu_at = $('#txt_luuchieu_at_' + index).text();
-        if (title.length >= 75) {
-            title = title.substring(0, 75) + "...";
-            $('#txt_title_' + index).html(title);
+        </div>
+    {% endfor %}
+    <script type="text/javascript">
+        var total_count = $('#total_count').text();
+        for (var index = 1; index <= total_count; index++) {
+            var title = $('#txt_title_' + index).text();
+            var pulished_at = $('#txt_pulished_at_' + index).text();
+            var luuchieu_at = $('#txt_luuchieu_at_' + index).text();
+            if (title.length >= 75) {
+                title = title.substring(0, 75) + "...";
+                $('#txt_title_' + index).html(title);
+            }
+            var i = pulished_at.indexOf("|");
+            var j = luuchieu_at.indexOf("|");
+            if (i > 0) {
+                pulished_at = pulished_at.substring(0, i);
+            } else if (pulished_at.indexOf("-") > 0) {
+                pulished_at = pulished_at.substring(0, pulished_at.indexOf("-"));
+            }
+            if (j > 0) {
+                luuchieu_at = luuchieu_at.substring(0, j);
+            } else if (luuchieu_at.indexOf("-") > 0) {
+                luuchieu_at = luuchieu_at.substring(0, luuchieu_at.indexOf("-"));
+            }
+            $('#txt_pulished_at_' + index).html(pulished_at);
+            $('#txt_luuchieu_at_' + index).html(luuchieu_at);
         }
-        var i = pulished_at.indexOf("|");
-        var j = luuchieu_at.indexOf("|");
-        if (i > 0) {
-            pulished_at = pulished_at.substring(0, i);
-        } else if (pulished_at.indexOf("-") > 0) {
-            pulished_at = pulished_at.substring(0, pulished_at.indexOf("-"));
+        //    function resizeIframe(obj) {
+        //        obj.style.height = obj.contentWindow.document.body.scrollHeight + 'px';
+        //    }
+        $('#menubar_1').css("display", "block");
+        $('#middle_1').css("display", "block");
+
+        function displayFullPageIMG(version) {
+            $('#img_fullcontent_' + version).css("display", "block");
+            $('#anhfull_' + version).css("background-color", "#8c8c8c");
+            hideFilteredContentIMG(version);
+            hidePost(version);
         }
-        if (j > 0) {
-            luuchieu_at = luuchieu_at.substring(0, j);
-        } else if (luuchieu_at.indexOf("-") > 0) {
-            luuchieu_at = luuchieu_at.substring(0, luuchieu_at.indexOf("-"));
+
+        function displayFilteredContentIMG(version) {
+            $('#img_filtered_content_' + version).css("display", "block");
+            $('#anhbai_' + version).css("background-color", "#8c8c8c");
+            hideFullpageIMG(version);
+            hidePost(version);
         }
-        $('#txt_pulished_at_' + index).html(pulished_at);
-        $('#txt_luuchieu_at_' + index).html(luuchieu_at);
-    }
-    //    function resizeIframe(obj) {
-    //        obj.style.height = obj.contentWindow.document.body.scrollHeight + 'px';
-    //    }
-    $('#menubar_1').css("display", "block");
-    $('#middle_1').css("display", "block");
-</script>
-{%endblock%}
+
+        function hideFullpageIMG(version) {
+            $('#img_fullcontent_' + version).css("display", "none");
+            $('#anhfull_' + version).css("background-color", "transparent");
+        }
+
+        function hideFilteredContentIMG(version) {
+            $('#img_filtered_content_' + version).css("display", "none");
+            $('#anhbai_' + version).css("background-color", "transparent");
+        }
+
+        function displayPost(version) {
+            $('#post_' + version).css("display", "block");
+            $('#baiviet_' + version).css("background-color", "#8c8c8c");
+            hideFullpageIMG(version);
+            hideFilteredContentIMG(version);
+        }
+
+        function hidePost(version) {
+            $('#post_' + version).css("display", "none");
+            $('#baiviet_' + version).css("background-color", "transparent");
+        }
+
+    </script>
+{% endblock %}

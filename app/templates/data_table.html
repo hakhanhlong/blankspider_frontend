@@ -34,7 +34,7 @@
     </tr>
     {%endfor%}
 </table>
-<div id="tong-so"> Tổng số: <label style="color: red;">{{pagination.total_count-1}}</label></div>
+<div id="tong-so"> Tổng số: <label style="color: red;">{{pagination.total_count}}</label></div>
 {%if params%}
 {%if params.pageid == 1%}
 {{ pagination_ajax(pagination, sid=params.sid, timingid=params.ptimingid) }}

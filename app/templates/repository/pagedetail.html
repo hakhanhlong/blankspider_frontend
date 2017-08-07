@@ -96,16 +96,16 @@
                 <div class="midle-content-navigationbar" style="width: 100%;"><a href="/" class="boder-right"
                                                                                  style="text-align: center; padding-right: 5px; margin-right:5px;">HOME</a>
                     <a href="/repository">KHO NỘI DUNG</a>
-                    <a style="float: right;" data-toggle="modal"
-                       href="#modalDefault{{ loop.index }}" index="{{ loop.index }}" class="open_popup">XEM TOÀN BỘ NỘI
-                        DUNG
-                        TRANG</a>
-                    <a id="baiviet_{{ loop.index }}" style="float: right;text-align: center; padding-right: 5px; margin-right:5px;"
-                       class="boder-right" onclick="displayPost({{ loop.index }})">XEM BÀI VIẾT</a>
+{#                    <a style="float: right;" data-toggle="modal"#}
+{#                       href="#modalDefault{{ loop.index }}" index="{{ loop.index }}" class="open_popup">XEM TOÀN BỘ NỘI#}
+{#                        DUNG#}
+{#                        TRANG</a>#}
+{#                    <a id="baiviet_{{ loop.index }}" style="float: right;text-align: center; padding-right: 5px; margin-right:5px;"#}
+{#                       class="boder-right" onclick="displayPost({{ loop.index }})">XEM BÀI VIẾT</a>#}
                     <a id="anhfull_{{ loop.index }}" style="float: right; text-align: center; padding-right: 5px; margin-right:5px;"
-                       class="boder-right" onclick="displayFullPageIMG({{ loop.index }})">XEM ẢNH CHỤP TOÀN BỘ TRANG</a>
+                       onclick="displayFullPageIMG({{ loop.index }})">TOÀN BỘ TRANG</a>
                     <a id="anhbai_{{ loop.index }}" style="float: right; text-align: center; padding-right: 5px; margin-right:5px;"
-                       class="boder-right" onclick="displayFilteredContentIMG({{ loop.index }})">XEM ẢNH CHỤP BÀI
+                       class="boder-right" onclick="displayFilteredContentIMG({{ loop.index }})">BÀI
                         VIẾT</a>
 
                 </div>
@@ -113,8 +113,8 @@
                     <img src="{{ item['value']['image_full_content'] }}" id="img_fullcontent_{{ loop.index }}"
                          style="display: none;max-width: 100%">
                     <img src="{{ item['value']['image_filter_content'] }}" id="img_filtered_content_{{ loop.index }}"
-                         style="display: none;margin-left: 30%;max-width: 100%">
-                    <div id="post_{{ loop.index }}" style="background: #FFFFFF; overflow: hidden; margin: 0 auto;">
+                         style="margin-left: 30%;max-width: 100%;border: 10px solid #FFFFFF;">
+                    <div id="post_{{ loop.index }}" style="background: #FFFFFF; overflow: hidden; margin: 0 auto;display: none">
                         <div style="margin: 0 auto;">
                             <div class="panel-heading" role="tab" style="margin: 0 auto;">
                             </div>
@@ -170,7 +170,7 @@
                         <div class="modal-content">
                             <div class="modal-body">
                                 <iframe id="iframe_{{ loop.index }}"
-                                        src="{{ url_for('repository.detail_html', cid=contentid, idx=loop.index-1) }}"
+                                        src="{{ url_for('repository.detail_html', cid=contentid, idx=loop.index - 1) }}"
                                         frameborder="0" scrolling="no"
                                         style="width:1024px;">
                                 </iframe>
@@ -183,6 +183,7 @@
         </div>
     {% endfor %}
     <script type="text/javascript">
+     $('#anhbai_1').css("background-color", "#8c8c8c");
         var total_count = $('#total_count').text();
         for (var index = 1; index <= total_count; index++) {
             var title = $('#txt_title_' + index).text();

@@ -203,7 +203,6 @@ def detail(cid, page=0, prepageid=0, ptimingid=0):
 
                 # data_master.append({'key': k, 'value': json.loads(v)})
                 # / mnt / storage / lcbc_storage / images / 201784 / J5W9aSaIgh.png
-                print("llllllllllllllllllllllllllllll"+str(len(content_im)))
                 if content_im is not None and len(content_im) >0:
                     directory1, directory2, directory3, directory4, directory5, directory6, imageName = \
                     content_im[i].images[0]['image_full_content'].split("/")

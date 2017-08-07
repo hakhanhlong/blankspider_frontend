@@ -32,7 +32,7 @@ class RequestURL:
 
         #--------------------------------------------------------------------------------------------
 
-        self.CONTENT_URL_SEARCH_BY_KEYWORD = 'http://118.107.88.35:8983/solr/lcbc_search/select?fl=title,published_at,tag_name,version_count,published_time,id&indent=on&q=%s&sort=title%20desc&wt=json';
+        self.CONTENT_URL_SEARCH_BY_KEYWORD = 'http://118.107.88.35:8983/solr/lcbc_search/select?fl=title,published_at,tag_name,version_count,published_time,id&indent=on&q=%s&wt=json';
 
 
 

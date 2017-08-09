@@ -1,144 +1,227 @@
 <!DOCTYPE html>
-{% extends "middle-content.html"%}
-{% import "bootstrap/wtf.html" as wtf%}
+{% extends "middle-content.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
 {% block title %}LUU CHIEU BAO CHI - LISTING{% endblock %}
 {% block horizontalmenubar %}
-<style>
-    @media screen and (max-width: 1180px) {
-        .horizontal-menubar-column1 {
-            margin-left: 2%;
-        }
-    }
-
-    @media screen and (min-width: 1529px) {
-        .horizontal-menubar-column1 {
-            margin-left: 7%;
-        }
-    }
-
-    @media screen and (min-width: 1560px) {
-        .horizontal-menubar-column1 {
-            margin-left: 10%;
-        }
-    }
-
-    @media screen and (min-width: 1629px) {
-        .horizontal-menubar-column1 {
-            margin-left: 15%;
-        }
-    }
-
-    @media screen and (max-width: 840px) {
-
-        #horizontal-menubar-row2 {
-            margin-top: 5px;
+    <link href="{{ url_for('static', filename='css/bootstrap-datepicker3.css') }}" rel="stylesheet">
+    <style>
+        @media screen and (max-width: 1180px) {
+            .horizontal-menubar-column1 {
+                margin-left: 2%;
+            }
         }
 
-        #horizontal-menubar-column2 {
-            margin-left: 15%;
+        @media screen and (min-width: 1529px) {
+            .horizontal-menubar-column1 {
+                margin-left: 7%;
+            }
         }
 
-        #horizontal-menubar-date {
-            margin-left: 15%;
+        @media screen and (min-width: 1560px) {
+            .horizontal-menubar-column1 {
+                margin-left: 10%;
+            }
         }
 
-        .horizontal-menubar-column1 {
-            margin-left: 15%;
+        @media screen and (min-width: 1629px) {
+            .horizontal-menubar-column1 {
+                margin-left: 15%;
+            }
         }
 
-        #txt-search,#select-baodientu-repository,#select-tag {
-            width: 150px;
-        }
-    }
+        @media screen and (max-width: 840px) {
 
-    @media screen and (min-width: 841px) {
-        #horizontal-menubar-row2 {
-            margin-top: -15px;
+            #horizontal-menubar-row2 {
+                margin-top: 5px;
+            }
+
+            #horizontal-menubar-column2 {
+                margin-left: 15%;
+            }
+
+            #horizontal-menubar-date {
+                margin-left: 15%;
+            }
+
+            .horizontal-menubar-column1 {
+                margin-left: 15%;
+            }
+
+{#            #txt-search, #select-baodientu-repository, #select-tag {#}
+{#                width: 150px;#}
+{#            }#}
         }
 
-        #horizontal-menubar-column2 {
-            margin-left: 5%;
+        @media screen and (min-width: 841px) {
+            #horizontal-menubar-row2 {
+                margin-top: -15px;
+            }
+
+            #horizontal-menubar-column2 {
+                margin-left: 5%;
+            }
+
+            #horizontal-menubar-date {
+                margin-left: 5%;
+            }
+
+            .horizontal-menubar-column1 {
+                margin-left: 5%;
+            }
         }
 
-        #horizontal-menubar-date {
-            margin-left: 5%;
+        .nopading-margin {
+            padding: 0 !important;
+            margin: 0 !important;
         }
 
-        .horizontal-menubar-column1 {
-            margin-left: 5%;
-        }
-    }
+        .nomargin-lef {
 
-</style>
-<div class="horizontal-menubar-row1">
-    <label id="lbl_published" style="display: none">{{params.published}}</label>
-    <label id="lbl_tag" style="display: none">{{params.tag}}</label>
-    <div id="horizontal-menubar-column1" class="horizontal-menubar-column1">
-        <p>
-            <label class="label-text-style">Tòa soạn: </label>
-            <label class="custom-select">
-                <select class="horizontal-menu-border-style" id="select-baodientu-repository">
-                    <option value="*">Tất cả</option>
-                    {% for source in sources%}
-                    {%if source.id|string() == params.source%}
-                    <option value="{{source.id}}" selected>{{source.name}}</option>
-                    {%else%}
-                    <option value="{{source.id}}">{{source.name}}</option>
-                    {%endif%}
-                    {% endfor %}
-                </select>
-            </label>
-        </p>
+            margin-left: 0 !important;
+        }
+
+        .nomargin-right {
+            margin-right: 0 !important;
+        }
+
+        .nopadding-left {
+            padding-left: 0 !important;
+        }
+
+        .nopadding-right {
+            padding-right: 0 !important;
+        }
+
+        .nomargin {
+            margin: 0 !important;
+        }
+
+        .nopadding {
+            padding: 0 !important;
+        }
+
+        .margin-top {
+            margin-top: 5px !important;
+        }
+
+        .nomargin-left {
+            margin-left: 5px !important;
+        }
+
+        .col-md-2 {
+            padding-right: 0 !important;
+        }
+
+        .col-sm-9 {
+            padding-right: 0 !important;
+
+        }
+
+
+
+    </style>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10">
+                <div class="row margin-top">
+                    <div class="container">
+                        <div class="col-md-4 nomargin-lef nomargin-right nopadding">
+                            <div class="controls col-sm-9">
+                                <label class="control-label control-label-left nomargin-right label-text-style"
+                                       for="select-baodientu-repository">Tòa
+                                    Soạn</label>
+                                <select id="select-baodientu-repository" class="form-control">
+                                    <option value="*">Tất cả</option>
+                                    {% for source in sources %}
+                                        {% if source.id|string() == params.source %}
+                                            <option value="{{ source.id }}" selected>{{ source.name }}</option>
+                                        {% else %}
+                                            <option value="{{ source.id }}">{{ source.name }}</option>
+                                        {% endif %}
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-5 col-sm-9">
+                            <div class="controls">
+                                <label class="control-label control-label-left label-text-style" for="field77">Từ
+                                    Khóa:</label>
+                                {% if params.kw != "" and params.kw !="*" %}
+                                    <input id="txt-search" type="text" class="form-control k-textbox"
+                                           placeholder="Tìm kiếm" value="{{ params.kw }}">
+                                {% else %}
+                                    <input id="txt-search" type="text" class="form-control k-textbox"
+                                           placeholder="Tìm kiếm">
+                                {% endif %}
+
+                            </div>
+                        </div>
+                        <div class="col-md-1 col-sm-9">
+                            <div class="form-group">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-10">
+                    <div class="row margin-top nomargin-lef">
+                        <div class="container">
+                            <div class="col-md-4 nomargin-lef nomargin-right nopadding">
+                                <div class="controls col-sm-9">
+                                    <label class="control-label control-label-left nomargin-right label-text-style"
+                                           for="select-tag">Chuyên mục:</label>
+                                    <select id="select-tag" class="form-control">
+                                        <option value="*">Tất cả</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-5 col-sm-9">
+                                {#                            <div class="controls col-sm-9">#}
+                                {#                                <input id="field77" type="text" class="form-control k-textbox" data-role="text"#}
+                                {#                                       placeholder="Tìm kiếm" data-parsley-errors-container="#errId5"><span id="errId5"#}
+                                {#                                                                                                            class="error"></span>#}
+                                {#                            </div>#}
+                                <label class="control-label control-label-left label-text-style"
+                                       for="txt-date-from-picker">Ngày:</label>
+                                <div class="row nopading-margin">
+                                    <div class="col-md-2 col-sm-1 nopadding-left" style="width: 45% !important;">
+                                        <div class="input-group date">
+
+                                            {% if params.published != "*" and params.published!="" %}
+                                                <input id="txt-date-from-picker" type="text" class="form-control"
+                                                       value="{{ params.published }}" readonly>
+                                            {% else %}
+                                                <input id="txt-date-from-picker" type="text" class="form-control" readonly>
+                                            {% endif %}
+                                            <span class="input-group-addon">
+                                            <i class="glyphicon glyphicon-th"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-1 col-sm-1"><label class="label-text-style">-</label></div>
+                                    <div class="col-md-2 col-sm-1" style="width: 45% !important;">
+                                        <div class="input-group date">
+                                            <input id="txt-date-to-picker" type="text" class="form-control" readonly><span
+                                                class="input-group-addon"><i
+                                                class="glyphicon glyphicon-th"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-1 col-sm-9" style="margin-left: 5% !important;">
+                                <div class="form-group">
+                                    <input style="padding: 0 !important;margin: 0 !important;" type="image" id="btn-search" src="{{ url_for('static', filename='images/filter1.png') }}" type="button" class="btn btn-default">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
-    <div id="horizontal-menubar-column2" class="horizontal-menubar-column2">
-        <p>
-            <label class="label-text-style">Từ khóa: </label>
-            <label>
-                {%if params.kw != "" and params.kw !="*"%}
-                <input class="horizontal-menu-border-style input-text-style" type="text"
-                       placeholder="Nhập từ khóa..." id="txt-search" value="{{params.kw}}">
-                {%else%}
-                <input class="horizontal-menu-border-style input-text-style" type="text"
-                       placeholder="Nhập từ khóa..." id="txt-search">
-                {%endif%}
-            </label>
-        </p>
-    </div>
-    <div id="horizontal-menubar-column3" class="horizontal-menubar-column3">
-        <button id="btn-search" class="horizontal-menu-border-style"
-                style="z-index: 1; width: 100%; height: 100%; background-color: #f1f1f1; color: #003366; font-size: 14px;font-weight: 500; margin-top: 20%;position: relative "
-                id="btn-search">
-            <img src="{{url_for('static', filename='images/filter.png')}}"/> Bộ lọc
-        </button>
-    </div>
-</div>
-<div id="horizontal-menubar-row2" class="horizontal-menubar-row2">
-    <div class="horizontal-menubar-column1">
-        <p>
-            <label class="label-text-style">Chuyên mục: </label>
-            <label class="custom-select ">
-                <select class="horizontal-menu-border-style" id="select-tag">
-                    <option value="*">Tất cả</option>
-                </select>
-            </label>
-        </p>
-    </div>
-    <div id="horizontal-menubar-date" class="horizontal-menubar-column2">
-        <label class="label-text-style">Ngày:</label>
-        <label class="calendar">
-            {%if params.published != "*" and params.published!=""%}
-            <input id="txt-date-from-picker" value="{{params.published}}" data-date-format="dd/mm/yyyy"
-                   class="horizontal-menu-border-style input-text-style" type="text" readonly>
-            {%else%}
-            <input id="txt-date-from-picker" data-date-format="dd/mm/yyyy"
-                   class="horizontal-menu-border-style input-text-style" type="text" readonly>
-            {%endif%}
-            <img src="{{url_for('static', filename='images/datetimepickericon.png')}}"/> </label>
-        <label class="label-text-style" style="margin-left: 9%;">-</label>
-        <label class="calendar">
-            <input id="txt-date-to-picker" data-date-format="dd/mm/yyyy"
-                   class="horizontal-menu-border-style input-text-style" type="text" readonly>
-            <img src="{{url_for('static', filename='images/datetimepickericon.png')}}"/> </label>
-    </div>
-</div>
+
+    <script type="text/javascript" src="{{ url_for('static', filename='scripts/custome-datepicker.min.js') }}"></script>
+
 {% endblock %}

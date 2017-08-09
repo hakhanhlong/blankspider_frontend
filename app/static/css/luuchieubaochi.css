@@ -251,10 +251,11 @@ a img {
     padding-bottom: 20px;
 }
 
-#horizontal-menubar {
-    height: 67px;
-    margin-top: -21px;
-    width: 100%;
+#horizontal-menubar{
+    height: 150px;
+    /*margin-top: -21px;*/
+    margin-right: 0 !important;
+    /*width: 100%;*/
     background: url(../images/horizontalmenubackground.png) no-repeat;
     background-size: cover;
     background-position: center center;
@@ -262,21 +263,22 @@ a img {
 }
 
 #admin-area {
-    float: left;
-    width: 20.1%;
-    padding-left: 2%;
-    height: inherit;
+    /*float: left;*/
+    /*width: 20.1%;*/
+    /*padding-left: 2%;*/
+    /*height: inherit;*/
     background: url(../images/adminbackground.png) no-repeat;
     background-size: cover;
     background-position: center center;
-    min-width: 80px;
-    overflow: hidden;
+    /*min-width: 80px;*/
+    /*overflow: hidden;*/
     align-items: center;
     vertical-align: middle;
+    height: 100%;
 }
 
 #avatar_container {
-    width: 90%;
+    /*width: 90%;*/
     height: 100%;
     vertical-align: middle;
     align-self: center;
@@ -286,7 +288,7 @@ a img {
 #avatar_container a {
     align-self: center;
     vertical-align: middle;
-    width: 89px;
+    /*width: 89px;*/
     height: 10px;
     color: #ffffff;
     font-size: 14px;
@@ -413,7 +415,7 @@ a img {
 }
 
 .horizontal-menubar-detail-row1 {
-    width: 80%;
+    width: 100%;
     display: inline-block;
     margin-top: 5px;
 }
@@ -438,7 +440,6 @@ body {
     background-color: #ECECEC;
     background-position: center center;
     background-size: cover;
-    min-width: 1084px;
     overflow-x: hidden;
 }
 
@@ -454,17 +455,21 @@ iframe {
 
 }
 
-#txt-search {
-    width: 233px;
-}
+/*#txt-search {*/
+    /*width: 233px;*/
+/*}*/
 
-#select-baodientu-repository {
-    width: 213px;
-}
+/*#select-baodientu-repository {*/
+    /*width: 213px;*/
+/*}*/
 
-#select-tag {
-    width: 189px;
-}
+/*#select-tag {*/
+    /*width: 189px;*/
+/*}*/
+
+ /*#btn-search {*/
+            /*background: url(../images/filter1.png) no-repeat;*/
+        /*}*/
 
 #btn_slide_right {
     display: none;

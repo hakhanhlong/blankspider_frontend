@@ -70,9 +70,9 @@ $(document).ready(function () {
     mobile_check = window.mobilecheck;
     tablet_check = window.mobileAndTabletcheck;
     if (mobile_check == true || tablet_check == true) {
-        MOBILE_WIDTH = 840;
+        MOBILE_WIDTH = 934;
     } else {
-        MOBILE_WIDTH = 823;
+        MOBILE_WIDTH = 948;
     }
     resize_for_mobile();
     $('#btn_collapsed').on('click', function () {
@@ -535,10 +535,10 @@ function convertFormatDate(date) {
 function resize_for_mobile() {
     var horizontalMenubar_height = $('#horizontal-menubar').height();
     if ($(window).width() <= MOBILE_WIDTH) {
-        $('#admin-area').css({height: horizontalMenubar_height});
-        $('#btn-search').appendTo('#horizontal-menubar-date');
-        $('#btn-search').css("margin-top", 2 + "px");
-        $('#btn-search').css("margin-bottom", 1 + "px");
+        // $('#admin-area').css({height: horizontalMenubar_height});
+        // $('#btn-search').appendTo('#horizontal-menubar-date');
+        // $('#btn-search').css("margin-top", 2 + "px");
+        // $('#btn-search').css("margin-bottom", 1 + "px");
         var leftMenuTreeWidth = $('#left-menu-tree').width();
         if (isLeftMenuTreeDisplay == false) {
             var h = $(window).height();
@@ -547,10 +547,12 @@ function resize_for_mobile() {
             $('#btn_slide_right').css({top: slide_right_top});
         }
         $('.midle-content').css({float: 'left', width: 100 + '%'});
+        $('.img-filtered-content').css("margin-left","0%");
     } else {
-        $('#admin-area').css({height: horizontalMenubar_height});
-        $('#btn-search').appendTo('#horizontal-menubar-column3');
-        $('#btn-search').css("margin-top", 20 + "%");
+        $('.img-filtered-content').css("margin-left","30%");
+        // $('#admin-area').css({height: horizontalMenubar_height});
+        // $('#btn-search').appendTo('#horizontal-menubar-column3');
+        // $('#btn-search').css("margin-top", 20 + "%");
         $('.midle-content').css({float: 'right', width: 77 + '%'});
         if (scroll_position >= POSITION_TO_SCROLL_TO) {
             $('#left-menu-tree').css({position: 'fixed', left: 0, top: 0});

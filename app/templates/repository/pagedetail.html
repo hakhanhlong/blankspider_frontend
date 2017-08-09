@@ -54,7 +54,7 @@
         }
     </style>
     {% for item in data %}
-        <div id="menubar_{{ loop.index }}" style="display: none;">
+        <div id="menubar_{{ loop.index }}" style="display: none; width: 100%;margin-top: 2%">
             <h6 id="total_count" style="display: none">{{ pagination.total_count }}</h6>
             <div class="horizontal-menubar-detail-row1">
                 <div class="horizontal-menubar-detail-column">
@@ -113,7 +113,7 @@
                     <img src="{{ item['value']['image_full_content'] }}" id="img_fullcontent_{{ loop.index }}"
                          style="display: none;max-width: 100%">
                     <img src="{{ item['value']['image_filter_content'] }}" id="img_filtered_content_{{ loop.index }}"
-                         style="margin-left: 30%;max-width: 100%;border: 10px solid #FFFFFF;">
+                         style="margin-left: 30%;max-width: 100%;border: 10px solid #FFFFFF;" class="img-filtered-content">
                     <div id="post_{{ loop.index }}" style="background: #FFFFFF; overflow: hidden; margin: 0 auto;display: none">
                         <div style="margin: 0 auto;">
                             <div class="panel-heading" role="tab" style="margin: 0 auto;">

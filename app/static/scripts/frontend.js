@@ -3,7 +3,7 @@ var PAGE_FILTER_DEFAULT = 0;
 var PAGE_FILTER_BY_TIMING = 1;
 var PAGE_SEARCH = 3;
 var scroll_position = 0;
-var POSITION_TO_SCROLL_TO = 204;
+var POSITION_TO_SCROLL_TO = 300;
 var isLeftMenuTreeDisplay = false;
 var MOBILE_WIDTH = 840;
 var MOBILE_SCROLL_POSITION = 350;
@@ -11,7 +11,7 @@ var mobile_check = false;
 var tablet_check = false;
 var is_navigationbar_opened = false;
 
-function search(source, tag, published, kw) {
+function search(source, tag, published, kw,page) {
     if (!kw) {
         kw = "*";
     }
@@ -221,7 +221,7 @@ $(document).ready(function () {
         var page = $(this).attr('page');
         var pageid = $(this).attr('pageid');
         if (pageid == PAGE_FILTER_DEFAULT || pageid == PAGE_FILTER_BY_TIMING || pageid == PAGE_SEARCH) {
-            $.ajax('/repository/filter-by-timing/' + sourceid + '/' + timingid + '/' + page + '/' + pageid, {
+            $.ajax('/repository/filter-by-timing/' + sourceid + '/' + timingid + '/' + 0 + '/' + pageid, {
                 success: function (data) {
                     hide_busy_mark();
                     $('.midle-content').html(data);

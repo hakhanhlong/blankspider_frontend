@@ -179,11 +179,9 @@
 
 <script type="text/javascript">
 
-    $('.date').datepicker({
-        format: "dd/mm/yyyy",
-        clearBtn: true,
-        language: "vi",
-        autoclose: true
+    $(function () {
+        $('#txt-date-from-picker').datepicker();
+        $('#txt-date-to-picker').datepicker();
     });
 
 </script>

@@ -69,30 +69,25 @@ a img {
 /*Safari, Google Chrome, Opera 15+*/
 ::-webkit-input-placeholder {
     color: #333333;
-    font-size: 11px;
-    font-style: italic;
-    font-weight: lighter;
+    font-size: 14px;
 }
 
 /*firefox*/
 :-moz-placeholder {
     color: #333333;
-    font-size: 12px;
-    font-style: italic;
+    font-size: 14px;
 }
 
 /*Mozilla Firefox 19+*/
 ::-moz-placeholder {
     color: #333333;
-    font-size: 12px;
-    font-style: italic;
+    font-size: 14px;
 }
 
 /*Internet Explorer 10 and 11*/
 :-ms-input-placeholder {
     color: #333333;
-    font-size: 12px;
-    font-style: italic;
+    font-size: 14px;
 }
 
 /*::-webkit-datetime-edit { padding: 1em; }*/

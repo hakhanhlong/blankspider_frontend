@@ -147,10 +147,10 @@
                                 <label class="control-label control-label-left label-text-style" for="field77">Từ
                                     Khóa:</label>
                                 {% if params.kw != "" and params.kw !="*" %}
-                                    <input id="txt-search" type="text" class="form-control k-textbox"
+                                    <input id="txt-search" type="text" class="form-control"
                                            placeholder="Tìm kiếm" value="{{ params.kw }}">
                                 {% else %}
-                                    <input id="txt-search" type="text" class="form-control k-textbox"
+                                    <input id="txt-search" type="text" class="form-control "
                                            placeholder="Tìm kiếm">
                                 {% endif %}
 
@@ -186,7 +186,7 @@
                                        for="txt-date-from-picker">Ngày:</label>
                                 <div class="row nopading-margin">
                                     <div class="col-md-2 col-sm-1 nopadding-left" style="width: 45% !important;">
-                                        <div class="input-group date">
+                                        <div id="date-from" class="input-group date">
 
                                             {% if params.published != "*" and params.published!="" %}
                                                 <input id="txt-date-from-picker" type="text" class="form-control"
@@ -201,7 +201,7 @@
                                     </div>
                                     <div class="col-md-1 col-sm-1"><label class="label-text-style">-</label></div>
                                     <div class="col-md-2 col-sm-1" style="width: 45% !important;">
-                                        <div class="input-group date">
+                                        <div id="date-to" class="input-group date">
                                             <input id="txt-date-to-picker" type="text" class="form-control" readonly><span
                                                 class="input-group-addon"><i
                                                 class="glyphicon glyphicon-th"></i></span>

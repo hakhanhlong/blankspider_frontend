@@ -39,7 +39,10 @@ def get_data_from_service_filter_by_default(page=0):
     content_service = ContentService()
     content = content_service.list_by_default(int(page), 50)
     count_items = content['response']['numFound']
-    pagination = Pagination(int(page), 50, count_items)
+    p = int(page)
+    if p == 0:
+        p = 1
+    pagination = Pagination(p, 50, count_items)
     data_master = []
     for item in content['response']['docs']:
         data_master.append(item)
@@ -53,7 +56,10 @@ def get_data_from_service_filter_by_timing(sid, ptimingid, page=0):
     content_service = ContentService()
     content = content_service.filter_by_timing(sid, ptimingid, int(page), 50)
     count_items = content['response']['numFound']
-    pagination = Pagination(int(page), 50, count_items)
+    p = int(page)
+    if p == 0:
+        p = 1
+    pagination = Pagination(p, 50, count_items)
     data_master = []
     for item in content['response']['docs']:
         data_master.append(item)
@@ -256,7 +262,10 @@ def content_search(source='', tag='', published='', kw='', page=0):
 
     content = content_service.search(source, tag, published, kw, int(page), 50)
     count_items = content['response']['numFound']
-    pagination = Pagination(int(page), 50, count_items)
+    p = int(page)
+    if p == 0:
+        p =1
+    pagination = Pagination(p, 50, count_items)
     data_master = []
     for item in content['response']['docs']:
         data_master.append(item)
@@ -368,7 +377,10 @@ def back_from_detail_to_search(source='', tag='', published='', kw='', page=0):
 
     content = content_service.search(source, tag, published, kw, int(page), 50)
     count_items = content['response']['numFound']
-    pagination = Pagination(int(page), 50, count_items)
+    p = int(page)
+    if p ==0:
+        p =1
+    pagination = Pagination(p, 50, count_items)
 
     data_master = []
     for item in content['response']['docs']:

@@ -283,12 +283,14 @@ def search_to_detail(cid, source, tag, published, kw, page):
         published = day + "-" + month + "-" + year
     cont = content_impl.get_byid(cid)
     s = source_impl.get_by_id(cont.source_id)
+    content_im = content_img_impl.getByContentId(cid)
     configuration = configuration_impl.get_config('SOURCE', cont.source_id)
     # n_dict = json.loads(cont.data)
     data_master = []
 
     try:
         for item in cont.data:
+            i =0
             for k, v in item.items():
 
                 _val = json.loads(v)
@@ -334,9 +336,16 @@ def search_to_detail(cid, source, tag, published, kw, page):
 
                 except Exception as error:
                     pass
-
+                if content_im is not None and len(content_im) >0:
+                    directory1, directory2, directory3, directory4, directory5, directory6, imageName = \
+                    content_im[i].images[0]['image_full_content'].split("/")
+                    directory7, directory8, directory9, directory10, directory11, directory12, imageName1 = \
+                    content_im[i].images[0]['image_filter_content'].split("/")
+                    _val['image_full_content'] = IMAGE_URL + directory6 + "/" + imageName
+                    _val['image_filter_content'] = IMAGE_URL + directory12 + "/" + imageName1
                 # data_master.append({'key': k, 'value': json.loads(v)})
                 data_master.append({'key': k, 'value': _val})
+                i = i+1
     except Exception as ex:
         flash('ERROR:' + ex.message, 'danger')
     pagination = Pagination(int(1), 1, len(data_master))

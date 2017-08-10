@@ -21,23 +21,24 @@
     {{ moment.include_moment() }}
     {{ moment.lang("vi") }}
     <style>
-          body {
-                width: auto;
-                min-width: 250px;
-            }
-          .navbar{
-              margin-bottom: 0 !important;
-          }
-          .navbar-toggle{
-              margin-top: 0 !important;
-              margin-bottom: 0 !important;
-          }
+        body {
+            width: auto;
+            min-width: 250px;
+        }
+
+        .navbar {
+            margin-bottom: 0 !important;
+        }
+
+        .navbar-toggle {
+            margin-top: 0 !important;
+            margin-bottom: 0 !important;
+        }
+
         @media screen and (max-width: 992px) {
             #horizontal-menubar {
                 height: auto;
             }
-
-
 
             #admin-area {
                 height: 100%;
@@ -46,29 +47,29 @@
         }
 
         @media screen and (min-width: 993px) {
-{#            body {#}
-{#                min-width: 1084px;#}
-{#            }#}
+        {#            body {#}
+        {#                min-width: 1084px;#}
+        {#            }#}
 
             #horizontal-menubar {
                 height: 150px;
             }
 
-{#            #admin-area {#}
-{#                height: inherit;#}
-{#            }#}
-{##}
-{#            #btn_slide_right {#}
-{#                display: none;#}
-{#            }#}
+        {#            #admin-area {#}
+        {#                height: inherit;#}
+        {#            }#}
+        {##}
+        {#            #btn_slide_right {#}
+        {#                display: none;#}
+        {#            }#}
 
         }
 
-{#        @media screen and (min-width: 769px) {#}
-{#            #defaultNavbar1 {#}
-{#                background: transparent;#}
-{#            }#}
-{#        }#}
+        {#        @media screen and (min-width: 769px) {#}
+        {#            #defaultNavbar1 {#}
+        {#                background: transparent;#}
+        {#            }#}
+        {#        }#}
     </style>
 </head>
 <body>
@@ -180,8 +181,20 @@
 <script type="text/javascript">
 
     $(function () {
-        $('#txt-date-from-picker').datepicker();
-        $('#txt-date-to-picker').datepicker();
+        $('#date-from input').datepicker({
+    format: "dd/mm/yyyy",
+    clearBtn: true,
+    language: "vi",
+    autoclose: true,
+    toggleActive: true
+});
+        $('#date-to input').datepicker({
+    format: "dd/mm/yyyy",
+    clearBtn: true,
+    language: "vi",
+    autoclose: true,
+    toggleActive: true
+});
     });
 
 </script>

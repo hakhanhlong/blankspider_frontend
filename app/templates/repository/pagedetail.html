@@ -114,28 +114,28 @@
                          style="display: none;max-width: 100%">
                     <img src="{{ item['value']['image_filter_content'] }}" id="img_filtered_content_{{ loop.index }}"
                          style="margin-left: 30%;max-width: 100%;border: 10px solid #FFFFFF;" class="img-filtered-content">
-                    <div id="post_{{ loop.index }}" style="background: #FFFFFF; overflow: hidden; margin: 0 auto;display: none">
-                        <div style="margin: 0 auto;">
-                            <div class="panel-heading" role="tab" style="margin: 0 auto;">
-                            </div>
-                            <div class="panel-body" style="max-width: 1000px; margin: 0 auto; ">
-                                <h1 class="panel-title" style="font-size:34px;margin: 0 auto; font-weight: bold">
-
-                                    {{ item['value']['title'] }}
-                                </h1>
-                                <br/>
-                                <br/>
-                                <br/>
-                                <i>{{ item['value']['published_at'] }}</i>
-                                <span class="pull-right"></span>
-                                <span class="pull-right">&nbsp;&nbsp;</span>
-                                <span class="pull-right"></span>
-                                <div class="lead">{{ item['value']['description'] }}</div>
-                                <div style="margin: 0 auto;">{{ item['value']['content']|safe }}</div>
-
-                            </div>
-                        </div>
-                    </div>
+{#                    <div id="post_{{ loop.index }}" style="background: #FFFFFF; overflow: hidden; margin: 0 auto;display: none">#}
+{#                        <div style="margin: 0 auto;">#}
+{#                            <div class="panel-heading" role="tab" style="margin: 0 auto;">#}
+{#                            </div>#}
+{#                            <div class="panel-body" style="max-width: 1000px; margin: 0 auto; ">#}
+{#                                <h1 class="panel-title" style="font-size:34px;margin: 0 auto; font-weight: bold">#}
+{##}
+{#                                    {{ item['value']['title'] }}#}
+{#                                </h1>#}
+{#                                <br/>#}
+{#                                <br/>#}
+{#                                <br/>#}
+{#                                <i>{{ item['value']['published_at'] }}</i>#}
+{#                                <span class="pull-right"></span>#}
+{#                                <span class="pull-right">&nbsp;&nbsp;</span>#}
+{#                                <span class="pull-right"></span>#}
+{#                                <div class="lead">{{ item['value']['description'] }}</div>#}
+{#                                <div style="margin: 0 auto;">{{ item['value']['content']|safe }}</div>#}
+{##}
+{#                            </div>#}
+{#                        </div>#}
+{#                    </div>#}
                     <div style="width: 100%">
                         <div style="margin-top: 20px; width: 100%;">
                             <nav aria-label="Page navigation example" style="display: inline-block; width: 100%;">
@@ -218,14 +218,14 @@
             $('#img_fullcontent_' + version).css("display", "block");
             $('#anhfull_' + version).css("background-color", "#8c8c8c");
             hideFilteredContentIMG(version);
-            hidePost(version);
+            //hidePost(version);
         }
 
         function displayFilteredContentIMG(version) {
             $('#img_filtered_content_' + version).css("display", "block");
             $('#anhbai_' + version).css("background-color", "#8c8c8c");
             hideFullpageIMG(version);
-            hidePost(version);
+            //hidePost(version);
         }
 
         function hideFullpageIMG(version) {

@@ -54,7 +54,7 @@
         }
     </style>
     {% for item in data %}
-        <div id="menubar_{{ loop.index }}" style="display: none; width: 100%;margin-top: 2%">
+        <div id="menubar_{{ loop.index }}" style="display: none; width: 100%;margin-top: 2%;margin-left: 5%">
             <h6 id="total_count" style="display: none">{{ pagination.total_count }}</h6>
             <div class="horizontal-menubar-detail-row1">
                 <div class="horizontal-menubar-detail-column">
@@ -82,9 +82,7 @@
                     <label id="txt_luuchieu_at_{{ loop.index }}"
                            class="label-text-style ">{{ item['value']['published_at'] }}</label>
                 </div>
-                <div class="horizontal-menubar-detail-column"><a href="{{ link_href }}" class="label-detail-text-style"
-                                                                 target="_blank">Bài viết
-                    gốc </a></div>
+                <div class="horizontal-menubar-detail-column"></div>
             </div>
         </div>
     {% endfor %}
@@ -96,46 +94,53 @@
                 <div class="midle-content-navigationbar" style="width: 100%;"><a href="/" class="boder-right"
                                                                                  style="text-align: center; padding-right: 5px; margin-right:5px;">HOME</a>
                     <a href="/repository">KHO NỘI DUNG</a>
-{#                    <a style="float: right;" data-toggle="modal"#}
-{#                       href="#modalDefault{{ loop.index }}" index="{{ loop.index }}" class="open_popup">XEM TOÀN BỘ NỘI#}
-{#                        DUNG#}
-{#                        TRANG</a>#}
-{#                    <a id="baiviet_{{ loop.index }}" style="float: right;text-align: center; padding-right: 5px; margin-right:5px;"#}
-{#                       class="boder-right" onclick="displayPost({{ loop.index }})">XEM BÀI VIẾT</a>#}
-                    <a id="anhfull_{{ loop.index }}" style="float: right; text-align: center; padding-right: 5px; margin-right:5px;"
+                    {#                    <a style="float: right;" data-toggle="modal"#}
+                    {#                       href="#modalDefault{{ loop.index }}" index="{{ loop.index }}" class="open_popup">XEM TOÀN BỘ NỘI#}
+                    {#                        DUNG#}
+                    {#                        TRANG</a>#}
+                    {#                    <a id="baiviet_{{ loop.index }}" style="float: right;text-align: center; padding-right: 5px; margin-right:5px;"#}
+                    {#                       class="boder-right" onclick="displayPost({{ loop.index }})">XEM BÀI VIẾT</a>#}
+                    <a id="anhfull_{{ loop.index }}"
+                       style="float: right; text-align: center; padding-right: 5px; margin-right:5px;"
                        onclick="displayFullPageIMG({{ loop.index }})">TOÀN BỘ TRANG</a>
-                    <a id="anhbai_{{ loop.index }}" style="float: right; text-align: center; padding-right: 5px; margin-right:5px;"
+                    <a id="anhbai_{{ loop.index }}"
+                       style="float: right; text-align: center; padding-right: 5px; margin-right:5px;"
                        class="boder-right" onclick="displayFilteredContentIMG({{ loop.index }})">BÀI
                         VIẾT</a>
+                    <a href="{{ link_href }}"
+                       style="float: right; text-align: center; padding-right: 5px; margin-right:5px;"
+                       class="boder-right"
+                       target="_blank">BÀI VIẾT GỐC</a>
 
                 </div>
                 <div class="post_container" style="margin: 0 auto">
                     <img src="{{ item['value']['image_full_content'] }}" id="img_fullcontent_{{ loop.index }}"
                          style="display: none;max-width: 100%">
                     <img src="{{ item['value']['image_filter_content'] }}" id="img_filtered_content_{{ loop.index }}"
-                         style="margin-left: 30%;max-width: 100%;border: 10px solid #FFFFFF;" class="img-filtered-content">
-{#                    <div id="post_{{ loop.index }}" style="background: #FFFFFF; overflow: hidden; margin: 0 auto;display: none">#}
-{#                        <div style="margin: 0 auto;">#}
-{#                            <div class="panel-heading" role="tab" style="margin: 0 auto;">#}
-{#                            </div>#}
-{#                            <div class="panel-body" style="max-width: 1000px; margin: 0 auto; ">#}
-{#                                <h1 class="panel-title" style="font-size:34px;margin: 0 auto; font-weight: bold">#}
-{##}
-{#                                    {{ item['value']['title'] }}#}
-{#                                </h1>#}
-{#                                <br/>#}
-{#                                <br/>#}
-{#                                <br/>#}
-{#                                <i>{{ item['value']['published_at'] }}</i>#}
-{#                                <span class="pull-right"></span>#}
-{#                                <span class="pull-right">&nbsp;&nbsp;</span>#}
-{#                                <span class="pull-right"></span>#}
-{#                                <div class="lead">{{ item['value']['description'] }}</div>#}
-{#                                <div style="margin: 0 auto;">{{ item['value']['content']|safe }}</div>#}
-{##}
-{#                            </div>#}
-{#                        </div>#}
-{#                    </div>#}
+                         style="margin-left: 30%;max-width: 100%;border: 10px solid #FFFFFF;"
+                         class="img-filtered-content">
+                    {#                    <div id="post_{{ loop.index }}" style="background: #FFFFFF; overflow: hidden; margin: 0 auto;display: none">#}
+                    {#                        <div style="margin: 0 auto;">#}
+                    {#                            <div class="panel-heading" role="tab" style="margin: 0 auto;">#}
+                    {#                            </div>#}
+                    {#                            <div class="panel-body" style="max-width: 1000px; margin: 0 auto; ">#}
+                    {#                                <h1 class="panel-title" style="font-size:34px;margin: 0 auto; font-weight: bold">#}
+                    {##}
+                    {#                                    {{ item['value']['title'] }}#}
+                    {#                                </h1>#}
+                    {#                                <br/>#}
+                    {#                                <br/>#}
+                    {#                                <br/>#}
+                    {#                                <i>{{ item['value']['published_at'] }}</i>#}
+                    {#                                <span class="pull-right"></span>#}
+                    {#                                <span class="pull-right">&nbsp;&nbsp;</span>#}
+                    {#                                <span class="pull-right"></span>#}
+                    {#                                <div class="lead">{{ item['value']['description'] }}</div>#}
+                    {#                                <div style="margin: 0 auto;">{{ item['value']['content']|safe }}</div>#}
+                    {##}
+                    {#                            </div>#}
+                    {#                        </div>#}
+                    {#                    </div>#}
                     <div style="width: 100%">
                         <div style="margin-top: 20px; width: 100%;">
                             <nav aria-label="Page navigation example" style="display: inline-block; width: 100%;">
@@ -183,7 +188,7 @@
         </div>
     {% endfor %}
     <script type="text/javascript">
-     $('#anhbai_1').css("background-color", "#8c8c8c");
+        $('#anhbai_1').css("background-color", "#8c8c8c");
         var total_count = $('#total_count').text();
         for (var index = 1; index <= total_count; index++) {
             var title = $('#txt_title_' + index).text();

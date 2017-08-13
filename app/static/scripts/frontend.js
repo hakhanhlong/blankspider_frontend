@@ -543,7 +543,7 @@ function resize_for_mobile() {
         if (isLeftMenuTreeDisplay == false) {
             var h = $(window).height();
             $('#left-menu-tree').css({position: 'fixed', left: -leftMenuTreeWidth, height: h});
-            var slide_right_top = ($('#left-menu-tree').height / 2) - ($('#btn_slide_right').height() / 2);
+            var slide_right_top = ($('#left-menu-tree').height() / 2) - ($('#btn_slide_right').height() / 2);
             $('#btn_slide_right').css({top: slide_right_top});
         }
         $('.midle-content').css({float: 'left', width: 100 + '%'});
@@ -565,7 +565,7 @@ function resize_for_mobile() {
 function open_left_menu_tree() {
     $('#open_menutree').css({display: 'none'});
     $('#close_menutree').css({display: 'block'});
-    var destination = $('#left-menu-tree').width();
+    var destination = $('#left-menu-tree').width()+10;
     $('#left-menu-tree').animate({
         left: "+=" + destination + "px",
     }, 1000);
@@ -581,7 +581,7 @@ function open_left_menu_tree() {
 function close_left_menu_tree(speed) {
     $('#open_menutree').css({display: 'block'});
     $('#close_menutree').css({display: 'none'});
-    var destination = $('#left-menu-tree').width();
+    var destination = $('#left-menu-tree').width()+10;
     if (speed == 0) {
         $('#left-menu-tree').animate({
             left: "-=" + destination + "px",

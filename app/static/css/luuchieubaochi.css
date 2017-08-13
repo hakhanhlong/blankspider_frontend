@@ -299,14 +299,13 @@ a img {
 }
 
 #content {
-    width: 100%;
+    /*width: 100%;*/
     height: auto;
 }
 
 #left-menu-tree {
-    min-width: 192px;
-    width: 19%;
-    padding-left: 0px;
+    /*min-width: 192px;*/
+    background-color: #f1f1f1;
     overflow-y: scroll;
     float: left;
     z-index: 2;
@@ -315,21 +314,21 @@ a img {
 #left-menu-tree .container-fluid {
     /*width: 19%;*/
     /*height: 100%;*/
-    width: 100%;
+    /*width: 100%;*/
     background-color: #f1f1f1;
     float: left;
-    margin-left: -3px;
+    /*margin-left: -3px;*/
 }
 
-#left-menu-tree-layer1 {
-    width: 100%;
-    margin-top: 20px;
-}
+/*#left-menu-tree-layer1 {*/
+    /*width: 100%;*/
+    /*margin-top: 20px;*/
+/*}*/
 
-#left-menu-tree-layer1 div {
-    overflow-x: auto;
-    height: 100%;
-}
+/*#left-menu-tree-layer1 div {*/
+    /*overflow-x: auto;*/
+    /*height: 100%;*/
+/*}*/
 
 #tong-so {
     float: left;
@@ -369,8 +368,8 @@ a img {
 .midle-content {
     float: right;
     margin-top: 20px;
-    margin-right: 23px;
-    width: 77%;
+    margin-right: 3%;
+    /*width: 77%;*/
 }
 
 .boder-right {
@@ -413,12 +412,13 @@ a img {
     width: 100%;
     display: inline-block;
     margin-top: 5px;
+    margin-left: 5%;
 }
 
 .horizontal-menubar-detail-column {
     float: left;
     display: inline;
-    margin-left: 5%;
+    margin-left: 10%;
     overflow-x: hidden;
 }
 

@@ -94,29 +94,26 @@
     <!-- /.container-fluid -->
 </nav>
 <div id="horizontal-menubar" class="col-md-12">
-    <div id="admin-area" class="row text-center pagination-centered col-md-2 col-sm-3">
+    <div id="admin-area" class="row col-md-2 col-sm-3">
         <div id="avatar_container" class="col-md-12 col-sm-12">
             <img src="{{ url_for('static', filename='images/adminavatar.png') }}"
                  style="height: 80%; margin-bottom: 10px"/>
             <a href="#" id="link_user_name">Adminstrator</a>
         </div>
     </div>
-    <div id="menu_bar" class="col-md-9 col-sm-9">
+    <div id="menu_bar" class="col-md-10 col-sm-9">
         {% block horizontalmenubar %}
 
         {% endblock %}
     </div>
 </div>
-<div id="content">
-    <div id="left-menu-tree">
-        <div class="container-fluid" id="container-fluid">
-            <div id="left-menu-tree-layer1">
-                <div>
-                    <ul class="nav">
+<div id="content" class="col-md-12 col-sm-12">
+    <div id="left-menu-tree" class="container-fluid row col-md-2 col-sm-3">
+                    <ul class="nav" style="margin-top: 5px !important; margin-bottom: 5px !important;">
                         {% if sources %}
                             {% for source in sources %}
                                 <li>
-                                    <label class="tree-toggler nav-header"><img
+                                    <label class="tree-toggler nav-header control-label control-label-left"><img
                                             src="{{ url_for('static', filename='images/opened-folder.png') }}"/>
                                         <img src="{{ url_for('static', filename='images/folderIcon.png') }}"
                                              style="display: none"/>
@@ -141,9 +138,6 @@
                             {% endfor %}
                         {% endif %}
                     </ul>
-                </div>
-            </div>
-        </div>
     </div>
     {% block midlecontent %}
 

@@ -11,19 +11,24 @@ var mobile_check = false;
 var tablet_check = false;
 var is_navigationbar_opened = false;
 
-function search(source, tag, published, kw) {
-    if (!kw) {
+function search(source, tag, published_from, published_to, kw) {
+    if (!kw || trim(kw) == "") {
         kw = "*";
     }
 
-    if (!published) {
-        published = "*";
+    if (!published_from || published_from == "") {
+        published_from = "*";
+    }
+
+    if (!published_to || published_to == "") {
+        published_to = "*";
     }
 
     var newchar = '-'
-    published = published.split('/').join(newchar);
+    published_from = published_from.split('/').join(newchar);
+    published_to = published_to.split('/').join(newchar);
 
-    var url = '/repository/search/' + source + '/' + tag + '/' + published + '/' + kw + '/1';
+    var url = '/repository/search/' + source + '/' + tag + '/' + published_from + '/' + published_to + '/' + kw + '/1';
     $.ajax(encodeURI(url), {
         success: function (data) {
             hide_busy_mark();
@@ -40,6 +45,15 @@ function search(source, tag, published, kw) {
 }
 
 $(document).ready(function () {
+    $('#navigationbar').on('click', function () {
+        $(location).attr('href', '/repository');
+    });
+    $('#date-from .input-group-addon').on('click', function () {
+        $('#txt-date-from-picker').focus();
+    });
+    $('#date-to .input-group-addon').on('click', function () {
+        $('#txt-date-to-picker').focus();
+    });
     $(document).keypress(function (e) {
         if (e.which == 13) {
             if ($('#txt-search').is(":focus")) {
@@ -49,7 +63,8 @@ $(document).ready(function () {
                     var source = $('#select-baodientu-repository').val();
                     var tag = $('#select-tag').val();
                     var published = $('#txt-date-from-picker').val();
-                    search(source, tag, published, kw);
+                    var published_to = $('#txt-date-to-picker').val();
+                    search(source, tag, published, published_to, kw);
                 }
             }
         }
@@ -169,7 +184,7 @@ $(document).ready(function () {
         $('#select-tag option').remove();
         $.ajax('/ajax/tag/get_by_source/' + this.value, {
             success: function (data) {
-                $('#select-tag').append('<option value="*">' + 'Tất cả' + '</option>');
+                $('#select-tag').append('<option value="*" >' + 'Tất cả' + '</option>');
                 $.each(data, function (index, item) {
                     var savedid = $('#lbl_tag').text();
                     var item_id = item._id;
@@ -220,11 +235,28 @@ $(document).ready(function () {
         var timingid = $(this).attr('timingid');
         var page = $(this).attr('page');
         var pageid = $(this).attr('pageid');
+        var time = $('#' + timingid).children().text();
         if (pageid == PAGE_FILTER_DEFAULT || pageid == PAGE_FILTER_BY_TIMING || pageid == PAGE_SEARCH) {
             $.ajax('/repository/filter-by-timing/' + sourceid + '/' + timingid + '/' + page + '/' + pageid, {
                 success: function (data) {
                     hide_busy_mark();
                     $('.midle-content').html(data);
+                    $('#txt-date-from-picker').val(time);
+                    $('#txt-date-to-picker').val(time);
+                    $('.source_selection').each(function () {
+                        if ($(this).val() == sourceid) {
+                            $(this).prop('selected', true);
+                        } else {
+                            $(this).prop('selected', false);
+                        }
+                    });
+                    // $.each($("#select-baodientu-repository option:selected"), function () {
+                    //     countries.push($(this).val());
+                    //     // this is it
+                    //     $(this).prop('selected', false);
+                    // });
+
+                    $('#select-baodientu-repository').change();
                     return scroll_to_top();
                 },
                 error: function () {
@@ -275,8 +307,10 @@ $(document).ready(function () {
         var source = $('#select-baodientu-repository').val();
         var tag = $('#select-tag').val();
         var kw = $('#txt-search').val();
-        var published = $('#txt-date-from-picker').val();
-        search(source, tag, published, kw);
+        var published_from = $('#txt-date-from-picker').val();
+        var published_to = $('#txt-date-to-picker').val();
+
+        search(source, tag, published_from, published_to, kw);
 
     });
 
@@ -418,19 +452,25 @@ function pagination_ajax_search_content_v2(obj) {
     var source = $(obj).attr('source');
     var tag = $(obj).attr('tag');
     var kw = $(obj).attr('kw');
-    var published = $(obj).attr('published');
+    var published_from = $(obj).attr('published_from');
+    var published_to = $(obj).attr('published_to');
     if (!kw) {
         kw = "*";
     }
 
-    if (!published) {
-        published = "*";
+    if (!published_from) {
+        published_from = "*";
+    }
+
+    if (!published_to) {
+        published_to = "*";
     }
 
     var newchar = '-'
-    published = published.split('/').join(newchar);
+    published_from = published_from.split('/').join(newchar);
+    published_to = published_to.split('/').join(newchar);
 
-    var url = '/repository/search/' + source + '/' + tag + '/' + published + '/' + kw + '/' + page;
+    var url = '/repository/search/' + source + '/' + tag + '/' + published_from + '/' + published_to + '/' + kw + '/' + page;
     $.ajax(encodeURI(url), {
         success: function (data) {
             hide_busy_mark();
@@ -547,9 +587,9 @@ function resize_for_mobile() {
             $('#btn_slide_right').css({top: slide_right_top});
         }
         $('.midle-content').css({float: 'left', width: 100 + '%'});
-        $('.img-filtered-content').css("margin-left","0%");
+        $('.img-filtered-content').css("margin-left", "0%");
     } else {
-        $('.img-filtered-content').css("margin-left","30%");
+        //$('.img-filtered-content').css("margin-left", "30%");
         // $('#admin-area').css({height: horizontalMenubar_height});
         // $('#btn-search').appendTo('#horizontal-menubar-column3');
         // $('#btn-search').css("margin-top", 20 + "%");
@@ -565,7 +605,7 @@ function resize_for_mobile() {
 function open_left_menu_tree() {
     $('#open_menutree').css({display: 'none'});
     $('#close_menutree').css({display: 'block'});
-    var destination = $('#left-menu-tree').width()+10;
+    var destination = $('#left-menu-tree').width() + 10;
     $('#left-menu-tree').animate({
         left: "+=" + destination + "px",
     }, 1000);
@@ -581,7 +621,7 @@ function open_left_menu_tree() {
 function close_left_menu_tree(speed) {
     $('#open_menutree').css({display: 'block'});
     $('#close_menutree').css({display: 'none'});
-    var destination = $('#left-menu-tree').width()+10;
+    var destination = $('#left-menu-tree').width() + 10;
     if (speed == 0) {
         $('#left-menu-tree').animate({
             left: "-=" + destination + "px",

@@ -5,6 +5,7 @@
         <tr class="datatable_first_row">
             <th>#</th>
             <th>TIÊU ĐỀ</th>
+            <th>TÒA SOẠN</th>
             <th>CHUYÊN MỤC</th>
             <th>THỜI GIAN</th>
             <th>PHIÊN BẢN</th>
@@ -23,11 +24,12 @@
                             {{ item['title'] }}</a>
                     {% elif params.pageid|int == 3 %}
                         <a data-date-format="dd/mm/yyyy"
-                           href="{{ url_for('repository.search_to_detail', cid=item.id, source=params.source,tag=params.tag,published=params.published,kw=params.kw,page=pagination.page) }}">
+                           href="{{ url_for('repository.search_to_detail', cid=item.id, source=params.source,tag=params.tag,published_from=params.published_from,published_to=params.published_to,kw=params.kw,page=pagination.page) }}">
                             {{ item['title'] }}</a>
                     {% endif %}
 
                 </td>
+                <td class="datatable_other_columns">{{ item['source_name'] }}</td>
                 <td class="datatable_other_columns">{{ item['tag_name'] }}</td>
                 <td class="datatable_other_columns">{{ item['published_time'] }}</td>
                 <td class="datatable_other_columns">{{ item['version_count'] }}</td>
@@ -43,7 +45,7 @@
             {{ pagination_ajax_content_default(pagination) }}
         {% endif %}
         {% if params.pageid == 3 %}
-            {{ pagination_ajax_search_content(pagination,source = params.source,tag=params.tag,kw=params.kw,published=params.published) }}
+            {{ pagination_ajax_search_content(pagination,source = params.source,tag=params.tag,kw=params.kw,published_from=params.published_from,published_to=params.published_to) }}
         {% endif %}
     {% endif %}
 {% endblock %}

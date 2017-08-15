@@ -93,7 +93,7 @@
 {% endmacro %}
 
 
-{% macro pagination_ajax_search_content(pagination,source,tag,kw,published) %}
+{% macro pagination_ajax_search_content(pagination,source,tag,kw,published_from, published_to) %}
     <ul class="pagination pull-right lv-body">
         {% if pagination.has_prev %}
             <li>
@@ -104,7 +104,8 @@
                    source="{{ source }}"
                    tag="{{ tag }}"
                    kw="{{ kw }}"
-                   published="{{ published }}"
+                   published_from="{{ published_from }}"
+                   published_to="{{ published_to }}"
                 >
                     <span aria-hidden="true">&laquo;</span>
                 </a>
@@ -121,7 +122,8 @@
                            source="{{ source }}"
                            tag="{{ tag }}"
                            kw="{{ kw }}"
-                           published="{{ published }}"
+                           published_from="{{ published_from }}"
+                           published_to="{{ published_to }}"
                         >{{ p }}</a>
                     </li>
                 {% else %}
@@ -132,7 +134,8 @@
                            source="{{ source }}"
                            tag="{{ tag }}"
                            kw="{{ kw }}"
-                           published="{{ published }}"
+                           published_from="{{ published_from }}"
+                           published_to="{{ published_to }}"
                         >{{ p }}</a>
                     </li>
                 {% endif %}
@@ -151,7 +154,8 @@
                    source="{{ source }}"
                    tag="{{ tag }}"
                    kw="{{ kw }}"
-                   published="{{ published }}"
+                   published_from="{{ published_from }}"
+                   published_to="{{ published_to }}"
                 >
                     <span aria-hidden="true">&raquo;</span>
                 </a>

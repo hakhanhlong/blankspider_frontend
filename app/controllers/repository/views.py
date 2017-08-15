@@ -45,6 +45,7 @@ def get_data_from_service_filter_by_default(page=0):
     pagination = Pagination(p, 50, count_items)
     data_master = []
     for item in content['response']['docs']:
+        item['source_name'] = source_impl.get_by_id(item['source_id']).name
         data_master.append(item)
     aDict = {}
     aDict['items'] = data_master
@@ -62,6 +63,7 @@ def get_data_from_service_filter_by_timing(sid, ptimingid, page=0):
     pagination = Pagination(p, 50, count_items)
     data_master = []
     for item in content['response']['docs']:
+        item['source_name'] = source_impl.get_by_id(item['source_id']).name
         data_master.append(item)
     aDict = {}
     aDict['items'] = data_master
@@ -251,16 +253,27 @@ def detail_html(cid, idx):
 
 
 @repository.route('/search/', methods=['GET'])
-@repository.route('/search/<source>/<tag>/<published>/<kw>/<page>', methods=['GET'])
-def content_search(source='', tag='', published='', kw='', page=0):
+@repository.route('/search/<source>/<tag>/<published_from>/<published_to>/<kw>/<page>', methods=['GET'])
+def content_search(source='', tag='', published_from='', published_to='', kw='', page=0):
+    print("searchhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh")
+    print(source)
+    print(tag)
+    print(published_from)
+    print(published_to)
+    print(kw)
+    print(page)
     if not session.get('logged_in'):
         return render_template("login.html")
     content_service = ContentService()
-    if published is not '*':
-        published = published.split('-')[::-1]
-        published = '-'.join(published)
+    if published_from is not '*':
+        published_from = published_from.split('-')[::-1]
+        published_from = '-'.join(published_from)
 
-    content = content_service.search(source, tag, published, kw, int(page), 50)
+    if published_to is not '*':
+        published_to = published_to.split('-')[::-1]
+        published_to = '-'.join(published_to)
+
+    content = content_service.search(source, tag, published_from, published_to, kw, int(page), 50)
     count_items = content['response']['numFound']
     p = int(page)
     if p == 0:
@@ -268,19 +281,23 @@ def content_search(source='', tag='', published='', kw='', page=0):
     pagination = Pagination(p, 50, count_items)
     data_master = []
     for item in content['response']['docs']:
+       # item['source_name'] = source_impl.get_by_id(item['source_id']).name
         data_master.append(item)
     return render_template('/data_table.html', contents=data_master, pagination=pagination,
-                           params={'source': source, 'tag': tag, 'published': published, 'kw': kw, 'page': page,
+                           params={'source': source, 'tag': tag, 'published_from': published_from, 'published_to': published_to, 'kw': kw, 'page': page,
                                    'pageid': PAGE_SEARCH})
 
 
-@repository.route('/search_to_detail/<cid>/<source>/<tag>/<published>/<kw>/<page>', methods=['GET'])
-def search_to_detail(cid, source, tag, published, kw, page):
+@repository.route('/search_to_detail/<cid>/<source>/<tag>/<published_from>/<published_to>/<kw>/<page>', methods=['GET'])
+def search_to_detail(cid, source, tag, published_from, published_to, kw, page):
     if not session.get('logged_in'):
         return render_template("login.html")
-    if published is not '*':
-        year, month, day = published.split("-")
-        published = day + "-" + month + "-" + year
+    if published_from is not '*':
+        year, month, day = published_from.split("-")
+        published_from = day + "-" + month + "-" + year
+    if published_to is not '*':
+        year, month, day = published_to.split("-")
+        published_to = day + "-" + month + "-" + year
     cont = content_impl.get_byid(cid)
     s = source_impl.get_by_id(cont.source_id)
     content_im = content_img_impl.getByContentId(cid)
@@ -352,7 +369,7 @@ def search_to_detail(cid, source, tag, published, kw, page):
     return render_template('repository/pagedetail.html', sources=get_source(), data=data_master, link_href=cont.href,
                            pagination=pagination,
                            contentid=cid, source=s,
-                           params={'source': source, 'tag': tag, 'published': published, 'kw': kw,
+                           params={'source': source, 'tag': tag, 'published_from': published_from, 'published_to': published_to, 'kw': kw,
                                    'pageid': PAGE_DETAIL, 'page': page, 'prepageid': PAGE_SEARCH})
 
 
@@ -375,16 +392,20 @@ def back_from_detail_to_filter_by_timing(sid, ptimingid, page):
                            params={'pageid': PAGE_FILTER_BY_TIMING, 'sid': sid, 'ptimingid': ptimingid})
 
 
-@repository.route('/back_from_detail_to_search/<source>/<tag>/<published>/<kw>/<page>', methods=['GET'])
-def back_from_detail_to_search(source='', tag='', published='', kw='', page=0):
+@repository.route('/back_from_detail_to_search/<source>/<tag>/<published_from>/<published_to>/<kw>/<page>', methods=['GET'])
+def back_from_detail_to_search(source='', tag='', published_from='', published_to='', kw='', page=0):
     if not session.get('logged_in'):
         return render_template("login.html")
     content_service = ContentService()
-    if published is not '*':
-        published = published.split('-')[::-1]
-        published = '-'.join(published)
+    if published_from is not '*':
+        published_from = published_from.split('-')[::-1]
+        published_from = '-'.join(published_from)
 
-    content = content_service.search(source, tag, published, kw, int(page), 50)
+    if published_to is not '*':
+        published_to = published_to.split('-')[::-1]
+        published_to = '-'.join(published_to)
+
+    content = content_service.search(source, tag, published_from, published_to, kw, int(page), 50)
     count_items = content['response']['numFound']
     p = int(page)
     if p ==0:
@@ -396,7 +417,7 @@ def back_from_detail_to_search(source='', tag='', published='', kw='', page=0):
         data_master.append(item)
     return render_template('repository/index2.html', sources=get_source(), contents=data_master,
                            pagination=pagination,
-                           params={'source': source, 'tag': tag, 'published': published, 'kw': kw, 'page': page,
+                           params={'source': source, 'tag': tag, 'published_from': published_from, 'published_to': published_to, 'kw': kw, 'page': page,
                                    'pageid': PAGE_SEARCH})
 
 

@@ -118,7 +118,6 @@
         }
 
 
-
     </style>
     <div class="container-fluid">
         <div class="row">
@@ -134,9 +133,9 @@
                                     <option value="*">Tất cả</option>
                                     {% for source in sources %}
                                         {% if source.id|string() == params.source %}
-                                            <option value="{{ source.id }}" selected>{{ source.name }}</option>
+                                            <option  class="source_selection" value="{{ source.id }}" selected>{{ source.name }}</option>
                                         {% else %}
-                                            <option value="{{ source.id }}">{{ source.name }}</option>
+                                            <option  class="source_selection" value="{{ source.id }}">{{ source.name }}</option>
                                         {% endif %}
                                     {% endfor %}
                                 </select>
@@ -187,12 +186,11 @@
                                 <div class="row nopading-margin">
                                     <div class="col-md-2 col-sm-1 col-xs-1 nopadding-left" style="width: 45% !important;">
                                         <div id="date-from" class="input-group date">
-
-                                            {% if params.published != "*" and params.published!="" %}
+                                            {% if params.published_from != "*" and params.published_from!="" %}
                                                 <input id="txt-date-from-picker" type="text" class="form-control"
-                                                       value="{{ params.published }}" readonly>
+                                                       value="{{ params.published_from }}">
                                             {% else %}
-                                                <input id="txt-date-from-picker" type="text" class="form-control" readonly>
+                                                <input id="txt-date-from-picker" type="text" class="form-control">
                                             {% endif %}
                                             <span class="input-group-addon">
                                             <i class="glyphicon glyphicon-calendar"></i>
@@ -202,14 +200,20 @@
                                     <div class="col-md-1 col-sm-1 col-xs-1"><label class="label-text-style">-</label></div>
                                     <div class="col-md-2 col-sm-1 col-xs-1" style="width: 45% !important;">
                                         <div id="date-to" class="input-group date">
-                                            <input id="txt-date-to-picker" type="text" class="form-control" readonly><span
-                                                class="input-group-addon"><i
-                                                class="glyphicon glyphicon-calendar"></i></span>
+                                            {% if params.published_to != "*" and params.published_to!="" %}
+                                                <input id="txt-date-to-picker" type="text" class="form-control"
+                                                       value="{{ params.published_to }}">
+                                            {% else %}
+                                                <input id="txt-date-to-picker" type="text" class="form-control">
+                                            {% endif %}
+                                            <span class="input-group-addon">
+                                            <i class="glyphicon glyphicon-calendar"></i>
+                                            </span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-1 col-sm-9" style="margin-left: 5% !important;">
+                            <div class="col-md-1 col-sm-9" style="padding-left: 5%">
                                 <div class="form-group">
                                     <input style="padding: 0 !important;margin: 0 !important;" type="image" id="btn-search" src="{{ url_for('static', filename='images/filter1.png') }}" type="button" class="btn btn-default">
                                 </div>

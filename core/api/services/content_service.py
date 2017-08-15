@@ -29,15 +29,18 @@ class ContentService:
         return self.requestHelpers.get().json()
 
 
-    def search(self,source_id='', tagid='', published_at='', keyword='', pageindex=1, pagesize=50):
+    def search(self,source_id='', tagid='', published_from='', published_to='', keyword='', pageindex=1, pagesize=50):
         if pageindex == 0:
             pageindex = 1
         pageindex = (pageindex -1)*pagesize
-        if published_at is not '*':
-            published_at = parse(published_at)
-            published_at = published_at.strftime('"%Y-%m-%dT00:00:00Z"')
-        if source_id == '*' and tagid == '*' and published_at == '*' and keyword is not '*':
-            self.requestHelpers.url = 'http://118.107.88.35:8983/solr/lcbc_search/select?fl=title,published_at,tag_name,version_count,published_time,content_filter,id&indent=on&q='+keyword+'&rows='+str(pagesize)+'&start='+str(pageindex)+'&wt=json&fq=status:COMPLETED'
-        else:
-            self.requestHelpers.url = self.request_URL.CONTENT_URL_SEARCH % (source_id, tagid, published_at, keyword, pagesize, pageindex)
+        if published_from is not '*':
+            published_from = parse(published_from)
+            published_from = published_from.strftime('"%Y-%m-%dT00:00:00.000Z"')
+        if published_to is not '*':
+            published_to = parse(published_to)
+            published_to = published_to.strftime('"%Y-%m-%dT00:00:00.000Z"')
+        # if source_id == '*' and tagid == '*' and published_from == '*' and published_to == '*' and keyword is not '*':
+        #     self.requestHelpers.url = 'http://118.107.88.35:8983/solr/lcbc_search/select?fl=title,published_at,tag_name,version_count,published_time,content_filter,id&indent=on&q='+keyword+'&rows='+str(pagesize)+'&start='+str(pageindex)+'&wt=json&fq=status:COMPLETED'
+        # else:
+        self.requestHelpers.url = self.request_URL.CONTENT_URL_SEARCH % (source_id, tagid, published_from, published_to, keyword, pagesize, pageindex)
         return self.requestHelpers.get().json()

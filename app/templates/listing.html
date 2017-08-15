@@ -84,7 +84,6 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="defaultNavbar1">
             <ul class="nav navbar-nav navbar-right">
-                <li class="text-center" id="link_kho_nd"><a href="/repository">KHO NỘI DUNG</a></li>
                 <li class="text-center" id="link_canh_bao"><a href="#">CẢNH BÁO</a></li>
                 <li class="text-center" id="report_source"><a href="javascript:;">BÁO CÁO</a></li>
             </ul>
@@ -97,11 +96,11 @@
     <div id="admin-area" class="row col-md-2 col-sm-3">
         <div id="avatar_container" class="col-md-12 col-sm-12">
             <img src="{{ url_for('static', filename='images/adminavatar.png') }}"
-                 style="height: 80%; margin-bottom: 10px"/>
+                 style="max-height: 50%;max-width: 40%; margin-top: 20px"/>
             <a href="#" id="link_user_name">Adminstrator</a>
         </div>
     </div>
-    <div id="menu_bar" class="col-md-10 col-sm-9">
+    <div id="menu_bar" class="col-md-10 col-sm-9 container-fluid">
         {% block horizontalmenubar %}
 
         {% endblock %}
@@ -123,7 +122,9 @@
                                         {% if source.timings %}
                                             {% for timing in source.timings %}
                                                 {% if timing.published_at %}
-                                                    <li><a href="javascript:;" page="1" pageid="{{ params.pageid }}"
+                                                    <li>
+                                                    <label style="display: none" id="{{ timing._id }}">{{ moment(timing.published_at).format('DD/MM/YYYY') }}</label>
+                                                        <a href="javascript:;" page="1" pageid="{{ params.pageid }}"
                                                            prepageid="{{ params.prepageid }}" class="menu-tree-link"
                                                            sourceid="{{ timing.source_id }}"
                                                            timingid="{{ timing._id }}"><img

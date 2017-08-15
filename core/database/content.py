@@ -14,4 +14,5 @@ class CONTENTS(db.Document):
     content_hash = db.StringField(max_length=255)
     __v = db.IntField()
     content_img = None
+    source_name = ""
     meta = {"db_alias": "blankspider_content_archived", 'collection': 'contents', 'strict': False}

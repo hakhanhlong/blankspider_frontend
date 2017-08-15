@@ -9,6 +9,7 @@
             <tr class="datatable_first_row">
                 <th>#</th>
                 <th>TIÊU ĐỀ</th>
+                <th>TÒA SOẠN</th>
                 <th>CHUYÊN MỤC</th>
                 <th>THỜI GIAN</th>
                 <th>PHIÊN BẢN</th>
@@ -31,6 +32,7 @@
                                 {{ item['title'] }}</a>
                         {% endif %}
                     </td>
+                    <td class="datatable_other_columns">{{ item['source_name'] }}</td>
                     <td class="datatable_other_columns">{{ item['tag_name'] }}</td>
                     <td class="datatable_other_columns">{{ item['published_time'] }}</td>
                     <td class="datatable_other_columns">{{ item['version_count'] }}</td>

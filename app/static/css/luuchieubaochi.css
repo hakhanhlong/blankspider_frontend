@@ -221,6 +221,7 @@ a img {
     height: 150px;
     background-size: cover; /* <------ */
     background-repeat: no-repeat;
+    cursor: pointer;
     background-position: center center;
     border: none;
 }

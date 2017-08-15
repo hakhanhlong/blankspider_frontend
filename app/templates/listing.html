@@ -116,7 +116,8 @@
                                             src="{{ url_for('static', filename='images/opened-folder.png') }}"/>
                                         <img src="{{ url_for('static', filename='images/folderIcon.png') }}"
                                              style="display: none"/>
-                                        {{ source.name }} ({{ (source.timings|count) - 1 }})
+                                        {{ source.name }}
+{#                                        ({{ (source.timings|count) - 1 }})#}
                                     </label>
                                     <ul class="nav nav-list tree">
                                         {% if source.timings %}

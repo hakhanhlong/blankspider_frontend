@@ -168,7 +168,7 @@ def detail(cid, page=0, prepageid=0, ptimingid=0):
                 _val = json.loads(v)
                 content = _val['content']
                 try:
-                    if configuration['config']['PARSERVIDEOS']:
+                    '''if configuration['config']['PARSERVIDEOS']:
                         configs = configuration['config']['PARSERVIDEOS']['data']
                         array_player = []
                         array_embeded_player = []
@@ -202,7 +202,7 @@ def detail(cid, page=0, prepageid=0, ptimingid=0):
 
                         content = etree.tostring(tree, method='html', pretty_print=True)
 
-                        _val['content'] = str(content).replace('\\n', "").replace('\\t', "").replace("b'", "")
+                        _val['content'] = str(content).replace('\\n', "").replace('\\t', "").replace("b'", "")'''
 
 
 
@@ -223,7 +223,8 @@ def detail(cid, page=0, prepageid=0, ptimingid=0):
                 data_master.append({'key': k, 'value': _val})
                 i = i + 1;
     except Exception as ex:
-        print("error = ===================" + str(ex))
+        pass
+        #print("error = ===================" + str(ex))
         # flash('ERROR:' + ex.message, 'danger')
     pagination = Pagination(int(1), 1, len(data_master))
     return render_template('repository/pagedetail.html', sources=get_source(), data=data_master, link_href=cont.href,

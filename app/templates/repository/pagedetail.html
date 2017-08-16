@@ -89,7 +89,7 @@
 {% endblock %}
 {% block midlecontent %}
     {% for item in data %}
-        <div id="middle_{{ loop.index }}" style="display: none" class="midle-content">
+        <div id="middle_{{ loop.index }}" style="display: none" class="midle-content col-sm-12">
             <div>
                 <div class="midle-content-navigationbar" style="width: 100%; padding-bottom: 20px;">
                     <a id="anhfull_{{ loop.index }}"
@@ -117,11 +117,11 @@
                         {% endif %}
                     </div>
                 </div>
-                <div class="post_container" style="margin: 0 auto">
+                <div class="post_container col-sm-12" style="margin: 0 auto">
                     <img src="{{ item['value']['image_full_content'] }}" id="img_fullcontent_{{ loop.index }}"
                          style="display: none;max-width: 100%">
                     <img src="{{ item['value']['image_filter_content'] }}" id="img_filtered_content_{{ loop.index }}"
-                         style="margin-left: 30%;max-width: 100%;border: 10px solid #FFFFFF;"
+                         style="min-width: 480px;max-width:100%;border: 10px solid #FFFFFF; position: relative; display: block; margin: 0 auto"
                          class="img-filtered-content">
                     <div style="width: 100%">
                         <div style="margin-top: 20px; width: 100%;">

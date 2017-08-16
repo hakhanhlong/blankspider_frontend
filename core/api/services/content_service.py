@@ -15,6 +15,7 @@ class ContentService:
             pageindex = 1
         pageindex = (pageindex -1)*pagesize
         self.requestHelpers.url = self.request_URL.CONTENT_URL_FILTER_BY_TIMING % (publishtiming_id, source_id, pagesize, pageindex)
+        print(self.requestHelpers.url)
         #self.requestHelpers.params = {'source_id': source_id, 'publishtiming_id':publishtiming_id,
         #                              'pageindex':pageindex, 'pagesize':pagesize}
 

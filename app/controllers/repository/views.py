@@ -262,23 +262,22 @@ def detail_html(cid, idx):
 @repository.route('/search/', methods=['GET'])
 @repository.route('/search/<source>/<tag>/<published_from>/<published_to>/<kw>/<page>', methods=['GET'])
 def content_search(source='', tag='', published_from='', published_to='', kw='', page=0):
-    print("searchhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh")
-    print(source)
-    print(tag)
-    print(published_from)
-    print(published_to)
-    print(kw)
-    print(page)
     if not session.get('logged_in'):
         return render_template("login.html")
     content_service = ContentService()
+
+
     if published_from is not '*':
-        published_from = published_from.split('-')[::-1]
-        published_from = '-'.join(published_from)
+        if 'T00:00:00.000Z' not in published_from:
+            published_from = published_from.replace('T00:00:00.000Z', '')
+            published_from = published_from.split('-')[::-1]
+            published_from = '-'.join(published_from) + 'T00:00:00.000Z'
 
     if published_to is not '*':
-        published_to = published_to.split('-')[::-1]
-        published_to = '-'.join(published_to)
+        if 'T00:00:00.000Z' not in published_to:
+            published_to = published_to.replace('T00:00:00.000Z', '')
+            published_to = published_to.split('-')[::-1]
+            published_to = '-'.join(published_to) + 'T00:00:00.000Z'
 
     content = content_service.search(source, tag, published_from, published_to, kw, int(page), 50)
     count_items = content['response']['numFound']

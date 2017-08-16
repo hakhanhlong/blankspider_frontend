@@ -473,6 +473,8 @@ function pagination_ajax_search_content_v2(obj) {
     published_from = published_from.split('/').join(newchar);
     published_to = published_to.split('/').join(newchar);
 
+    console.log(published_from + '|' + published_to);
+
     var url = '/repository/search/' + source + '/' + tag + '/' + published_from + '/' + published_to + '/' + kw + '/' + page;
     $.ajax(encodeURI(url), {
         success: function (data) {

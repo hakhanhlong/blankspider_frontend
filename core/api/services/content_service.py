@@ -39,8 +39,8 @@ class ContentService:
         if published_to is not '*':
             published_to = parse(published_to)
             published_to = published_to.strftime('"%Y-%m-%dT00:00:00.000Z"')
-        # if source_id == '*' and tagid == '*' and published_from == '*' and published_to == '*' and keyword is not '*':
-        #     self.requestHelpers.url = 'http://118.107.88.35:8983/solr/lcbc_search/select?fl=title,published_at,tag_name,version_count,published_time,content_filter,id&indent=on&q='+keyword+'&rows='+str(pagesize)+'&start='+str(pageindex)+'&wt=json&fq=status:COMPLETED'
-        # else:
-        self.requestHelpers.url = self.request_URL.CONTENT_URL_SEARCH % (source_id, tagid, published_from, published_to, keyword, pagesize, pageindex)
+        if source_id == '*' and tagid == '*' and published_from == '*' and published_to == '*' and keyword is not '*':
+            self.requestHelpers.url = 'http://118.107.88.35:8983/solr/lcbc_search/select?fl=title,published_at,tag_name,version_count,published_time,content_filter,id&indent=on&q='+keyword+'&rows='+str(pagesize)+'&start='+str(pageindex)+'&wt=json&fq=status:COMPLETED'
+        else:
+            self.requestHelpers.url = self.request_URL.CONTENT_URL_SEARCH % (source_id, tagid, published_from, published_to, keyword, pagesize, pageindex)
         return self.requestHelpers.get().json()

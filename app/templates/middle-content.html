@@ -28,11 +28,11 @@
                                 {{ item['title'] }}</a>
                         {% elif params.pageid|int == 3 %}
                             <a data-date-format="dd/mm/yyyy"
-                               href="{{ url_for('repository.search_to_detail', cid=item.id, source=params.source,tag=params.tag,published=params.published,kw=params.kw,page=pagination.page) }}">
+                               href="{{ url_for('repository.search_to_detail', cid=item.id, source=params.source,tag=params.tag,published_from=params.published_from,published_to=params.published_to,kw=params.kw,page=pagination.page) }}">
                                 {{ item['title'] }}</a>
                         {% endif %}
                     </td>
-                    <td class="datatable_other_columns">{{ item['source_name'] }}</td>
+                    {#                    <td class="datatable_other_columns">{{ item['source_name'] }}</td>#}
                     <td class="datatable_other_columns">{{ item['tag_name'] }}</td>
                     <td class="datatable_other_columns">{{ item['published_time'] }}</td>
                     <td class="datatable_other_columns">{{ item['version_count'] }}</td>

@@ -11,6 +11,12 @@
     <link href="{{ url_for('static', filename='css/bootstrap.css') }}" rel="stylesheet">
     <link href="{{ url_for('static', filename='css/datepicker.css') }}" rel="stylesheet">
     <link href="{{ url_for('static', filename='css/luuchieubaochi.css') }}" rel="stylesheet">
+    <script type="text/javascript" src="{{ url_for('static', filename='scripts/jquery-1.11.3.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='scripts/bootstrap.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='scripts/bootstrap-datepicker.js') }}"></script>
+    <script type="text/javascript"
+            src="{{ url_for('static', filename='scripts/bootstrap-datepicker.vi.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='scripts/frontend.js') }}"></script>
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -74,12 +80,12 @@
 </head>
 <body>
 <nav class="navbar navbar-default" id="navigationbar">
-     <div id="clickable_area1" style="width: 100%;height: 80%;position: absolute">
+    <div id="clickable_area1" style="width: 100%;height: 80%;position: absolute">
 
-        </div>
-        <div id="clickable_area2" style="height: 100%;width: 80%; position: absolute">
+    </div>
+    <div id="clickable_area2" style="height: 100%;width: 80%; position: absolute">
 
-        </div>
+    </div>
     <div id="navigation-container" class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
@@ -114,38 +120,39 @@
 </div>
 <div id="content" class="col-md-12 col-sm-12">
     <div id="left-menu-tree" class="container-fluid row col-md-2 col-sm-3">
-                    <ul class="nav" style="margin-top: 5px !important; margin-bottom: 5px !important;">
-                        {% if sources %}
-                            {% for source in sources %}
-                                <li>
-                                    <label class="tree-toggler nav-header control-label control-label-left"><img
-                                            src="{{ url_for('static', filename='images/opened-folder.png') }}"/>
-                                        <img src="{{ url_for('static', filename='images/folderIcon.png') }}"
-                                             style="display: none"/>
-                                        {{ source.name }}
-{#                                        ({{ (source.timings|count) - 1 }})#}
-                                    </label>
-                                    <ul class="nav nav-list tree">
-                                        {% if source.timings %}
-                                            {% for timing in source.timings %}
-                                                {% if timing.published_at %}
-                                                    <li>
-                                                    <label style="display: none" id="{{ timing._id }}">{{ moment(timing.published_at).format('DD/MM/YYYY') }}</label>
-                                                        <a href="javascript:;" page="1" pageid="{{ params.pageid }}"
-                                                           prepageid="{{ params.prepageid }}" class="menu-tree-link"
-                                                           sourceid="{{ timing.source_id }}"
-                                                           timingid="{{ timing._id }}"><img
-                                                            src="{{ url_for('static', filename='images/link-arrow.png') }}"/> {{ moment(timing.published_at).format('DD/MM/YYYY') }}
-                                                        ({{ timing.count_status_completed }})</a>
-                                                    </li>
-                                                {% endif %}
-                                            {% endfor %}
-                                        {% endif %}
-                                    </ul>
-                                </li>
-                            {% endfor %}
-                        {% endif %}
-                    </ul>
+        <ul class="nav" style="margin-top: 5px !important; margin-bottom: 5px !important;">
+            {% if sources %}
+                {% for source in sources %}
+                    <li>
+                        <label class="tree-toggler nav-header control-label control-label-left"><img
+                                src="{{ url_for('static', filename='images/opened-folder.png') }}"/>
+                            <img src="{{ url_for('static', filename='images/folderIcon.png') }}"
+                                 style="display: none"/>
+                            {{ source.name }}
+                            {#                                        ({{ (source.timings|count) - 1 }})#}
+                        </label>
+                        <ul class="nav nav-list tree">
+                            {% if source.timings %}
+                                {% for timing in source.timings %}
+                                    {% if timing.published_at %}
+                                        <li>
+                                            <label style="display: none"
+                                                   id="{{ timing._id }}">{{ moment(timing.published_at).format('DD/MM/YYYY') }}</label>
+                                            <a href="javascript:;" page="1" pageid="{{ params.pageid }}"
+                                               prepageid="{{ params.prepageid }}" class="menu-tree-link"
+                                               sourceid="{{ timing.source_id }}"
+                                               timingid="{{ timing._id }}"><img
+                                                    src="{{ url_for('static', filename='images/link-arrow.png') }}"/> {{ moment(timing.published_at).format('DD/MM/YYYY') }}
+                                                ({{ timing.count_status_completed }})</a>
+                                        </li>
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}
+                        </ul>
+                    </li>
+                {% endfor %}
+            {% endif %}
+        </ul>
     </div>
     {% block midlecontent %}
 
@@ -172,31 +179,25 @@
 <div class="footer" id="footer"> Copy right luu chieu bao chi 2017</div>
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <!-- Include all compiled plugins (below), or include individual files as needed -->
-<script type="text/javascript" src="{{ url_for('static', filename='scripts/jquery-1.11.3.min.js') }}"></script>
-<script type="text/javascript" src="{{ url_for('static', filename='scripts/bootstrap-datepicker.js') }}"></script>
-<script type="text/javascript" src="{{ url_for('static', filename='scripts/bootstrap.js') }}"></script>
-<script type="text/javascript" src="{{ url_for('static', filename='scripts/frontend.js') }}"></script>
-<script type="text/javascript"
-        src="{{ url_for('static', filename='scripts/bootstrap-datepicker.vi.min.js') }}"></script>
 
 
 <script type="text/javascript">
 
     $(function () {
         $('#date-from input').datepicker({
-    format: "dd/mm/yyyy",
-    clearBtn: true,
-    language: "vi",
-    autoclose: true,
-    toggleActive: true
-});
+            format: "dd/mm/yyyy",
+            clearBtn: true,
+            language: "vi",
+            autoclose: true,
+            toggleActive: true
+        });
         $('#date-to input').datepicker({
-    format: "dd/mm/yyyy",
-    clearBtn: true,
-    language: "vi",
-    autoclose: true,
-    toggleActive: true
-});
+            format: "dd/mm/yyyy",
+            clearBtn: true,
+            language: "vi",
+            autoclose: true,
+            toggleActive: true
+        });
     });
 
 </script>

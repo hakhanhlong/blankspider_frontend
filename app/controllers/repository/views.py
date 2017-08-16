@@ -45,7 +45,10 @@ def get_data_from_service_filter_by_default(page=0):
     pagination = Pagination(p, 50, count_items)
     data_master = []
     for item in content['response']['docs']:
-        item['source_name'] = source_impl.get_by_id(item['source_id']).name
+        try:
+            item['source_name'] = source_impl.get_by_id(item['source_id']).name
+        except Exception as ex:
+            print("exception : "+str(ex))
         data_master.append(item)
     aDict = {}
     aDict['items'] = data_master
@@ -282,7 +285,11 @@ def content_search(source='', tag='', published_from='', published_to='', kw='',
     pagination = Pagination(p, 50, count_items)
     data_master = []
     for item in content['response']['docs']:
-       # item['source_name'] = source_impl.get_by_id(item['source_id']).name
+        try:
+            item['source_name'] = source_impl.get_by_id(item['source_id']).name
+        except Exception as ex:
+            print("exception : " + str(ex))
+        data_master.append(item)
         data_master.append(item)
     return render_template('/data_table.html', contents=data_master, pagination=pagination,
                            params={'source': source, 'tag': tag, 'published_from': published_from, 'published_to': published_to, 'kw': kw, 'page': page,

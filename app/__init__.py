@@ -36,19 +36,25 @@ def create_app(config_name):
             'alias': 'default',
             'db': config[config_name].MONGO_DATABASE_SECURITY_NAME,
             'host': config[config_name].MONGO_DATABASE_SECURITY_SERVER,
-            'port': config[config_name].MONGO_DATABASE_SECURITY_PORT
+            'port': config[config_name].MONGO_DATABASE_SECURITY_PORT,
+            'username':'longhk',
+            'password':'abc@321#@!'
         },
         {
             'alias': config[config_name].MONGO_DATABASE_ARCHIVIED_NAME,
             'db': config[config_name].MONGO_DATABASE_ARCHIVIED_NAME,
             'host': config[config_name].MONGO_DATABASE_ARCHIVIED_SERVER,
-            'port': config[config_name].MONGO_DATABASE_ARCHIVIED_PORT
+            'port': config[config_name].MONGO_DATABASE_ARCHIVIED_PORT,
+            'username': 'longhk',
+            'password': 'abc!123#!!'
         },
         {
             'alias': config[config_name].MONGO_DATABASE_BLANKSPIDER_NAME,
             'db': config[config_name].MONGO_DATABASE_BLANKSPIDER_NAME,
             'host': config[config_name].MONGO_DATABASE_BLANKSPIDER_SERVER,
-            'port': config[config_name].MONGO_DATABASE_BLANKSPIDER_PORT
+            'port': config[config_name].MONGO_DATABASE_BLANKSPIDER_PORT,
+            'username': 'longhk',
+            'password': 'abc@123#@!'
         }
     ]
 

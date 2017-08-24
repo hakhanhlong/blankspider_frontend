@@ -41,7 +41,7 @@ manager.add_command('runserver', Server(
     use_debugger=True,
     use_reloader=True,
     host='0.0.0.0',
-    port='8077'))
+    port='8066'))
 
 manager.add_command('create_account_admin', createadmin())
 

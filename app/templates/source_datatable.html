@@ -27,7 +27,7 @@
                     {% set vars = {'foo': 0} %}
 
                     {% for tag in source.tags %}
-                        {% if vars.update({'foo': vars.foo + tag.count}) %} {% endif %}
+                        {% if vars.update({'foo': vars.foo + tag.count_status_completed}) %} {% endif %}
                     {% endfor %}
                     {{ vars.foo }}
                 </td>

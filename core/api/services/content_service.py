@@ -33,6 +33,11 @@ class ContentService:
         if pageindex == 0:
             pageindex = 1
         pageindex = (pageindex - 1) * pagesize
+        if published_to is '*':
+            published_to = published_from
+
+        if published_from is '*':
+            published_from = published_to
         if published_from is not '*':
             published_from = parse(published_from)
             published_from = published_from.strftime('"%Y-%m-%dT00:00:00.000Z"')

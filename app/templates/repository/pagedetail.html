@@ -102,19 +102,21 @@
                        target="_blank">BÀI VIẾT GỐC</a>
 
                     <div style="float: right; margin-right: 0px; color:  #337ab7 !important;font-size:  14px;font-weight:  400;text-decoration:  underline;text-align:  justify;">
-                        {% if params.prepageid|int == 0 %}
-                            <a style="color:  #337ab7 !important;" href="{{ url_for('repository.back_from_detail_to_filter_by_default', page=params.page) }}">
-                                < Quay lại
-                            </a>
-                        {% elif params.prepageid|int == 1 %}
-                            <a style="color:  #337ab7 !important;" href="{{ url_for('repository.back_from_detail_to_filter_by_timing',sid=source.id,ptimingid=params.ptimingid, page=params.page) }}">
-                                < Quay lại
-                            </a>
-                        {% elif params.prepageid|int == 3 %}
-                            <a style="color:  #337ab7 !important;" href="{{ url_for('repository.back_from_detail_to_search',source=params.source,tag=params.tag, published_from=params.published_from, published_to=params.published_to, kw = params.kw, page=params.page) }}">
-                                < Quay lại
-                            </a>
-                        {% endif %}
+                        {#                        {% if params.prepageid|int == 0 %}#}
+                        {#                            <a style="color:  #337ab7 !important;" href="{{ url_for('repository.back_from_detail_to_filter_by_default', page=params.page) }}">#}
+                        {#                                < Quay lại#}
+                        {#                            </a>#}
+                        {#                        {% elif params.prepageid|int == 1 %}#}
+                        {#                            <a style="color:  #337ab7 !important;" href="{{ url_for('repository.back_from_detail_to_filter_by_timing',sid=source.id,ptimingid=params.ptimingid, page=params.page) }}">#}
+                        {#                                < Quay lại#}
+                        {#                            </a>#}
+                        {#                        {% elif params.prepageid|int == 3 %}#}
+                       <a style="color: #337ab7 !important;" class="btn_back_to_search" source="{{ params.source }}" tag="{{ params.tag }}"
+                                       published_from="{{ params.published_from }}"
+                                       published_to="{{ params.published_to }}" page="{{ params.page }}" kw="{{ params.kw }}">
+                                        < Quay lại
+                                    </a>
+                        {#                        {% endif %}#}
                     </div>
                 </div>
                 <div class="post_container col-sm-12" style="margin: 0 auto">
@@ -133,19 +135,21 @@
                                 </ul>
 
                                 <div style="float: right; margin-right: 0px; color:  #337ab7;font-size:  14px;font-weight:  400;text-decoration:  underline;text-align:  justify;">
-                                    {% if params.prepageid|int == 0 %}
-                                        <a href="{{ url_for('repository.back_from_detail_to_filter_by_default', page=params.page) }}">
-                                            < Quay lại
-                                        </a>
-                                    {% elif params.prepageid|int == 1 %}
-                                        <a href="{{ url_for('repository.back_from_detail_to_filter_by_timing',sid=source.id,ptimingid=params.ptimingid, page=params.page) }}">
-                                            < Quay lại
-                                        </a>
-                                    {% elif params.prepageid|int == 3 %}
-                                        <a href="{{ url_for('repository.back_from_detail_to_search',source=params.source,tag=params.tag, published_from=params.published_from, published_to=params.published_to, kw = params.kw, page=params.page) }}">
-                                            < Quay lại
-                                        </a>
-                                    {% endif %}
+                                    {#                                    {% if params.prepageid|int == 0 %}#}
+                                    {#                                        <a href="{{ url_for('repository.back_from_detail_to_filter_by_default', page=params.page) }}">#}
+                                    {#                                            < Quay lại#}
+                                    {#                                        </a>#}
+                                    {#                                    {% elif params.prepageid|int == 1 %}#}
+                                    {#                                        <a href="{{ url_for('repository.back_from_detail_to_filter_by_timing',sid=source.id,ptimingid=params.ptimingid, page=params.page) }}">#}
+                                    {#                                            < Quay lại#}
+                                    {#                                        </a>#}
+                                    {#                                    {% elif params.prepageid|int == 3 %}#}
+                                    <a class="btn_back_to_search" source="{{ params.source }}" tag="{{ params.tag }}"
+                                       published_from="{{ params.published_from }}"
+                                       published_to="{{ params.published_to }}" page="{{ params.page }}" kw="{{ params.kw }}">
+                                        < Quay lại
+                                    </a>
+                                    {#                                    {% endif %}#}
                                 </div>
                             </nav>
                         </div>

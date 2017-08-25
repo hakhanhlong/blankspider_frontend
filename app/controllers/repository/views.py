@@ -48,7 +48,7 @@ def get_data_from_service_filter_by_default(page=0):
         try:
             item['source_name'] = source_impl.get_by_id(item['source_id']).name
         except Exception as ex:
-            print("exception : "+str(ex))
+            print("exception : " + str(ex))
         data_master.append(item)
     aDict = {}
     aDict['items'] = data_master
@@ -69,7 +69,7 @@ def get_data_from_service_filter_by_timing(sid, ptimingid, page=0):
         try:
             item['source_name'] = source_impl.get_by_id(item['source_id']).name
         except Exception as ex:
-            print("exception : "+str(ex))
+            print("exception : " + str(ex))
         data_master.append(item)
     aDict = {}
     aDict['items'] = data_master
@@ -97,7 +97,7 @@ def get_source():
             x.timings = timings
             # ------------------------------------------------------------------------------------------------------------------
     except Exception as ex:
-        print('xxxxxxxxxxxxxxxxxxxxxxxxxx'+str(ex))
+        print('xxxxxxxxxxxxxxxxxxxxxxxxxx' + str(ex))
         flash('ERROR:' + str(ex), 'danger')
     return sources
 
@@ -134,15 +134,15 @@ def index(page=0, pageid=0):
         #     for i in tags:
         #         print("count i ="+str(i))
         aDict = get_data_from_service_filter_by_default(page)
-        if pageid == int(PAGE_FILTER_DEFAULT) and int(page) == 0:
-            return render_template('repository/index2.html', sources=sources, contents=aDict['items'],
-                                   pagination=aDict['pagingnation'], params={'pageid': PAGE_FILTER_DEFAULT})
-        elif pageid == PAGE_DETAIL:
-            return render_template('repository/index2.html', sources=sources, contents=aDict['items'],
-                                   pagination=aDict['pagingnation'], params={'pageid': PAGE_FILTER_DEFAULT})
-        elif pageid == PAGE_FILTER_DEFAULT and int(page) > 0:
-            return render_template('/data_table.html', sources=sources, contents=aDict['items'],
-                                   pagination=aDict['pagingnation'], params={'pageid': PAGE_FILTER_DEFAULT})
+        # if pageid == int(PAGE_FILTER_DEFAULT) and int(page) == 0:
+        #     return render_template('repository/index2.html', sources=sources, contents=aDict['items'],
+        #                            pagination=aDict['pagingnation'], params={'pageid': PAGE_FILTER_DEFAULT})
+        # elif pageid == PAGE_DETAIL:
+        return render_template('repository/index2.html', sources=sources, contents=aDict['items'],
+                               pagination=aDict['pagingnation'], params={'pageid': PAGE_FILTER_DEFAULT})
+        # elif pageid == PAGE_FILTER_DEFAULT and int(page) > 0:
+        #     return render_template('/data_table.html', sources=sources, contents=aDict['items'],
+        #                            pagination=aDict['pagingnation'], params={'pageid': PAGE_FILTER_DEFAULT})
 
 
 @repository.route('/login/<username>/<password>', methods=['POST'])
@@ -218,20 +218,20 @@ def detail(cid, page=0, prepageid=0, ptimingid=0):
 
                 # data_master.append({'key': k, 'value': json.loads(v)})
                 # / mnt / storage / lcbc_storage / images / 201784 / J5W9aSaIgh.png
-                if content_im is not None and len(content_im) >0:
+                if content_im is not None and len(content_im) > 0:
                     directory1, directory2, directory3, directory4, directory5, directory6, imageName = \
-                    content_im[i].images[0]['image_full_content'].split("/")
+                        content_im[i].images[0]['image_full_content'].split("/")
                     directory7, directory8, directory9, directory10, directory11, directory12, imageName1 = \
-                    content_im[i].images[0]['image_filter_content'].split("/")
+                        content_im[i].images[0]['image_filter_content'].split("/")
                     _val['image_full_content'] = IMAGE_URL + directory6 + "/" + imageName
                     _val['image_filter_content'] = IMAGE_URL + directory12 + "/" + imageName1
-                    print("name == ="+imageName)
-                    print("name2 = == "+imageName1)
+                    print("name == =" + imageName)
+                    print("name2 = == " + imageName1)
                 data_master.append({'key': k, 'value': _val})
                 i = i + 1;
     except Exception as ex:
         pass
-        #print("error = ===================" + str(ex))
+        # print("error = ===================" + str(ex))
         # flash('ERROR:' + ex.message, 'danger')
     pagination = Pagination(int(1), 1, len(data_master))
     return render_template('repository/pagedetail.html', sources=get_source(), data=data_master, link_href=cont.href,
@@ -267,7 +267,6 @@ def content_search(source='', tag='', published_from='', published_to='', kw='',
         return render_template("login.html")
     content_service = ContentService()
 
-
     if published_from is not '*':
         if 'T00:00:00.000Z' not in published_from:
             published_from = published_from.replace('T00:00:00.000Z', '')
@@ -279,23 +278,39 @@ def content_search(source='', tag='', published_from='', published_to='', kw='',
             published_to = published_to.replace('T00:00:00.000Z', '')
             published_to = published_to.split('-')[::-1]
             published_to = '-'.join(published_to) + 'T00:00:00.000Z'
-
-    content = content_service.search(source, tag, published_from, published_to, kw, int(page), 50)
-    count_items = content['response']['numFound']
-    p = int(page)
-    if p == 0:
-        p =1
-    pagination = Pagination(p, 50, count_items)
-    data_master = []
-    for item in content['response']['docs']:
-        try:
-            item['source_name'] = source_impl.get_by_id(item['source_id']).name
-        except Exception as ex:
-            print("exception : " + str(ex))
-        data_master.append(item)
-    return render_template('/data_table.html', contents=data_master, pagination=pagination,
-                           params={'source': source, 'tag': tag, 'published_from': published_from, 'published_to': published_to, 'kw': kw, 'page': page,
-                                   'pageid': PAGE_SEARCH})
+    if source is '*':
+        sources = get_source()
+        tag_service = core.api.services.tag_service.TagService()
+        for s in sources:
+            s.tags = tag_service.get_by_source(str(s.id))
+        return render_template('source_datatable.html', sources=sources, params={'pageid': PAGE_REPORT_SOURCE})
+    elif source is not '*' and tag is '*':
+        sources = get_source()
+        tag_service = core.api.services.tag_service.TagService()
+        ss = []
+        for s in sources:
+            s.tags = tag_service.get_by_source(str(s.id))
+            if str(s.id) == str(source):
+                ss.append(s)
+                return render_template('source_datatable.html', sources=ss, params={'pageid': PAGE_REPORT_SOURCE})
+    else:
+        content = content_service.search(source, tag, published_from, published_to, kw, int(page), 50)
+        count_items = content['response']['numFound']
+        p = int(page)
+        if p == 0:
+            p = 1
+        pagination = Pagination(p, 50, count_items)
+        data_master = []
+        for item in content['response']['docs']:
+            try:
+                item['source_name'] = source_impl.get_by_id(item['source_id']).name
+            except Exception as ex:
+                print("exception : " + str(ex))
+            data_master.append(item)
+        return render_template('/data_table.html', contents=data_master, pagination=pagination,
+                               params={'source': source, 'tag': tag, 'published_from': published_from,
+                                       'published_to': published_to, 'kw': kw, 'page': page,
+                                       'pageid': PAGE_SEARCH})
 
 
 @repository.route('/search_to_detail/<cid>/<source>/<tag>/<published_from>/<published_to>/<kw>/<page>', methods=['GET'])
@@ -317,7 +332,7 @@ def search_to_detail(cid, source, tag, published_from, published_to, kw, page):
 
     try:
         for item in cont.data:
-            i =0
+            i = 0
             for k, v in item.items():
 
                 _val = json.loads(v)
@@ -363,23 +378,24 @@ def search_to_detail(cid, source, tag, published_from, published_to, kw, page):
 
                 except Exception as error:
                     pass
-                if content_im is not None and len(content_im) >0:
+                if content_im is not None and len(content_im) > 0:
                     directory1, directory2, directory3, directory4, directory5, directory6, imageName = \
-                    content_im[i].images[0]['image_full_content'].split("/")
+                        content_im[i].images[0]['image_full_content'].split("/")
                     directory7, directory8, directory9, directory10, directory11, directory12, imageName1 = \
-                    content_im[i].images[0]['image_filter_content'].split("/")
+                        content_im[i].images[0]['image_filter_content'].split("/")
                     _val['image_full_content'] = IMAGE_URL + directory6 + "/" + imageName
                     _val['image_filter_content'] = IMAGE_URL + directory12 + "/" + imageName1
                 # data_master.append({'key': k, 'value': json.loads(v)})
                 data_master.append({'key': k, 'value': _val})
-                i = i+1
+                i = i + 1
     except Exception as ex:
         flash('ERROR:' + ex.message, 'danger')
     pagination = Pagination(int(1), 1, len(data_master))
     return render_template('repository/pagedetail.html', sources=get_source(), data=data_master, link_href=cont.href,
                            pagination=pagination,
                            contentid=cid, source=s,
-                           params={'source': source, 'tag': tag, 'published_from': published_from, 'published_to': published_to, 'kw': kw,
+                           params={'source': source, 'tag': tag, 'published_from': published_from,
+                                   'published_to': published_to, 'kw': kw,
                                    'pageid': PAGE_DETAIL, 'page': page, 'prepageid': PAGE_SEARCH})
 
 
@@ -402,7 +418,8 @@ def back_from_detail_to_filter_by_timing(sid, ptimingid, page):
                            params={'pageid': PAGE_FILTER_BY_TIMING, 'sid': sid, 'ptimingid': ptimingid})
 
 
-@repository.route('/back_from_detail_to_search/<source>/<tag>/<published_from>/<published_to>/<kw>/<page>', methods=['GET'])
+@repository.route('/back_from_detail_to_search/<source>/<tag>/<published_from>/<published_to>/<kw>/<page>',
+                  methods=['GET'])
 def back_from_detail_to_search(source='', tag='', published_from='', published_to='', kw='', page=0):
     if not session.get('logged_in'):
         return render_template("login.html")
@@ -418,16 +435,21 @@ def back_from_detail_to_search(source='', tag='', published_from='', published_t
     content = content_service.search(source, tag, published_from, published_to, kw, int(page), 50)
     count_items = content['response']['numFound']
     p = int(page)
-    if p ==0:
-        p =1
+    if p == 0:
+        p = 1
     pagination = Pagination(p, 50, count_items)
 
     data_master = []
     for item in content['response']['docs']:
+        try:
+            item['source_name'] = source_impl.get_by_id(item['source_id']).name
+        except Exception as ex:
+            print("exception : " + str(ex))
         data_master.append(item)
-    return render_template('repository/index2.html', sources=get_source(), contents=data_master,
+    return render_template('data_table.html', sources=get_source(), contents=data_master,
                            pagination=pagination,
-                           params={'source': source, 'tag': tag, 'published_from': published_from, 'published_to': published_to, 'kw': kw, 'page': page,
+                           params={'source': source, 'tag': tag, 'published_from': published_from,
+                                   'published_to': published_to, 'kw': kw, 'page': page,
                                    'pageid': PAGE_SEARCH})
 
 

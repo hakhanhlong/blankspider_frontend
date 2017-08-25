@@ -367,9 +367,10 @@ a img {
 }
 
 .midle-content {
-    float: right;
+    /*float: right; comment because removed left-menu-tree*/
     margin-top: 20px;
-    margin-right: 3%;
+    /*margin-right: 3%;*/
+    width: 100%;
     /*width: 77%;*/
 }
 

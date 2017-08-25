@@ -3,53 +3,53 @@
 {% from "_macros.html" import pagination_ajax_content_default with context %}
 {% from "_macros.html" import pagination_ajax_search_content with context %}
 {% block midlecontent %}
-    <div class="midle-content col-md-10">
-        <table id="data_table" class="table table-striped table-bordered">
-            <thead>
-            <tr class="datatable_first_row">
-                <th>STT</th>
-                <th>TIÊU ĐỀ</th>
-                <th>TÒA SOẠN</th>
-                <th>CHUYÊN MỤC</th>
-                <th>THỜI GIAN</th>
-                <th>PHIÊN BẢN</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for item in contents %}
-                <tr>
-                    <td class="datatable_other_columns">{{ ((pagination.page * 50) - 50) + loop.index }}</td>
-                    <td class="datatable_title_column">
-                        {% if params.pageid|int == 0 %}
-                            <a href="{{ url_for('repository.detail', cid=item.id, page=pagination.page, prepageid=0) }}">
-                                {{ item['title'] }}</a>
-                        {% elif params.pageid|int == 1 %}
-                            <a href="{{ url_for('repository.detail', cid=item.id, page=pagination.page,prepageid=1,ptimingid=params.ptimingid) }}">
-                                {{ item['title'] }}</a>
-                        {% elif params.pageid|int == 3 %}
-                            <a data-date-format="dd/mm/yyyy"
-                               href="{{ url_for('repository.search_to_detail', cid=item.id, source=params.source,tag=params.tag,published_from=params.published_from,published_to=params.published_to,kw=params.kw,page=pagination.page) }}">
-                                {{ item['title'] }}</a>
-                        {% endif %}
-                    </td>
-                    <td class="datatable_other_columns">{{ item['source_name'] }}</td>
-                    <td class="datatable_other_columns">{{ item['tag_name'] }}</td>
-                    <td class="datatable_other_columns">{{ item['published_time'] }}</td>
-                    <td class="datatable_other_columns">{{ item['version_count'] }}</td>
-                </tr>
-            {% endfor %}
-        </table>
-        <div id="tong-so"> Tổng số: <label style="color: red;">{{ pagination.total_count }}</label></div>
-        {% if params %}
-            {% if params.pageid == 1 %}
-                {{ pagination_ajax(pagination, sid=params.sid, timingid=params.ptimingid) }}
-            {% endif %}
-            {% if params.pageid == 0 %}
-                {{ pagination_ajax_content_default(pagination) }}
-            {% endif %}
-            {% if params.pageid == 3 %}
-            {{ pagination_ajax_search_content(pagination,source = params.source,tag=params.tag,kw=params.kw,published_from=params.published_from,published_to=params.published_to) }}
-            {% endif %}
-        {% endif %}
+    <div class="midle-content">
+{#        <table id="data_table" class="table table-striped table-bordered">#}
+{#            <thead>#}
+{#            <tr class="datatable_first_row">#}
+{#                <th>STT</th>#}
+{#                <th>TIÊU ĐỀ</th>#}
+{#                <th>TÒA SOẠN</th>#}
+{#                <th>CHUYÊN MỤC</th>#}
+{#                <th>THỜI GIAN</th>#}
+{#                <th>PHIÊN BẢN</th>#}
+{#            </tr>#}
+{#            </thead>#}
+{#            <tbody>#}
+{#            {% for item in contents %}#}
+{#                <tr>#}
+{#                    <td class="datatable_other_columns">{{ ((pagination.page * 50) - 50) + loop.index }}</td>#}
+{#                    <td class="datatable_title_column">#}
+{#                        {% if params.pageid|int == 0 %}#}
+{#                            <a href="{{ url_for('repository.detail', cid=item.id, page=pagination.page, prepageid=0) }}">#}
+{#                                {{ item['title'] }}</a>#}
+{#                        {% elif params.pageid|int == 1 %}#}
+{#                            <a href="{{ url_for('repository.detail', cid=item.id, page=pagination.page,prepageid=1,ptimingid=params.ptimingid) }}">#}
+{#                                {{ item['title'] }}</a>#}
+{#                        {% elif params.pageid|int == 3 %}#}
+{#                            <a data-date-format="dd/mm/yyyy"#}
+{#                               href="{{ url_for('repository.search_to_detail', cid=item.id, source=params.source,tag=params.tag,published_from=params.published_from,published_to=params.published_to,kw=params.kw,page=pagination.page) }}">#}
+{#                                {{ item['title'] }}</a>#}
+{#                        {% endif %}#}
+{#                    </td>#}
+{#                    <td class="datatable_other_columns">{{ item['source_name'] }}</td>#}
+{#                    <td class="datatable_other_columns">{{ item['tag_name'] }}</td>#}
+{#                    <td class="datatable_other_columns">{{ item['published_time'] }}</td>#}
+{#                    <td class="datatable_other_columns">{{ item['version_count'] }}</td>#}
+{#                </tr>#}
+{#            {% endfor %}#}
+{#        </table>#}
+{#        <div id="tong-so"> Tổng số: <label style="color: red;">{{ pagination.total_count }}</label></div>#}
+{#        {% if params %}#}
+{#            {% if params.pageid == 1 %}#}
+{#                {{ pagination_ajax(pagination, sid=params.sid, timingid=params.ptimingid) }}#}
+{#            {% endif %}#}
+{#            {% if params.pageid == 0 %}#}
+{#                {{ pagination_ajax_content_default(pagination) }}#}
+{#            {% endif %}#}
+{#            {% if params.pageid == 3 %}#}
+{#            {{ pagination_ajax_search_content(pagination,source = params.source,tag=params.tag,kw=params.kw,published_from=params.published_from,published_to=params.published_to) }}#}
+{#            {% endif %}#}
+{#        {% endif %}#}
     </div>
 {% endblock %}

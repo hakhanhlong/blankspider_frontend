@@ -33,6 +33,11 @@ class ContentService:
         if pageindex == 0:
             pageindex = 1
         pageindex = (pageindex - 1) * pagesize
+        if published_to is '*':
+            published_to = published_from
+
+        if published_from is '*':
+            published_from = published_to
         if published_from is not '*':
             published_from = parse(published_from)
             published_from = published_from.strftime('"%Y-%m-%dT00:00:00.000Z"')
@@ -44,7 +49,11 @@ class ContentService:
                 pagesize) + '&start=' + str(pageindex) + '&wt=json&fq=status:COMPLETED'
         elif (published_from is not '*' or published_to is not '*') and keyword is not '*':
             url_search = self.request_URL.CONTENT_URL_SEARCH % (source_id, tagid, published_from, published_to, keyword, pagesize, pageindex)
-            self.requestHelpers.url = url_search.replace('&sort=published_at desc', '')
+            self.requestHelpers.url = url_search.replace('&sort=published_at desc', '&sort=published_at asc')
+        elif published_from is not '*' or published_to is not '*':
+            url_search = self.request_URL.CONTENT_URL_SEARCH % (
+            source_id, tagid, published_from, published_to, keyword, pagesize, pageindex)
+            self.requestHelpers.url = url_search.replace('&sort=published_at desc', '&sort=published_at asc')
         else:
             self.requestHelpers.url = self.request_URL.CONTENT_URL_SEARCH % (
             source_id, tagid, published_from, published_to, keyword, pagesize, pageindex)

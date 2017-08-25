@@ -7,7 +7,7 @@
         <table id="data_table" class="table table-striped table-bordered">
             <thead>
             <tr class="datatable_first_row">
-                <th>#</th>
+                <th>STT</th>
                 <th>TIÊU ĐỀ</th>
                 <th>TÒA SOẠN</th>
                 <th>CHUYÊN MỤC</th>
@@ -48,7 +48,7 @@
                 {{ pagination_ajax_content_default(pagination) }}
             {% endif %}
             {% if params.pageid == 3 %}
-                {{ pagination_ajax_search_content(pagination) }}
+            {{ pagination_ajax_search_content(pagination,source = params.source,tag=params.tag,kw=params.kw,published_from=params.published_from,published_to=params.published_to) }}
             {% endif %}
         {% endif %}
     </div>

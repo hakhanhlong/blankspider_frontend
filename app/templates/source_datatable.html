@@ -4,9 +4,8 @@
     <table id="data_table" class="table table-striped table-bordered">
         <thead>
         <tr class="datatable_first_row">
-            <th>#</th>
+            <th>STT</th>
             <th>NGUỒN</th>
-            <th>THỜI GIAN TẠO</th>
             <th>TỔNG SỐ CHUYÊN MỤC</th>
             <th>TỔNG SỐ BÀI VIẾT</th>
         </tr>
@@ -19,7 +18,6 @@
                     <a href="javascript:;" class="source_link" sourceid="{{ source.id }}">
                         {{ source.name }}</a>
                 </td>
-                <td class="datatable_other_columns">{{ source.created_date }}</td>
                 <td class="datatable_other_columns">
                     {{ source.tags|length }}
                 </td>
@@ -27,7 +25,7 @@
                     {% set vars = {'foo': 0} %}
 
                     {% for tag in source.tags %}
-                        {% if vars.update({'foo': vars.foo + tag.count}) %} {% endif %}
+                        {% if vars.update({'foo': vars.foo + tag.count_status_completed}) %} {% endif %}
                     {% endfor %}
                     {{ vars.foo }}
                 </td>

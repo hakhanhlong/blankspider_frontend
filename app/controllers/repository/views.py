@@ -97,7 +97,6 @@ def get_source():
             x.timings = timings
             # ------------------------------------------------------------------------------------------------------------------
     except Exception as ex:
-        print('xxxxxxxxxxxxxxxxxxxxxxxxxx' + str(ex))
         flash('ERROR:' + str(ex), 'danger')
     return sources
 
@@ -225,8 +224,6 @@ def detail(cid, page=0, prepageid=0, ptimingid=0):
                         content_im[i].images[0]['image_filter_content'].split("/")
                     _val['image_full_content'] = IMAGE_URL + directory6 + "/" + imageName
                     _val['image_filter_content'] = IMAGE_URL + directory12 + "/" + imageName1
-                    print("name == =" + imageName)
-                    print("name2 = == " + imageName1)
                 data_master.append({'key': k, 'value': _val})
                 i = i + 1;
     except Exception as ex:
@@ -261,12 +258,18 @@ def detail_html(cid, idx):
 
 
 @repository.route('/search/', methods=['GET'])
-@repository.route('/search/<source>/<tag>/<published_from>/<published_to>/<kw>/<page>', methods=['GET'])
-def content_search(source='', tag='', published_from='', published_to='', kw='', page=0):
+@repository.route('/search/<source>/<tag>/<published_from>/<published_to>/<kw>/<page>/<page_id>', methods=['GET'])
+def content_search(source='', tag='', published_from='', published_to='', kw='', page=0, page_id=0):
+    session['source_id'] = source
+    session['tag_id'] = tag
+    session['published_from'] = published_from
+    session['published_to'] = published_to
+    session['kw'] = kw
+    session['page'] = page
+    session['page_id'] = page_id
     if not session.get('logged_in'):
         return render_template("login.html")
     content_service = ContentService()
-
     if published_from is not '*':
         if 'T00:00:00.000Z' not in published_from:
             published_from = published_from.replace('T00:00:00.000Z', '')
@@ -278,39 +281,30 @@ def content_search(source='', tag='', published_from='', published_to='', kw='',
             published_to = published_to.replace('T00:00:00.000Z', '')
             published_to = published_to.split('-')[::-1]
             published_to = '-'.join(published_to) + 'T00:00:00.000Z'
-    if source is '*':
-        sources = get_source()
-        tag_service = core.api.services.tag_service.TagService()
+    sources = get_source()
+    tag_service = core.api.services.tag_service.TagService()
+    if source == '*':
         for s in sources:
             s.tags = tag_service.get_by_source(str(s.id))
-        return render_template('source_datatable.html', sources=sources, params={'pageid': PAGE_REPORT_SOURCE})
-    elif source is not '*' and tag is '*':
-        sources = get_source()
-        tag_service = core.api.services.tag_service.TagService()
+            content = content_service.search(s.id, tag, published_from, published_to, kw, int(page), 50)
+            s.numFound = content['response']['numFound']
+            session['current_page'] = PAGE_REPORT_SOURCE
+        return render_template('source_datatable.html', sources=sources,
+                               params={'pageid': PAGE_REPORT_SOURCE, 'source': source, 'tag': tag,
+                                       'published_from': published_from, 'published_to': published_to, 'kw': kw})
+    else:
         ss = []
         for s in sources:
-            s.tags = tag_service.get_by_source(str(s.id))
             if str(s.id) == str(source):
+                s.tags = tag_service.get_by_source(str(s.id))
+                content = content_service.search(s.id, tag, published_from, published_to, kw, int(page), 50)
+                s.numFound = content['response']['numFound']
                 ss.append(s)
-                return render_template('source_datatable.html', sources=ss, params={'pageid': PAGE_REPORT_SOURCE})
-    else:
-        content = content_service.search(source, tag, published_from, published_to, kw, int(page), 50)
-        count_items = content['response']['numFound']
-        p = int(page)
-        if p == 0:
-            p = 1
-        pagination = Pagination(p, 50, count_items)
-        data_master = []
-        for item in content['response']['docs']:
-            try:
-                item['source_name'] = source_impl.get_by_id(item['source_id']).name
-            except Exception as ex:
-                print("exception : " + str(ex))
-            data_master.append(item)
-        return render_template('/data_table.html', contents=data_master, pagination=pagination,
-                               params={'source': source, 'tag': tag, 'published_from': published_from,
-                                       'published_to': published_to, 'kw': kw, 'page': page,
-                                       'pageid': PAGE_SEARCH})
+                session['current_page'] = PAGE_REPORT_SOURCE
+                break
+        return render_template('source_datatable.html', sources=ss,
+                               params={'pageid': PAGE_REPORT_SOURCE, 'tag': tag,
+                                       'published_from': published_from, 'published_to': published_to, 'kw': kw})
 
 
 @repository.route('/search_to_detail/<cid>/<source>/<tag>/<published_from>/<published_to>/<kw>/<page>', methods=['GET'])
@@ -462,11 +456,51 @@ def report_source():
     return render_template('source_datatable.html', sources=sources, params={'pageid': PAGE_REPORT_SOURCE})
 
 
-@repository.route('/report_tag/<sid>', methods=['GET'])
-def report_tag(sid):
+@repository.route('/report_tag/<sid>/<tag>/<published_from>/<published_to>/<kw>/<page>', methods=['GET'])
+def report_tag(sid, tag, published_from, published_to, kw, page=0):
+    session['source_id_0'] = sid
+    if not session.get('logged_in'):
+        return render_template("login.html")
+    if published_from is not '*':
+        if 'T00:00:00.000Z' not in published_from:
+            published_from = published_from.replace('T00:00:00.000Z', '')
+            published_from = published_from.split('-')[::-1]
+            published_from = '-'.join(published_from) + 'T00:00:00.000Z'
+
+    if published_to is not '*':
+        if 'T00:00:00.000Z' not in published_to:
+            published_to = published_to.replace('T00:00:00.000Z', '')
+            published_to = published_to.split('-')[::-1]
+            published_to = '-'.join(published_to) + 'T00:00:00.000Z'
+    content_service = ContentService()
     tag_service = core.api.services.tag_service.TagService()
     tags = tag_service.get_by_source(str(sid))
-    return render_template('tag_datatable.html', tags=tags, params={'pageid': PAGE_REPORT_TAG})
+    if tag == '*':
+        for t in tags:
+            content = content_service.search(sid, t['_id'], published_from, published_to, kw, int(page), 50)
+            t['numfound'] = content['response']['numFound']
+        session['current_page'] = PAGE_REPORT_TAG
+        return render_template('tag_datatable.html', tags=tags, params={'pageid': PAGE_REPORT_TAG,
+                                                                        'source': sid,
+                                                                        'tag': tag,
+                                                                        'published_from': published_from,
+                                                                        'published_to': published_to, 'kw': kw,
+                                                                        'page': page})
+    else:
+        ts = []
+        for t in tags:
+            print('tag ======== '+str(t))
+            if tag == t['_id']:
+                content = content_service.search(sid, t['_id'], published_from, published_to, kw, int(page), 50)
+                t['numfound'] = content['response']['numFound']
+                ts.append(t)
+                break
+        session['current_page'] = PAGE_REPORT_TAG
+        return render_template('tag_datatable.html', tags=ts, params={'pageid': PAGE_REPORT_TAG,
+                                                                      'published_from': published_from,
+                                                                      'published_to': published_to, 'kw': kw,
+                                                                      'page': page})
+
 
 # @repository.route('/detail/<cid>', methods=['GET'])
 # def detail(cid):
@@ -529,3 +563,61 @@ def report_tag(sid):
 #         flash('ERROR:' + ex.message, 'danger')
 #
 #     return render_template('repository/detail.html', data=data_master, link_href=cont.href, contentid=cid)
+@repository.route('/search_content/', methods=['GET'])
+@repository.route('/search_content/<source>/<tag>/<published_from>/<published_to>/<kw>/<page>/<page_id>',
+                  methods=['GET'])
+def search_content(source='', tag='', published_from='', published_to='', kw='', page=0, page_id=0):
+
+    if not session.get('logged_in'):
+        return render_template("login.html")
+    content_service = ContentService()
+
+    if published_from is not '*':
+        if 'T00:00:00.000Z' not in published_from:
+            published_from = published_from.replace('T00:00:00.000Z', '')
+            published_from = published_from.split('-')[::-1]
+            published_from = '-'.join(published_from) + 'T00:00:00.000Z'
+
+    if published_to is not '*':
+        if 'T00:00:00.000Z' not in published_to:
+            published_to = published_to.replace('T00:00:00.000Z', '')
+            published_to = published_to.split('-')[::-1]
+            published_to = '-'.join(published_to) + 'T00:00:00.000Z'
+
+    content = content_service.search(source, tag, published_from, published_to, kw, int(page), 50)
+    count_items = content['response']['numFound']
+    p = int(page)
+    if p == 0:
+        p = 1
+    pagination = Pagination(p, 50, count_items)
+    data_master = []
+    for item in content['response']['docs']:
+        try:
+            item['source_name'] = source_impl.get_by_id(item['source_id']).name
+        except Exception as ex:
+            print("exception : " + str(ex))
+        data_master.append(item)
+    session['current_page'] = PAGE_SEARCH
+    return render_template('/data_table.html', contents=data_master, pagination=pagination,
+                           params={'source': source, 'tag': tag, 'published_from': published_from,
+                                   'published_to': published_to, 'kw': kw, 'page': page,
+                                   'pageid': PAGE_SEARCH})
+
+
+@repository.route('/back/', methods=['GET'])
+def back():
+    currentPage = session.get('current_page')
+    print('current page =' + str(currentPage))
+    source = session.get('source_id')
+    tag = session.get('tag_id')
+    published_from = session.get('published_from')
+    published_to = session.get('published_to')
+    kw = session.get('kw')
+    page = session.get('page')
+    sid_0 = session.get('source_id_0')
+    print('sid 0 = '+str(sid_0))
+    if int(currentPage) == int(PAGE_SEARCH):
+        print('running here')
+        return report_tag(sid_0,tag, published_from, published_to, kw, page)
+    elif int(currentPage) == int(PAGE_REPORT_TAG):
+        return content_search(source, tag, published_from, published_to, kw, page, PAGE_REPORT_TAG)

@@ -1,12 +1,20 @@
 {% extends "_layoutblank.html" %}
 {% block content %}
-    <script type="text/javascript" src="{{ url_for('static', filename='scripts/frontend.js') }}"></script>
+    <h1 style="display: none" id="page_id">5</h1>
+    <div class="col-md-12 col-sm-12" style="float: right">
+        <a id="back" onclick="javascript;" source="{{ params.source }}"
+           tag="{{ params.tag }}"
+           published_from="{{ params.published_from }}"
+           published_to="{{ params.published_to }}"
+           kw="{{ params.kw }}"
+           style="margin-right: 10px;float: right"><< BACK </a>
+    </div>
     <table id="data_table" class="table table-striped table-bordered">
         <thead>
         <tr class="datatable_first_row">
             <th>STT</th>
             <th>CHUYÊN MỤC</th>
-            <th>TỔNG SỐ BÀI VIẾT</th>
+            <th>BÀI VIẾT TÌM THẤY</th>
         </tr>
         </thead>
         <tbody>
@@ -14,20 +22,76 @@
             <tr>
                 <td class="datatable_other_columns">{{ loop.index }}</td>
                 <td class="datatable_title_column">
-                    <a href="javascript:;" class="tag_link" tagid="{{ tag._id }}" sourceid="{{ tag.source_id }}">
+                    <a href="javascript:;" class="tag_link" published_from="{{ params.published_from }}"
+                       published_to="{{ params.published_to }}"
+                       kw="{{ params.kw }}"
+                       page="{{ params.page }}"
+                       tagid="{{ tag._id }}" sourceid="{{ tag.source_id }} ">
                         {{ tag.name }}</a>
                 </td>
-                <td class="datatable_other_columns">{{ tag.count_status_completed }}</td>
+                <td class="datatable_other_columns">{{ tag.numfound }}</td>
             </tr>
         {% endfor %}
     </table>
     <script type="text/javascript">
-    $('.tag_link').click(function () {
-        display_busy_mark();
-        var tagid = $(this).attr('tagid');
-        var sourceid = $(this).attr('sourceid')
-        search(sourceid, tagid, '*', '*','*');
+        function search_content(source, tag, published_from, published_to, kw) {
+            if (!kw) {
+                kw = "*";
+            }
 
-    });
+            if (!published_from) {
+                published_from = "*";
+            }
+
+            if (!published_to) {
+                published_to = "*";
+            }
+
+            var newchar = '-'
+            published_from = published_from.split('/').join(newchar);
+            published_to = published_to.split('/').join(newchar);
+            var page_id = $('#page_id').html();
+
+            var url = '/repository/search_content/' + source + '/' + tag + '/' + published_from + '/' + published_to + '/' + kw + '/1/' + page_id;
+            $.ajax(encodeURI(url), {
+                success: function (data) {
+                    hide_busy_mark();
+                    $('.midle-content').css("display", "block");
+                    $('.midle-content').html(data);
+
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert(errorThrown);
+                    display_error_mesage();
+                    console.log('ERROR: GET CONTENT');
+                }
+            });
+        }
+
+        $('.tag_link').click(function () {
+            display_busy_mark();
+            tagid = $(this).attr('tagid');
+            sourceid = $(this).attr('sourceid');
+            publised_from = $(this).attr('published_from');
+            publised_to = $(this).attr('published_to');
+            kw = $(this).attr('kw');
+            search_content(sourceid, tagid, publised_from, publised_to, kw);
+
+        });
+
+        $('#back').on('click', function () {
+            display_busy_mark();
+            $.ajax('/repository/back/', {
+                success: function (data) {
+                    hide_busy_mark();
+                    $('.midle-content').css("display", "block");
+                    $('.midle-content').html(data);
+                },
+                error: function () {
+                    display_error_mesage();
+                    console.log('ERROR: GET TAG BY SOURCE');
+                }
+            });
+        });
     </script>
 {% endblock %}

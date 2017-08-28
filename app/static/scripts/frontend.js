@@ -27,8 +27,9 @@ function search(source, tag, published_from, published_to, kw) {
     var newchar = '-'
     published_from = published_from.split('/').join(newchar);
     published_to = published_to.split('/').join(newchar);
+    var page_id = $('#page_id').html();
 
-    var url = '/repository/search/' + source + '/' + tag + '/' + published_from + '/' + published_to + '/' + kw + '/1';
+    var url = '/repository/search/' + source + '/' + tag + '/' + published_from + '/' + published_to + '/' + kw + '/1/' + page_id;
     $.ajax(encodeURI(url), {
         success: function (data) {
             hide_busy_mark();
@@ -37,7 +38,6 @@ function search(source, tag, published_from, published_to, kw) {
 
         },
         error: function (XMLHttpRequest, textStatus, errorThrown) {
-            alert(errorThrown);
             display_error_mesage();
             console.log('ERROR: GET CONTENT');
         }
@@ -193,32 +193,33 @@ $(document).ready(function () {
         }
     });
     $('#select-baodientu-repository').change(function () {
-        $('#select-tag option').remove();
-        $.ajax('/ajax/tag/get_by_source/' + this.value, {
-            success: function (data) {
-                $('#select-tag').append('<option value="*" >' + 'Tất cả' + '</option>');
-                $.each(data, function (index, item) {
-                    var savedid = $('#lbl_tag').text();
-                    var item_id = item._id;
-                    if (savedid == item_id) {
-                        $('#select-tag').append('<option value="' + item._id
-                            + '"selected>' + item.name + ' ('
-                            + item.count_status_completed + ')' + '</option>');
-                    }
-                    else {
-                        $('#select-tag').append('<option value="' + item._id
-                            + '">' + item.name + ' (' + item.count_status_completed + ')' + '</option>');
-                    }
-                });
+        if ($('#select-baodientu-repository').is(":focus")) {
+            $('#select-tag option').remove();
+            $.ajax('/ajax/tag/get_by_source/' + this.value, {
+                success: function (data) {
+                    $('#select-tag').append('<option value="*" >' + 'Tất cả' + '</option>');
+                    $.each(data, function (index, item) {
+                        var savedid = $('#lbl_tag').text();
+                        var item_id = item._id;
+                        if (savedid == item_id) {
+                            $('#select-tag').append('<option value="' + item._id
+                                + '"selected>' + item.name + ' ('
+                                + item.count_status_completed + ')' + '</option>');
+                        }
+                        else {
+                            $('#select-tag').append('<option value="' + item._id
+                                + '">' + item.name + ' (' + item.count_status_completed + ')' + '</option>');
+                        }
+                    });
+                    $('#select-baodientu-repository').blur();
 
-                //  $('#select-tag').selectpicker('refresh');
-            },
-            error: function () {
-                display_error_mesage();
-                console.log('ERROR: GET TAG BY SOURCE');
-            }
-        });
-
+                },
+                error: function () {
+                    display_error_mesage();
+                    console.log('ERROR: GET TAG BY SOURCE');
+                }
+            });
+        }
     }).change();
 
 
@@ -484,7 +485,7 @@ function pagination_ajax_search_content_v2(obj) {
 
     console.log(published_from + '|' + published_to);
 
-    var url = '/repository/search/' + source + '/' + tag + '/' + published_from + '/' + published_to + '/' + kw + '/' + page;
+    var url = '/repository/search_content/' + source + '/' + tag + '/' + published_from + '/' + published_to + '/' + kw + '/' + page + '/' + 0;
     $.ajax(encodeURI(url), {
         success: function (data) {
             hide_busy_mark();

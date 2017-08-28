@@ -14,5 +14,5 @@ class SOURCES(db.Document):
     server_ip = db.StringField(max_length=255, required=False, default=u'0.0.0.0')
 
     tags = []
-
+    numFound = 0
     meta = {"db_alias": "DEV_BLANKSPIDER"}

@@ -15,7 +15,6 @@ class ContentService:
         pageindex = (pageindex - 1) * pagesize
         self.requestHelpers.url = self.request_URL.CONTENT_URL_FILTER_BY_TIMING % (
         publishtiming_id, source_id, pagesize, pageindex)
-        print(self.requestHelpers.url)
         # self.requestHelpers.params = {'source_id': source_id, 'publishtiming_id':publishtiming_id,
         #                              'pageindex':pageindex, 'pagesize':pagesize}
 
@@ -57,6 +56,5 @@ class ContentService:
         else:
             self.requestHelpers.url = self.request_URL.CONTENT_URL_SEARCH % (
             source_id, tagid, published_from, published_to, keyword, pagesize, pageindex)
-            print("url = " + str(self.requestHelpers.url))
 
         return self.requestHelpers.get().json()

@@ -29,7 +29,7 @@
             min-width: 300px;
         }
 
-        input{
+        input {
             font-family: 'Segoe UI';
             font-size: larger;
             color: black;
@@ -64,7 +64,7 @@
 <div>
     <div class="square">
         <img src="{{ url_for('static', filename='images/LOGIN-03.png') }}"
-             style="max-width: 250px;position: relative; padding-bottom: 5%; padding-top: 5%;padding-left: 2%;">
+             style="max-width: 400px;position: relative; padding-bottom: 5%; padding-top: 5%;padding-left: 2%;display: block;position: relative; margin: 0 auto">
         <div class="content">
             <h1 style="font-size: large; padding-top: 10%;padding-bottom: 5%;">VUI LÒNG ĐĂNG NHẬP</h1>
             <input id="username" type="text"
@@ -84,21 +84,21 @@
 <script type="text/javascript">
     $(document).ready(function () {
         $('#login').on('click', function () {
-            if($('#username').val() !="" && $('#password').val() !=""){
-            $.ajax({
-                type: "POST",
-                url: "/repository/login/" + $('#username').val() + "/" + $('#password').val(),
-                data: {username: $('#username').val(), password: $('#password').val()}
-            }).done(function (data) {
-                // do something
-                if (data == "1") {
-                    $(location).attr('href', '/repository');
-                } else {
-                    $('#error').html("Sai tên đăng nhập hoặc mật khẩu");
-                }
-            });
-        }else {
-                 $('#error').html("Tên đăng nhập và mật khẩu không được bỏ trống");
+            if ($('#username').val() != "" && $('#password').val() != "") {
+                $.ajax({
+                    type: "POST",
+                    url: "/repository/login/" + $('#username').val() + "/" + $('#password').val(),
+                    data: {username: $('#username').val(), password: $('#password').val()}
+                }).done(function (data) {
+                    // do something
+                    if (data == "1") {
+                        $(location).attr('href', '/repository');
+                    } else {
+                        $('#error').html("Sai tên đăng nhập hoặc mật khẩu");
+                    }
+                });
+            } else {
+                $('#error').html("Tên đăng nhập và mật khẩu không được bỏ trống");
             }
         });
     });

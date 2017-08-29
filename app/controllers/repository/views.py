@@ -492,7 +492,6 @@ def report_tag(sid, tag, published_from, published_to, kw, page=0):
     else:
         ts = []
         for t in tags:
-            print('tag ======== '+str(t))
             if tag == t['_id']:
                 content = content_service.search(sid, t['_id'], published_from, published_to, kw, int(page), 50)
                 t['numfound'] = content['response']['numFound']
@@ -610,7 +609,6 @@ def search_content(source='', tag='', published_from='', published_to='', kw='',
 @repository.route('/back/', methods=['GET'])
 def back():
     currentPage = session.get('current_page')
-    print('current page =' + str(currentPage))
     source = session.get('source_id')
     tag = session.get('tag_id')
     published_from = session.get('published_from')
@@ -618,9 +616,7 @@ def back():
     kw = session.get('kw')
     page = session.get('page')
     sid_0 = session.get('source_id_0')
-    print('sid 0 = '+str(sid_0))
     if int(currentPage) == int(PAGE_SEARCH):
-        print('running here')
         return report_tag(sid_0,tag, published_from, published_to, kw, page)
     elif int(currentPage) == int(PAGE_REPORT_TAG):
         return content_search(source, tag, published_from, published_to, kw, page, PAGE_REPORT_TAG)

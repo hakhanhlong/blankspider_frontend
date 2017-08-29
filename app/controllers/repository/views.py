@@ -475,12 +475,15 @@ def report_tag(sid, tag, published_from, published_to, kw, page=0):
     content_service = ContentService()
     tag_service = core.api.services.tag_service.TagService()
     tags = tag_service.get_by_source(str(sid))
+    ts = []
     if tag == '*':
         for t in tags:
             content = content_service.search(sid, t['_id'], published_from, published_to, kw, int(page), 50)
-            t['numfound'] = content['response']['numFound']
+            if int(content['response']['numFound']) != 0:
+                t['numfound'] = content['response']['numFound']
+                ts.append(t)
         session['current_page'] = PAGE_REPORT_TAG
-        return render_template('tag_datatable.html', tags=tags, params={'pageid': PAGE_REPORT_TAG,
+        return render_template('tag_datatable.html', tags=ts, params={'pageid': PAGE_REPORT_TAG,
                                                                         'source': sid,
                                                                         'tag': tag,
                                                                         'published_from': published_from,

@@ -164,71 +164,30 @@ def detail(cid, page=0, prepageid=0, ptimingid=0):
     cont = content_impl.get_byid(cid)
     s = source_impl.get_by_id(cont.source_id)
     content_im = content_img_impl.getByContentId(cid)
+    print("xxxxxxxxxx "+str(content_im[0].images[0]))
+    print("xxxxxxxxxx " + str(content_im[0].images[1]))
     configuration = configuration_impl.get_config('SOURCE', cont.source_id)
     # n_dict = json.loads(cont.data)
     data_master = []
 
     try:
+        i = 0;
         for item in cont.data:
-            i = 0;
             for k, v in item.items():
                 _val = json.loads(v)
-                content = _val['content']
-                try:
-                    '''if configuration['config']['PARSERVIDEOS']:
-                        configs = configuration['config']['PARSERVIDEOS']['data']
-                        array_player = []
-                        array_embeded_player = []
-                        array_player_id = []
-                        htmlparser = etree.HTMLParser(recover=True, remove_blank_text=True)
-                        # tree = etree.parse(StringIO(content), htmlparser)
-                        tree = etree.fromstring(str(content), htmlparser)
-
-                        attribute = configs['attribute']
-                        attribute_pattern_value = attribute['step']['1']['field_value']
-
-                        pattern = configs['pattern']
-                        pattern_value = pattern['step']['1']['field_value']
-
-                        players = tree.xpath(pattern_value)
-                        # players = tree.find(pattern_value)
-                        # players = tree.find('.//div')
-
-
-
-                        embeded_player = configs['format_player']['step']['1']['field_value']
-                        for x in players:
-                            # array_player_id.append()
-                            array_player_id.append(dict(x.attrib)[attribute_pattern_value])  # get value by attribute
-                            array_player.append(str(etree.tostring(x, pretty_print=True)))
-
-                            embeded = embeded_player.replace("{1}", dict(x.attrib)[attribute_pattern_value])
-                            array_embeded_player.append(embeded)
-
-                            x.append(etree.HTML(embeded))
-
-                        content = etree.tostring(tree, method='html', pretty_print=True)
-
-                        _val['content'] = str(content).replace('\\n', "").replace('\\t', "").replace("b'", "")'''
-
-
-
-                except Exception as error:
-                    pass
-
-                # data_master.append({'key': k, 'value': json.loads(v)})
-                # / mnt / storage / lcbc_storage / images / 201784 / J5W9aSaIgh.png
-                if content_im is not None and len(content_im) >0:
+                if content_im is not None and len(content_im[0].images) >0:
                     directory1, directory2, directory3, directory4, directory5, directory6, imageName = \
-                    content_im[i].images[0]['image_full_content'].split("/")
+                    content_im[0].images[i]['image_full_content'].split("/")
                     directory7, directory8, directory9, directory10, directory11, directory12, imageName1 = \
-                    content_im[i].images[0]['image_filter_content'].split("/")
+                    content_im[0].images[i]['image_filter_content'].split("/")
                     _val['image_full_content'] = IMAGE_URL + directory6 + "/" + imageName
                     _val['image_filter_content'] = IMAGE_URL + directory12 + "/" + imageName1
                     print("name == ="+imageName)
                     print("name2 = == "+imageName1)
+                    i = i + 1;
+                    print("cxxxxxxxxxxxxxxx"+str(i))
                 data_master.append({'key': k, 'value': _val})
-                i = i + 1;
+
     except Exception as ex:
         pass
         #print("error = ===================" + str(ex))

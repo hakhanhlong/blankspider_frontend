@@ -164,10 +164,6 @@ def detail(cid, page=0, prepageid=0, ptimingid=0):
     cont = content_impl.get_byid(cid)
     s = source_impl.get_by_id(cont.source_id)
     content_im = content_img_impl.getByContentId(cid)
-    print("xxxxxxxxxx "+str(content_im[0].images[0]))
-    print("xxxxxxxxxx " + str(content_im[0].images[1]))
-    configuration = configuration_impl.get_config('SOURCE', cont.source_id)
-    # n_dict = json.loads(cont.data)
     data_master = []
 
     try:
@@ -180,18 +176,13 @@ def detail(cid, page=0, prepageid=0, ptimingid=0):
                     content_im[0].images[i]['image_full_content'].split("/")
                     directory7, directory8, directory9, directory10, directory11, directory12, imageName1 = \
                     content_im[0].images[i]['image_filter_content'].split("/")
-                    _val['image_full_content'] = IMAGE_URL + directory6 + "/" + imageName
-                    _val['image_filter_content'] = IMAGE_URL + directory12 + "/" + imageName1
-                    print("name == ="+imageName)
-                    print("name2 = == "+imageName1)
+                    _val['image_full_content'] =  directory6 + "-" + imageName
+                    _val['image_filter_content'] =directory12 + "-" + imageName1
                     i = i + 1;
-                    print("cxxxxxxxxxxxxxxx"+str(i))
                 data_master.append({'key': k, 'value': _val})
 
     except Exception as ex:
         pass
-        #print("error = ===================" + str(ex))
-        # flash('ERROR:' + ex.message, 'danger')
     pagination = Pagination(int(1), 1, len(data_master))
     return render_template('repository/pagedetail.html', sources=get_source(), data=data_master, link_href=cont.href,
                            contentid=cid, pagination=pagination, source=s,
@@ -199,8 +190,8 @@ def detail(cid, page=0, prepageid=0, ptimingid=0):
                                    'ptimingid': ptimingid})
 
 
-@repository.route('/detail-html/<cid>/<idx>', methods=['GET'])
-def detail_html(cid, idx):
+@repository.route('/detail_html/<cid>/<idx>/<pdfurl>', methods=['GET'])
+def detail_html(cid, idx, pdfurl):
     if not session.get('logged_in'):
         return render_template("login.html")
     cont = content_impl.get_byid(cid)
@@ -215,8 +206,17 @@ def detail_html(cid, idx):
     # cont.data = None
 
     # return data_master[0]['value']['html_data'].replace("document.domain", "")
-    return render_template('repository/detail_html.html',
+    return render_template('viewer.html',
                            data=data_master[0]['value']['html_data'].replace("document.domain", ""))
+
+@repository.route('/display_pdf/<pdfurl>', methods=['GET'])
+def display_pdf(pdfurl):
+    if not session.get('logged_in'):
+        return render_template("login.html")
+    pdfurl = IMAGE_URL + pdfurl.replace("-", "/")
+    print("xxxxxxxxxxxxxxxx pdf = "+pdfurl)
+    return render_template('viewer.html',pdfdocument = pdfurl)
+
 
 
 @repository.route('/search/', methods=['GET'])

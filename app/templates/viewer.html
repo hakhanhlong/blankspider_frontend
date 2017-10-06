@@ -46,15 +46,20 @@ See https://github.com/adobe-type-tools/cmap-resources
     <script type="text/javascript" src="{{ url_for('static', filename='scripts/jquery-1.11.3.min.js') }}"></script>
 
     <script type="text/javascript">
+        document.domain = "img.lcbc.digicomdemo.vn";
+
         function setText_search(text) {
             $('#findInput').val(text);
             $('#findHighlightAll').click();
             $('#viewFind').click();
             $('#findInput').change();
         }
-        $(document).ready(function () {
-            {#            setText_search('thủ tướng');#}
 
+        $(document).ready(function () {
+            var text = $('#kw').html();
+            if(text != '*') {
+                setText_search(text);
+            }
         });
     </script>
 
@@ -63,7 +68,7 @@ See https://github.com/adobe-type-tools/cmap-resources
 <body tabindex="1" class="loadingInProgress">
 {#<label id="pdf_url" style="display: none">{{ url_for('static', filename='3_1.pdf') }}</label>#}
 <label id="pdf_url" style="display: none">{{ pdfdocument }}</label>
-
+<label id="kw" style="display: none">{{ kw }}</label>
 <div id="outerContainer">
 
     <div id="sidebarContainer">

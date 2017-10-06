@@ -120,19 +120,19 @@
                         {% endif %}
                     </div>
                 </div>
-                <div class="post_container col-sm-12" style="margin: 0 auto">
+                <div class="post_container col-sm-12 col-xs-12" style="margin: 0 auto">
                     {#                    <img src="{{ item['value']['image_full_content'] }}" id="img_fullcontent_{{ loop.index }}"#}
                     {#                         style="display: none;max-width: 100%">#}
                     {#                    <img src="{{ item['value']['image_filter_content'] }}" id="img_filtered_content_{{ loop.index }}"#}
                     {#                         style="min-width: 480px;max-width:100%;border: 10px solid #FFFFFF; position: relative; display: block; margin: 0 auto"#}
                     {#                         class="img-filtered-content">#}
                     <iframe id="img_fullcontent_{{ loop.index }}"
-                            src="{{ url_for('repository.display_pdf', pdfurl=item['value']['image_full_content']) }}"
+                            src="{{ url_for('repository.display_pdf', pdfurl=item['value']['image_full_content'], kw=params.kw) }}"
                             frameborder="0" scrolling="no"
                             style="width:100%; height: 4000px; display: none;position: relative;margin: 0 auto;">
                     </iframe>
                     <iframe id="img_filtered_content_{{ loop.index }}"
-                            src="{{ url_for('repository.display_pdf', pdfurl=item['value']['image_filter_content'] ) }}"
+                            src="{{ url_for('repository.display_pdf', pdfurl=item['value']['image_filter_content'], kw=params.kw) }}"
                             frameborder="0" scrolling="no"
                             style="width:80%; height: 4000px; display: block;position: relative;margin: 0 auto;">
                     </iframe>

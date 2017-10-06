@@ -1644,7 +1644,7 @@ html[dir='rtl'] .outlineItemToggler::before {
 
 #overlayContainer > .container {
   display: table-cell;
-  vertical-align: middle;
+  vertical-align: top;
   text-align: center;
 }
 

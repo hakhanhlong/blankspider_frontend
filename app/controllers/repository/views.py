@@ -215,12 +215,12 @@ def detail_html(cid, idx, pdfurl):
                            data=data_master[0]['value']['html_data'].replace("document.domain", ""))
 
 
-@repository.route('/display_pdf/<pdfurl>/<kw>', methods=['GET'])
-def display_pdf(pdfurl="", kw=""):
+@repository.route('/display_pdf/<pdfurl>/<kw>/<scale>', methods=['GET'])
+def display_pdf(pdfurl="", kw="",scale=""):
     if not session.get('logged_in'):
         return render_template("login.html")
     pdfurl = IMAGE_URL + pdfurl.replace("-", "/")
-    return render_template('viewer.html', pdfdocument=pdfurl, kw=kw)
+    return render_template('viewer.html', pdfdocument=pdfurl, kw=kw, scale=scale)
 
 
 @repository.route('/search/', methods=['GET'])

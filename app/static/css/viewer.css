@@ -218,7 +218,7 @@
 }
 
 .pdfViewer .canvasWrapper {
-  overflow: hidden;
+  /*overflow: hidden;*/
 }
 
 .pdfViewer .page {
@@ -230,7 +230,7 @@
   overflow: visible;
   /*border: 9px solid transparent;*/
   background-clip: content-box;
-  border-image: url(../images/shadow.png) 9 9 repeat;
+  /*border-image: url(../images/shadow.png) 9 9 repeat;*/
   background-color: white;
 }
 
@@ -298,8 +298,9 @@ html {
 body {
   height: 100%;
   width: 100%;
-  background-color: #404040;
-  background-image: url(../images/texture.png);
+  /*background-color: #404040;*/
+  /*background-image: url(../images/texture.png);*/
+    background-color: white;
 }
 
 body,
@@ -1795,7 +1796,8 @@ html[dir='rtl'] #documentPropertiesOverlay .row > * {
 }
 
 #viewer.textLayer-visible .canvasWrapper {
-  background-color: rgb(128,255,128);
+    padding-left: 200px;
+  /*background-color: rgb(128,255,128);*/
 }
 
 #viewer.textLayer-visible .canvasWrapper canvas {

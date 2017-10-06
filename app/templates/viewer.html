@@ -46,20 +46,28 @@ See https://github.com/adobe-type-tools/cmap-resources
     <script type="text/javascript" src="{{ url_for('static', filename='scripts/jquery-1.11.3.min.js') }}"></script>
 
     <script type="text/javascript">
-        document.domain = "img.lcbc.digicomdemo.vn";
-
         function setText_search(text) {
+            $('#viewFind').click();
             $('#findInput').val(text);
             $('#findHighlightAll').click();
-            $('#viewFind').click();
-            $('#findInput').change();
         }
 
         $(document).ready(function () {
-            var text = $('#kw').html();
-            if(text != '*') {
-                setText_search(text);
-            }
+            setTimeout(
+                function () {
+                    if ($('#scale').html() == 1) {
+                        $('.page').each(function (i, obj) {
+                            $(this).css("padding-left", "20%");
+                        });
+                        $('.linkAnnotation').each(function (i, obj) {
+                            $(this).css("padding-left", "20%");
+                        });
+                    }
+                    var text = $('#kw').html();
+                    if (text != '*') {
+                        setText_search(text);
+                    }
+                }, 1000);
         });
     </script>
 
@@ -69,6 +77,7 @@ See https://github.com/adobe-type-tools/cmap-resources
 {#<label id="pdf_url" style="display: none">{{ url_for('static', filename='3_1.pdf') }}</label>#}
 <label id="pdf_url" style="display: none">{{ pdfdocument }}</label>
 <label id="kw" style="display: none">{{ kw }}</label>
+<label id="scale" style="display: none">{{ scale }}</label>
 <div id="outerContainer">
 
     <div id="sidebarContainer">

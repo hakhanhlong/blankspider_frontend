@@ -46,6 +46,7 @@ See https://github.com/adobe-type-tools/cmap-resources
     <script type="text/javascript" src="{{ url_for('static', filename='scripts/jquery-1.11.3.min.js') }}"></script>
 
     <script type="text/javascript">
+
         function setText_search(text) {
             $('#viewFind').click();
             $('#findInput').val(text);
@@ -53,6 +54,7 @@ See https://github.com/adobe-type-tools/cmap-resources
         }
 
         $(document).ready(function () {
+
             setTimeout(
                 function () {
                     if ($('#scale').html() == 1) {
@@ -60,12 +62,6 @@ See https://github.com/adobe-type-tools/cmap-resources
                             $(this).css("margin-left", "20%");
                         });
                     }
-{#                    $('.textLayer').each(function () {#}
-{#                        $(this).children().each(function () {#}
-{#                            var newWidth = $(this).left() + 10;#}
-{#                            $(this).left(newWidth);#}
-{#                        });#}
-{#                    });#}
                     var text = $('#kw').html();
                     if (text != '*') {
                         setText_search(text);

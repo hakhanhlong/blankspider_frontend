@@ -2949,21 +2949,29 @@
                         var spaceIndexs = [];
                         for (var i = 0; i < query.length; i++) {
                             if (query[i] === ' ') {
-                                spaceIndexs.push(i);
+                                if (i != query.length - 1) {
+                                    spaceIndexs.push(i);
+                                }
                             }
                         }
                         if (null != spaceIndexs && spaceIndexs.length > 0) {
                             for (var i = 0; i < spaceIndexs.length; i++) {
+                                var hasmatch = false;
                                 var subquery = query.substring(0, spaceIndexs[i])
                                     + query.substring(spaceIndexs[i] + 1, query.length);
-                                console.log('xxxx sub query = ' + subquery);
                                 var matchIndex2 = -1;
-                                matchIndex2 = pageContent.indexOf(subquery);
-                                console.log('xxxx match ndex 2 = ' + matchIndex2);
-                                if (matchIndex2 == -1) {
-                                    break;
+                                matchIndex2 = pageContent.indexOf(subquery, matchIndex2 + subquery.length);
+                                if (matchIndex2 != -1) {
+                                    for (var j = 0; j < matches.length; j++) {
+                                        if (matchIndex2 === matches[j]) {
+                                            hasmatch = true;
+                                            break;
+                                        }
+                                    }
+                                    if (!hasmatch) {
+                                        matches.push(matchIndex2);
+                                    }
                                 }
-                                matches.push(matchIndex2);
                             }
                         }
                         if (matchIdx === -1) {

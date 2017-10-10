@@ -2956,11 +2956,14 @@
                             for (var i = 0; i < spaceIndexs.length; i++) {
                                 var subquery = query.substring(0, spaceIndexs[i])
                                     + query.substring(spaceIndexs[i] + 1, query.length);
-                                var matchIndex2 = -subquery.length;
-                                matchIndex2 = pageContent.indexOf(subquery, matchIndex2 + queryLen);
-                                if (matchIndex2 != -1) {
-                                    matches.push(matchIndex2);
+                                console.log('xxxx sub query = ' + subquery);
+                                var matchIndex2 = -1;
+                                matchIndex2 = pageContent.indexOf(subquery);
+                                console.log('xxxx match ndex 2 = ' + matchIndex2);
+                                if (matchIndex2 == -1) {
+                                    break;
                                 }
+                                matches.push(matchIndex2);
                             }
                         }
                         if (matchIdx === -1) {

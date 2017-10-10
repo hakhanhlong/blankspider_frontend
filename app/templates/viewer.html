@@ -60,11 +60,17 @@ See https://github.com/adobe-type-tools/cmap-resources
                             $(this).css("margin-left", "20%");
                         });
                     }
+{#                    $('.textLayer').each(function () {#}
+{#                        $(this).children().each(function () {#}
+{#                            var newWidth = $(this).left() + 10;#}
+{#                            $(this).left(newWidth);#}
+{#                        });#}
+{#                    });#}
                     var text = $('#kw').html();
                     if (text != '*') {
                         setText_search(text);
                     }
-                }, 1000);
+                }, 2000);
         });
     </script>
 

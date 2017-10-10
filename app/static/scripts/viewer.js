@@ -2946,6 +2946,23 @@
                     var matchIdx = -queryLen;
                     while (true) {
                         matchIdx = pageContent.indexOf(query, matchIdx + queryLen);
+                        var spaceIndexs = [];
+                        for (var i = 0; i < query.length; i++) {
+                            if (query[i] === ' ') {
+                                spaceIndexs.push(i);
+                            }
+                        }
+                        if (null != spaceIndexs && spaceIndexs.length > 0) {
+                            for (var i = 0; i < spaceIndexs.length; i++) {
+                                var subquery = query.substring(0, spaceIndexs[i])
+                                    + query.substring(spaceIndexs[i] + 1, query.length);
+                                var matchIndex2 = -subquery.length;
+                                matchIndex2 = pageContent.indexOf(subquery, matchIndex2 + queryLen);
+                                if (matchIndex2 != -1) {
+                                    matches.push(matchIndex2);
+                                }
+                            }
+                        }
                         if (matchIdx === -1) {
                             break;
                         }
@@ -8041,7 +8058,7 @@
 
             var config = getViewerConfiguration();
             window.PDFViewerApplication = pdfjsWebApp.PDFViewerApplication;
-             pdfjsWebApp.PDFViewerApplication.run(config);
+            pdfjsWebApp.PDFViewerApplication.run(config);
         }
 
         if (document.readyState === 'interactive' || document.readyState === 'complete') {

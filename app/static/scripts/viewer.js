@@ -12,6 +12,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+var pages = [];
+
+function bodauTiengViet(str) {
+    str = str.toLowerCase();
+    str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, 'a');
+    str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, 'e');
+    str = str.replace(/ì|í|ị|ỉ|ĩ/g, 'i');
+    str = str.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g, 'o');
+    str = str.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, 'u');
+    str = str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g, 'y');
+    str = str.replace(/đ/g, 'd');
+    // str = str.replace(/\W+/g, ' ');
+    // str = str.replace(/\s/g, '-');
+    return str;
+}
 
 /******/
 (function (modules) { // webpackBootstrap
@@ -2984,16 +2999,67 @@
                             break;
                         }
                     }
+
+
+                    var noneDaumatchIdx = -queryLen;
+                    while (true) {
+                        noneDaumatchIdx = pages[pageIndex].indexOf(query, noneDaumatchIdx + queryLen);
+                        if (noneDaumatchIdx != -1) {
+                            var hasmatch = false;
+                            for (var i = 0; i < matches.length; i++) {
+                                if (noneDaumatchIdx === matches[i]) {
+                                    hasmatch = true;
+                                }
+                            }
+                            if (!hasmatch) {
+                                matches.push(noneDaumatchIdx);
+                            }
+                        }
+                        var spaceIndexs = [];
+                        for (var i = 0; i < query.length; i++) {
+                            if (query[i] === ' ') {
+                                spaceIndexs.push(i);
+                            }
+                        }
+                        if (null != spaceIndexs && spaceIndexs.length > 0) {
+                            for (var i = 0; i < spaceIndexs.length; i++) {
+                                var hasmatch = false;
+                                var subquery = query.substring(0, spaceIndexs[i])
+                                    + query.substring(spaceIndexs[i] + 1, query.length);
+                                var matchIndex2 = -1;
+                                matchIndex2 = pages[pageIndex].indexOf(subquery, matchIndex2 + subquery.length);
+                                if (matchIndex2 != -1) {
+                                    for (var j = 0; j < matches.length; j++) {
+                                        if (matchIndex2 === matches[j]) {
+                                            hasmatch = true;
+                                            break;
+                                        }
+                                    }
+                                    if (!hasmatch) {
+                                        matches.push(matchIndex2);
+                                    }
+                                }
+                            }
+                        }
+
+                        if (noneDaumatchIdx === -1) {
+                            break;
+                        }
+                    }
+
+
                     this.pageMatches[pageIndex] = matches;
                 },
                 calcFindWordMatch: function PDFFindController_calcFindWordMatch(query, pageIndex, pageContent) {
                     var matchesWithLength = [];
                     var queryArray = query.match(/\S+/g);
                     var subquery, subqueryLen, matchIdx;
+                    var noneDauMatchIdx;
                     for (var i = 0, len = queryArray.length; i < len; i++) {
                         subquery = queryArray[i];
                         subqueryLen = subquery.length;
                         matchIdx = -subqueryLen;
+                        // noneDauMatchIdx = -subqueryLen;
                         while (true) {
                             matchIdx = pageContent.indexOf(subquery, matchIdx + subqueryLen);
                             if (matchIdx === -1) {
@@ -3005,6 +3071,18 @@
                                 skipped: false
                             });
                         }
+
+                        // while (true) {
+                        //     noneDauMatchIdx = pages[pageIndex].indexOf(subquery, noneDauMatchIdx + subqueryLen);
+                        //     if (noneDauMatchIdx === -1) {
+                        //         break;
+                        //     }
+                        //     matchesWithLength.push({
+                        //         match: noneDauMatchIdx,
+                        //         matchLength: subqueryLen,
+                        //         skipped: false
+                        //     });
+                        // }
                     }
                     if (!this.pageMatchesLength) {
                         this.pageMatchesLength = [];
@@ -3064,6 +3142,7 @@
                                 str.push(textItems[i].str);
                             }
                             self.pageContents.push(str.join(''));
+                            pages.push(bodauTiengViet(str.join('')));
                             extractTextPromisesResolves[pageIndex](pageIndex);
                             if (pageIndex + 1 < self.pdfViewer.pagesCount) {
                                 extractPageText(pageIndex + 1);

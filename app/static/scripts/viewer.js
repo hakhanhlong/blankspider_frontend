@@ -2942,16 +2942,21 @@
                 },
                 calcFindPhraseMatch: function PDFFindController_calcFindPhraseMatch(query, pageIndex, pageContent) {
                     var matches = [];
+                    if (query.lastIndexOf(' ') === (query.length - 1)) {
+                        query = query.substring(0, query.lastIndexOf(' '));
+                    }
                     var queryLen = query.length;
                     var matchIdx = -queryLen;
                     while (true) {
                         matchIdx = pageContent.indexOf(query, matchIdx + queryLen);
+                        if (matchIdx != -1) {
+                            matches.push(matchIdx);
+                        }
+
                         var spaceIndexs = [];
                         for (var i = 0; i < query.length; i++) {
                             if (query[i] === ' ') {
-                                if (i != query.length - 1) {
-                                    spaceIndexs.push(i);
-                                }
+                                spaceIndexs.push(i);
                             }
                         }
                         if (null != spaceIndexs && spaceIndexs.length > 0) {
@@ -2974,10 +2979,10 @@
                                 }
                             }
                         }
+
                         if (matchIdx === -1) {
                             break;
                         }
-                        matches.push(matchIdx);
                     }
                     this.pageMatches[pageIndex] = matches;
                 },

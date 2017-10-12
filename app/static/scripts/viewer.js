@@ -2960,6 +2960,7 @@ function bodauTiengViet(str) {
                     if (query.lastIndexOf(' ') === (query.length - 1)) {
                         query = query.substring(0, query.lastIndexOf(' '));
                     }
+                    console.log('xxxx query = ' + query);
                     var queryLen = query.length;
                     var matchIdx = -queryLen;
                     while (true) {
@@ -2967,19 +2968,24 @@ function bodauTiengViet(str) {
                         if (matchIdx != -1) {
                             matches.push(matchIdx);
                         }
+                        if (matchIdx === -1) {
+                            break;
+                        }
+                    }
 
-                        var spaceIndexs = [];
+
+                     var spaceIndexs1 = [];
                         for (var i = 0; i < query.length; i++) {
                             if (query[i] === ' ') {
-                                spaceIndexs.push(i);
+                                spaceIndexs1.push(i);
                             }
                         }
-                        if (null != spaceIndexs && spaceIndexs.length > 0) {
-                            for (var i = 0; i < spaceIndexs.length; i++) {
+                        if (null != spaceIndexs1 && spaceIndexs1.length > 0) {
+                            for (var i = 0; i < spaceIndexs1.length; i++) {
                                 var hasmatch = false;
-                                var subquery = query.substring(0, spaceIndexs[i])
-                                    + query.substring(spaceIndexs[i] + 1, query.length);
-                                var matchIndex2 = -1;
+                                var subquery = query.substring(0, spaceIndexs1[i])
+                                    + query.substring(spaceIndexs1[i] + 1, query.length);
+                                var matchIndex2 = -subquery.length;
                                 matchIndex2 = pageContent.indexOf(subquery, matchIndex2 + subquery.length);
                                 if (matchIndex2 != -1) {
                                     for (var j = 0; j < matches.length; j++) {
@@ -2994,11 +3000,6 @@ function bodauTiengViet(str) {
                                 }
                             }
                         }
-
-                        if (matchIdx === -1) {
-                            break;
-                        }
-                    }
 
 
                     var noneDaumatchIdx = -queryLen;
@@ -3015,39 +3016,39 @@ function bodauTiengViet(str) {
                                 matches.push(noneDaumatchIdx);
                             }
                         }
-                        var spaceIndexs = [];
-                        for (var i = 0; i < query.length; i++) {
-                            if (query[i] === ' ') {
-                                spaceIndexs.push(i);
-                            }
-                        }
-                        if (null != spaceIndexs && spaceIndexs.length > 0) {
-                            for (var i = 0; i < spaceIndexs.length; i++) {
-                                var hasmatch = false;
-                                var subquery = query.substring(0, spaceIndexs[i])
-                                    + query.substring(spaceIndexs[i] + 1, query.length);
-                                var matchIndex2 = -1;
-                                matchIndex2 = pages[pageIndex].indexOf(subquery, matchIndex2 + subquery.length);
-                                if (matchIndex2 != -1) {
-                                    for (var j = 0; j < matches.length; j++) {
-                                        if (matchIndex2 === matches[j]) {
-                                            hasmatch = true;
-                                            break;
-                                        }
-                                    }
-                                    if (!hasmatch) {
-                                        matches.push(matchIndex2);
-                                    }
-                                }
-                            }
-                        }
+
 
                         if (noneDaumatchIdx === -1) {
                             break;
                         }
                     }
 
-
+                    var spaceIndexs = [];
+                    for (var i = 0; i < query.length; i++) {
+                        if (query[i] === ' ') {
+                            spaceIndexs.push(i);
+                        }
+                    }
+                    if (null != spaceIndexs && spaceIndexs.length > 0) {
+                        for (var i = 0; i < spaceIndexs.length; i++) {
+                            var hasmatch = false;
+                            var subquery = query.substring(0, spaceIndexs[i])
+                                + query.substring(spaceIndexs[i] + 1, query.length);
+                            var matchIndex2 = -subquery.length;
+                            matchIndex2 = pages[pageIndex].indexOf(subquery, matchIndex2 + subquery.length);
+                            if (matchIndex2 != -1) {
+                                for (var j = 0; j < matches.length; j++) {
+                                    if (matchIndex2 === matches[j]) {
+                                        hasmatch = true;
+                                        break;
+                                    }
+                                }
+                                if (!hasmatch) {
+                                    matches.push(matchIndex2);
+                                }
+                            }
+                        }
+                    }
                     this.pageMatches[pageIndex] = matches;
                 },
                 calcFindWordMatch: function PDFFindController_calcFindWordMatch(query, pageIndex, pageContent) {

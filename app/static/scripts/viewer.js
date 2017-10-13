@@ -28,6 +28,11 @@ function bodauTiengViet(str) {
     return str;
 }
 
+function sortNumber(a,b) {
+    return a - b;
+}
+
+
 /******/
 (function (modules) { // webpackBootstrap
     /******/ 	// The module cache
@@ -1309,9 +1314,9 @@ function bodauTiengViet(str) {
         var DISABLE_AUTO_FETCH_LOADING_BAR_TIMEOUT = 5000;
 
         function configure(PDFJS) {
-            PDFJS.imageResourcesPath = 'http://localhost:8066/static/images/';
-            PDFJS.workerSrc = 'http://localhost:8066/static/scripts/pdf.worker.js';
-            PDFJS.cMapUrl = 'http://localhost:8066/static/cmaps/';
+            PDFJS.imageResourcesPath = 'http://118.107.71.38:8066/static/images/';
+            PDFJS.workerSrc = 'http://118.107.71.38:8066/static/scripts/pdf.worker.js';
+            PDFJS.cMapUrl = 'http://118.107.71.38:8066/static/cmaps/';
             PDFJS.cMapPacked = true;
         }
 
@@ -3049,6 +3054,7 @@ function bodauTiengViet(str) {
                             }
                         }
                     }
+                    matches.sort(sortNumber);
                     this.pageMatches[pageIndex] = matches;
                 },
                 calcFindWordMatch: function PDFFindController_calcFindWordMatch(query, pageIndex, pageContent) {

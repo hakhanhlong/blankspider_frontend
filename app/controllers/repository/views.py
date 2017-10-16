@@ -230,13 +230,13 @@ def content_search(source='', tag='', published_from='', published_to='', kw='',
         return render_template("login.html")
     content_service = ContentService()
 
-    if published_from is not '*':
+    if published_from != '*':
         if 'T00:00:00.000Z' not in published_from:
             published_from = published_from.replace('T00:00:00.000Z', '')
             published_from = published_from.split('-')[::-1]
             published_from = '-'.join(published_from) + 'T00:00:00.000Z'
 
-    if published_to is not '*':
+    if published_to  != '*':
         if 'T00:00:00.000Z' not in published_to:
             published_to = published_to.replace('T00:00:00.000Z', '')
             published_to = published_to.split('-')[::-1]
@@ -265,10 +265,10 @@ def content_search(source='', tag='', published_from='', published_to='', kw='',
 def search_to_detail(cid, source, tag, published_from, published_to, kw, page):
     if not session.get('logged_in'):
         return render_template("login.html")
-    if published_from is not '*':
+    if published_from != '*':
         year, month, day = published_from.split("-")
         published_from = day + "-" + month + "-" + year
-    if published_to is not '*':
+    if published_to != '*':
         year, month, day = published_to.split("-")
         published_to = day + "-" + month + "-" + year
     cont = content_impl.get_byid(cid)
@@ -326,7 +326,7 @@ def search_to_detail(cid, source, tag, published_from, published_to, kw, page):
 
                 except Exception as error:
                     pass
-                if content_im is not None and len(content_im) > 0:
+                if content_im != None and len(content_im) > 0:
                     directory1, directory2, directory3, directory4, directory5, directory6, imageName = \
                         content_im[i].images[0]['image_full_content'].split("/")
                     directory7, directory8, directory9, directory10, directory11, directory12, imageName1 = \
@@ -372,11 +372,11 @@ def back_from_detail_to_search(source='', tag='', published_from='', published_t
     if not session.get('logged_in'):
         return render_template("login.html")
     content_service = ContentService()
-    if published_from is not '*':
+    if published_from !='*':
         published_from = published_from.split('-')[::-1]
         published_from = '-'.join(published_from)
 
-    if published_to is not '*':
+    if published_to != '*':
         published_to = published_to.split('-')[::-1]
         published_to = '-'.join(published_to)
 

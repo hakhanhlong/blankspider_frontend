@@ -53,7 +53,7 @@ def content_list_by_default(page=0):
 def content_search(source='', tag='', published='', kw='', page=0):
     content_service = ContentService()
 
-    if published is not '*':
+    if published != '*':
         published = published.split('-')[::-1]
         published = '-'.join(published)
 

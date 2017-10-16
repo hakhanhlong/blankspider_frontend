@@ -13,6 +13,7 @@
  * limitations under the License.
  */
 var pages = [];
+var numFounds = 0;
 
 function bodauTiengViet(str) {
     str = str.toLowerCase();
@@ -28,7 +29,7 @@ function bodauTiengViet(str) {
     return str;
 }
 
-function sortNumber(a,b) {
+function sortNumber(a, b) {
     return a - b;
 }
 
@@ -2965,7 +2966,6 @@ function sortNumber(a,b) {
                     if (query.lastIndexOf(' ') === (query.length - 1)) {
                         query = query.substring(0, query.lastIndexOf(' '));
                     }
-                    console.log('xxxx query = ' + query);
                     var queryLen = query.length;
                     var matchIdx = -queryLen;
                     while (true) {
@@ -2979,32 +2979,32 @@ function sortNumber(a,b) {
                     }
 
 
-                     var spaceIndexs1 = [];
-                        for (var i = 0; i < query.length; i++) {
-                            if (query[i] === ' ') {
-                                spaceIndexs1.push(i);
-                            }
+                    var spaceIndexs1 = [];
+                    for (var i = 0; i < query.length; i++) {
+                        if (query[i] === ' ') {
+                            spaceIndexs1.push(i);
                         }
-                        if (null != spaceIndexs1 && spaceIndexs1.length > 0) {
-                            for (var i = 0; i < spaceIndexs1.length; i++) {
-                                var hasmatch = false;
-                                var subquery = query.substring(0, spaceIndexs1[i])
-                                    + query.substring(spaceIndexs1[i] + 1, query.length);
-                                var matchIndex2 = -subquery.length;
-                                matchIndex2 = pageContent.indexOf(subquery, matchIndex2 + subquery.length);
-                                if (matchIndex2 != -1) {
-                                    for (var j = 0; j < matches.length; j++) {
-                                        if (matchIndex2 === matches[j]) {
-                                            hasmatch = true;
-                                            break;
-                                        }
+                    }
+                    if (null != spaceIndexs1 && spaceIndexs1.length > 0) {
+                        for (var i = 0; i < spaceIndexs1.length; i++) {
+                            var hasmatch = false;
+                            var subquery = query.substring(0, spaceIndexs1[i])
+                                + query.substring(spaceIndexs1[i] + 1, query.length);
+                            var matchIndex2 = -subquery.length;
+                            matchIndex2 = pageContent.indexOf(subquery, matchIndex2 + subquery.length);
+                            if (matchIndex2 != -1) {
+                                for (var j = 0; j < matches.length; j++) {
+                                    if (matchIndex2 === matches[j]) {
+                                        hasmatch = true;
+                                        break;
                                     }
-                                    if (!hasmatch) {
-                                        matches.push(matchIndex2);
-                                    }
+                                }
+                                if (!hasmatch) {
+                                    matches.push(matchIndex2);
                                 }
                             }
                         }
+                    }
 
 
                     var noneDaumatchIdx = -queryLen;
@@ -3055,18 +3055,17 @@ function sortNumber(a,b) {
                         }
                     }
                     matches.sort(sortNumber);
+                    numFounds = matches.length;
                     this.pageMatches[pageIndex] = matches;
                 },
                 calcFindWordMatch: function PDFFindController_calcFindWordMatch(query, pageIndex, pageContent) {
                     var matchesWithLength = [];
                     var queryArray = query.match(/\S+/g);
                     var subquery, subqueryLen, matchIdx;
-                    var noneDauMatchIdx;
                     for (var i = 0, len = queryArray.length; i < len; i++) {
                         subquery = queryArray[i];
                         subqueryLen = subquery.length;
                         matchIdx = -subqueryLen;
-                        // noneDauMatchIdx = -subqueryLen;
                         while (true) {
                             matchIdx = pageContent.indexOf(subquery, matchIdx + subqueryLen);
                             if (matchIdx === -1) {
@@ -3078,18 +3077,6 @@ function sortNumber(a,b) {
                                 skipped: false
                             });
                         }
-
-                        // while (true) {
-                        //     noneDauMatchIdx = pages[pageIndex].indexOf(subquery, noneDauMatchIdx + subqueryLen);
-                        //     if (noneDauMatchIdx === -1) {
-                        //         break;
-                        //     }
-                        //     matchesWithLength.push({
-                        //         match: noneDauMatchIdx,
-                        //         matchLength: subqueryLen,
-                        //         skipped: false
-                        //     });
-                        // }
                     }
                     if (!this.pageMatchesLength) {
                         this.pageMatchesLength = [];
@@ -3097,6 +3084,7 @@ function sortNumber(a,b) {
                     this.pageMatchesLength[pageIndex] = [];
                     this.pageMatches[pageIndex] = [];
                     this._prepareMatches(matchesWithLength, this.pageMatches[pageIndex], this.pageMatchesLength[pageIndex]);
+                    numFounds = matchesWithLength.length;
                 },
                 calcFindMatch: function PDFFindController_calcFindMatch(pageIndex) {
                     var pageContent = this.normalize(this.pageContents[pageIndex]);
@@ -4514,7 +4502,7 @@ function sortNumber(a,b) {
                         this.findResultsCount.classList.add('hidden');
                         return;
                     }
-                    this.findResultsCount.textContent = matchCount.toLocaleString();
+                    this.findResultsCount.textContent = numFounds.toLocaleString();
                     this.findResultsCount.classList.remove('hidden');
                 },
                 open: function PDFFindBar_open() {

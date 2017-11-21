@@ -94,7 +94,7 @@ def get_source():
             timings = _request.post_json().json()
             for timing in timings:
                 try:
-                    timing['published_at'] = datetime.strptime(timing['published_at'].replace('T00:00:00.000Z', ''),
+                    timing['published_at'] = datetime.strptime(timing['published_at'].split('T')[0],
                                                                '%Y-%m-%d')
                 except:
                     break
@@ -166,7 +166,12 @@ def detail(cid, page=0, prepageid=0, ptimingid=0):
     kw = '*'
     if not session.get('logged_in'):
         return render_template("login.html")
-    cont = content_impl.get_byid(cid)
+    cont = None
+    try:
+        cont = content_impl.get_byid(cid)
+        print("xxxx cont = "+str(cont))
+    except Exception as e:
+        print('xxxxxxxxxxxxxxxxxxxxx '+str(e))
     s = source_impl.get_by_id(cont.source_id)
     content_im = content_img_impl.getByContentId(cid)
     data_master = []

@@ -11,7 +11,7 @@ class RequestURL:
 
         #---------------------------- TAG -----------------------------------------------------------
         #self.TAG_URL_LISTBYSOURCE = os.environ.get('TAG_URL_LISTBYSOURCE')
-        self.TAG_URL_LISTBYSOURCE = 'http://118.107.88.25:8096/api/v1/tag/get_tag_bysource'
+        self.TAG_URL_LISTBYSOURCE = 'http://118.107.88.25:8096/api/v1/tag/get_tag_by_source'
         #--------------------------------------------------------------------------------------------
 
         #---------------------------- CONTENT -------------------------------------------------------

@@ -6,4 +6,4 @@ class CONTENT_IMG(db.Document):
     created_at = db.DateTimeField(default=datetime.now)
     images = db.ListField()
     __v = db.IntField()
-    meta = {"db_alias": "blankspider_content_archived", 'collection': 'contentstorages', 'strict': False}
+    meta = {"db_alias": "lcbc_content_archived", 'collection': 'contentstorages', 'strict': False}

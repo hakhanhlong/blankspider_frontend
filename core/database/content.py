@@ -15,4 +15,4 @@ class CONTENTS(db.Document):
     __v = db.IntField()
     content_img = None
     source_name = ""
-    meta = {"db_alias": "blankspider_content_archived", 'collection': 'contents', 'strict': False}
+    meta = {"db_alias": "lcbc_content_archived", 'collection': 'contents', 'strict': False}

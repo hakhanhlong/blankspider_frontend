@@ -126,7 +126,11 @@
                     {#                    <img src="{{ item['value']['image_filter_content'] }}" id="img_filtered_content_{{ loop.index }}"#}
                     {#                         style="min-width: 480px;max-width:100%;border: 10px solid #FFFFFF; position: relative; display: block; margin: 0 auto"#}
                     {#                         class="img-filtered-content">#}
-                    <iframe class="iframe" id="img_fullcontent_{{ loop.index }}"
+
+                    {{ item['value']['content']|safe }}
+
+
+                    <!--<iframe class="iframe" id="img_fullcontent_{{ loop.index }}"
                             onload="resizeIframe(this);"
                             src="{{ url_for('repository.display_pdf', pdfurl=item['value']['image_full_content'], kw=params.kw, scale=0) }}"
                             frameborder="0" scrolling="no"
@@ -137,7 +141,7 @@
                             src="{{ url_for('repository.display_pdf', pdfurl=item['value']['image_filter_content'], kw=params.kw, scale=1) }}"
                             frameborder="0" scrolling="no"
                             style="width:100%; display: block;position: relative;margin: 0 auto;">
-                    </iframe>
+                    </iframe>-->
                     <div style="width: 100%">
                         <div style="margin-top: 20px; width: 100%;">
                             <nav aria-label="Page navigation example" style="display: inline-block; width: 100%;">
@@ -147,7 +151,7 @@
                                     {{ pagination_ajax_page_version(pagination,loop.index) }}
                                 </ul>
 
-                                <div style="float: right; margin-right: 0px; color:  #337ab7;font-size:  14px;font-weight:  400;text-decoration:  underline;text-align:  justify;">
+                                <!--<div style="float: right; margin-right: 0px; color:  #337ab7;font-size:  14px;font-weight:  400;text-decoration:  underline;text-align:  justify;">
                                     {% if params.prepageid|int == 0 %}
                                         <a href="{{ url_for('repository.back_from_detail_to_filter_by_default', page=params.page) }}">
                                             < Quay lại
@@ -161,7 +165,7 @@
                                             < Quay lại
                                         </a>
                                     {% endif %}
-                                </div>
+                                </div>-->
                             </nav>
                         </div>
                     </div>

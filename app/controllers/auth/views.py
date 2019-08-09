@@ -5,7 +5,7 @@ from core.dataimpl.account_impl import get_by_username
 from . import auth
 
 from .forms import LoginForm
-from flask.ext.login import login_user, current_user
+from flask_login import login_user, current_user
 from core.dataimpl import account_impl
 
 

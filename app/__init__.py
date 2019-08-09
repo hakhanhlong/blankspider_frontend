@@ -1,7 +1,7 @@
 from flask import Flask, render_template
-from flask.ext.bootstrap import Bootstrap
-from flask.ext.mongoengine import MongoEngine, MongoEngineSessionInterface
-from flask.ext.login import LoginManager, current_user
+from flask_bootstrap import Bootstrap
+from flask_mongoengine import MongoEngine, MongoEngineSessionInterface
+from flask_login import LoginManager, current_user
 from config import config
 from flask_debugtoolbar import DebugToolbarExtension
 
@@ -37,24 +37,24 @@ def create_app(config_name):
             'db': config[config_name].MONGO_DATABASE_SECURITY_NAME,
             'host': config[config_name].MONGO_DATABASE_SECURITY_SERVER,
             'port': config[config_name].MONGO_DATABASE_SECURITY_PORT,
-            'username':'longhk',
-            'password':'abc@321#@!'
+            'username':'dev_security_2019',
+            'password':'dev_security#2019'
         },
         {
             'alias': config[config_name].MONGO_DATABASE_ARCHIVIED_NAME,
             'db': config[config_name].MONGO_DATABASE_ARCHIVIED_NAME,
             'host': config[config_name].MONGO_DATABASE_ARCHIVIED_SERVER,
             'port': config[config_name].MONGO_DATABASE_ARCHIVIED_PORT,
-            'username': 'longhk',
-            'password': 'abc!123#!!'
+            'username': 'lcbc2019',
+            'password': 'lcbc#2019'
         },
         {
             'alias': config[config_name].MONGO_DATABASE_BLANKSPIDER_NAME,
             'db': config[config_name].MONGO_DATABASE_BLANKSPIDER_NAME,
             'host': config[config_name].MONGO_DATABASE_BLANKSPIDER_SERVER,
             'port': config[config_name].MONGO_DATABASE_BLANKSPIDER_PORT,
-            'username': 'longhk',
-            'password': 'abc@123#@!'
+            'username': 'dev2019',
+            'password': 'dev#2019'
         }
     ]
 

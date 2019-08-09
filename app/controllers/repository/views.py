@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 from flask import render_template, jsonify, flash, session
-from flask.ext.login import login_required
+from flask_login import login_required
 
 from core.api.services.content_service import ContentService
 
@@ -46,7 +46,21 @@ def get_data_from_service_filter_by_default(page=0):
     data_master = []
     for item in content['response']['docs']:
         try:
-            item['source_name'] = source_impl.get_by_id(item['source_id']).name
+            #item['source_name'] = source_impl.get_by_id(item['source_id']).name
+            item['href'] = item['href'][0]
+            item['source_id'] = item['source_id'][0]
+            item['tag_name'] = item['tag_name'][0]
+            item['href_md5'] = item['href_md5'][0]
+            item['tag_id'] = item['tag_id'][0]
+            item['published_at'] = item['published_at'][0]
+            item['publishtiming_id'] = item['publishtiming_id'][0]
+            item['title'] = item['title'][0]
+            item['version_count'] = item['version_count'][0]
+            item['published_time'] = item['published_time'][0]
+            item['content_filter'] = item['content_filter'][0]
+            item['content_hash'] = item['content_hash'][0]
+            item['status'] = item['status'][0]
+            item['content_khongdau'] = item['content_khongdau'][0]
         except Exception as ex:
             print("exception : " + str(ex))
         data_master.append(item)
@@ -68,7 +82,21 @@ def get_data_from_service_filter_by_timing(sid, ptimingid, page=0):
         data_master = []
         for item in content['response']['docs']:
             try:
-                item['source_name'] = source_impl.get_by_id(item['source_id']).name
+                #item['source_name'] = source_impl.get_by_id(item['source_id']).name
+                item['href'] = item['href'][0]
+                item['source_id'] = item['source_id'][0]
+                item['tag_name'] = item['tag_name'][0]
+                item['href_md5'] = item['href_md5'][0]
+                item['tag_id'] = item['tag_id'][0]
+                item['published_at'] = item['published_at'][0]
+                item['publishtiming_id'] = item['publishtiming_id'][0]
+                item['title'] = item['title'][0]
+                item['version_count'] = item['version_count'][0]
+                item['published_time'] = item['published_time'][0]
+                item['content_filter'] = item['content_filter'][0]
+                item['content_hash'] = item['content_hash'][0]
+                item['status'] = item['status'][0]
+                item['content_khongdau'] = item['content_khongdau'][0]
             except Exception as ex:
                 print("exception : " + str(ex))
             data_master.append(item)
@@ -181,7 +209,7 @@ def detail(cid, page=0, prepageid=0, ptimingid=0):
         for item in cont.data:
             for k, v in item.items():
                 _val = json.loads(v)
-                if content_im is not None and len(content_im[0].images) > 0:
+                '''if content_im is not None and len(content_im[0].images) > 0:
                     directory1, directory2, directory3, directory4, directory5, directory6, imageName = \
                         content_im[0].images[i]['image_full_content'].split("/")
                     directory7, directory8, directory9, directory10, directory11, directory12, imageName1 = \
@@ -189,6 +217,7 @@ def detail(cid, page=0, prepageid=0, ptimingid=0):
                     _val['image_full_content'] = directory6 + "-" + imageName
                     _val['image_filter_content'] = directory12 + "-" + imageName1
                     i = i + 1;
+                '''
                 data_master.append({'key': k, 'value': _val})
 
     except Exception as ex:

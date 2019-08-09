@@ -14,7 +14,8 @@ from core.control.pagination import Pagination
 @ajax.route('/tag/get_by_source/<sid>', methods=['GET'])
 def tag_get_by_source(sid):
     tag_service = TagService()
-    return jsonify(tag_service.get_by_source(sid))
+    list = tag_service.get_by_source(sid)
+    return jsonify(list)
 
 
 @ajax.route('/content/filter_by_ptiming/<sid>/<ptimingid>/', methods=['GET'])

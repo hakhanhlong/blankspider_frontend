@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 from flask import render_template, flash
-from flask.ext.login import login_required
+from flask_login import login_required
 
 from . import home
 from core.dataimpl import source_impl
